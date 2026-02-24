@@ -34,3 +34,9 @@ for detail; this is just the trail of breadcrumbs.
 - Added .gitignore to exclude .DS_Store
 - Set git global identity (name + email)
 - Verified Claude Code reads CLAUDE.md correctly from toolkit root
+
+### 2026-02-24 — api-key-prompt skill rebuilt
+- Created skills/api-key-prompt/set-api-key.sh
+- Supports Anthropic, OpenAI, Schwab, QuickBooks, plus any new service on the fly
+- Keys entered silently, exported to session only, never written to file
+- Written for zsh (MacBook Pro M1)
