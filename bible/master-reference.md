@@ -1,0 +1,127 @@
+# Master Reference — Claude Toolkit Bible
+
+Last updated: 2026-02-23
+
+---
+
+## Purpose
+
+This is the living manual for how Flint uses Claude Code. It captures 
+skills developed, conventions established, lessons learned, and 
+decisions made. Updated at the completion of every project via the 
+Bible Entry section of each project file.
+
+This document is also the first thing to paste into Claude Code as 
+context when starting a new session on a new machine or project.
+
+---
+
+## Core Principles
+
+These don't change project to project. They govern everything.
+
+1. **Plan first** — no project starts without a PRD and plan in /projects
+2. **Own your skills** — borrowed skills are a liability; adapt or rebuild over time
+3. **Local first** — iCloud working copy, GitHub for backup, minimize API calls
+4. **Simple over clever** — one layer of complexity at a time
+5. **Never hardcode keys** — API keys always via prompt-on-entry or environment variables
+6. **Keep the registry current** — log every skill immediately after installing
+
+---
+
+## Working Environment
+
+| Item | Detail |
+|---|---|
+| Primary machine | MacBook Pro M1 |
+| Secondary machine | iMac 2017 (terminal only, transitional) |
+| Claude Code | Installed on both |
+| Working copy | iCloud Drive |
+| Version control | GitHub (private, push deliberately) |
+| File format | Plain markdown (.md) throughout |
+| Naming convention | topic-YYYY-MM |
+
+---
+
+## Toolkit Structure
+
+See README.md for full folder structure. Key locations:
+
+- `/projects` — all PRDs and plans, one file per project
+- `/skills-registry/skills-inventory.md` — every skill, its source and status
+- `/prompts` — reusable prompt templates
+- `/subagents` — specialist agent definitions
+- `/claude-md-templates` — CLAUDE.md starters for new projects
+
+---
+
+## Skills Summary
+
+_Populated as skills are built or adapted. One entry per skill._
+
+### last30days (borrowed)
+Research agent that searches internet, Reddit, and other sources for 
+information from the last 30 days. Useful for staying current on Claude 
+Code techniques, trends, and any time-sensitive query. Installed at 
+~/.claude/skills/last30days. Requires OpenAI API key. Source: 
+github.com/mvanhorn/last30days-skill. Candidate for adaptation into 
+owned version.
+
+### api-key-prompt (to be rebuilt)
+Prompts for API key entry at runtime. Prevents keys from being stored 
+in plain text. Required dependency for last30days and any future 
+API-dependent skill. Originally built, currently on iMac — recovery 
+and rebuild is early priority.
+
+### quickbooks-automation (to be rebuilt)
+QuickBooks workflow automation. Was incomplete at time of toolkit build. 
+Will be redesigned from scratch with full PRD once toolkit foundation 
+is stable.
+
+---
+
+## Conventions Established
+
+_Decisions we've made that future-me should know about._
+
+### 2026-02-23 — Initial conventions
+- File naming: topic-YYYY-MM
+- PRDs and Plans live in single combined file in /projects
+- Changelog lives at root, bible entry at end of every project file
+- Skills have three statuses: borrowed / adapted / built
+- GitHub pushes are deliberate, not automatic
+- iCloud selective sync strategy to be handled as separate mini-project
+
+---
+
+## Lessons Learned
+
+_Hard-won insights. Updated as projects complete._
+
+### 2026-02-23 — API key security
+Never paste API keys into any conversation, file, or shared document. 
+Keys should only exist in environment variables or be entered at 
+runtime via prompt. If a key is accidentally exposed, revoke it 
+immediately at the provider's API dashboard before doing anything else.
+
+---
+
+## Open Mini-Projects
+
+_Smaller items that don't warrant a full PRD but need to be done._
+
+- [ ] iCloud selective sync strategy — keep work/personal separated on iMac
+- [ ] Recover skills from iMac before machine is retired
+- [ ] Rebuild api-key-prompt skill
+- [ ] Evaluate last30days for adaptation into owned version
+- [ ] Explore Claude Code plugin marketplace for useful community skills
+
+---
+
+## Reference Links
+
+- Claude Code docs: https://docs.claude.ai/claude-code
+- Claude Code best practices: https://code.claude.com/docs/en/best-practices
+- Community skills: https://github.com/hesreallyhim/awesome-claude-code
+- Community subagents: https://github.com/VoltAgent/awesome-claude-code-subagents
+- ClaudeLog: https://claudelog.com
