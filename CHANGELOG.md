@@ -1,4 +1,4 @@
-# Changelog
+2026-02-23 — Claude Code authenticated via API credits, Pro + API credits strategy confirmed# Changelog
 
 Format: [YYYY-MM-DD] — What changed and why (brief)
 
@@ -14,7 +14,7 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 - Added skills-registry/skills-inventory.md with last30days entry
 - Initialized as private GitHub repo
 - Working copy established in iCloud Drive
-
+— Claude Code authenticated via API credits, Pro + API credits strategy confirmeded
 ---
 
 ## How to Use This File
