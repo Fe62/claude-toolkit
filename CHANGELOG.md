@@ -27,3 +27,10 @@ Add an entry whenever you:
 
 Keep entries short — one to three lines is enough. The bible is 
 for detail; this is just the trail of breadcrumbs.
+
+### 2026-02-24 — Phase 2 complete
+- Verified folder structure in iCloud Drive on MacBook Pro M1
+- Confirmed all files pushed to GitHub (Fe62/claude-toolkit)
+- Added .gitignore to exclude .DS_Store
+- Set git global identity (name + email)
+- Verified Claude Code reads CLAUDE.md correctly from toolkit root
