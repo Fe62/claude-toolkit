@@ -66,7 +66,8 @@ Check off as you go._
 - [ ] Step 1
 - [ ] Step 2
 - [ ] Step 3
-
+- [ ] Update load-context.sh (Active Skills + Recent Completions)
+- [ ] Commit load-context.sh with final project commit
 ---
 
 ## Open Questions

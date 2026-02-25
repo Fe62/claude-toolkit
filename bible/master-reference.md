@@ -92,6 +92,18 @@ _Decisions we've made that future-me should know about._
 - GitHub pushes are deliberate, not automatic
 - iCloud selective sync strategy to be handled as separate mini-project
 
+### 2026-02-24 — Skill shortcut convention
+When building a new skill, ask: does this warrant a terminal alias and/or
+keyboard shortcut? If the skill will be run frequently or at the start of
+sessions, add an alias to ~/.zshrc and consider an Automator Quick Action
+for a keyboard shortcut. Document both in the skill's README.
+
+### 2026-02-24 — load-context maintenance convention
+When any skill is completed or retired, update load-context.sh before
+the final commit. Two sections to touch:
+- Active Skills — add new skill with one-line description, alias, and shortcut if any
+- Recent Completions — add one line summarizing what was done and when
+Treat load-context.sh as a living document, not a snapshot.
 ---
 
 ## Lessons Learned
