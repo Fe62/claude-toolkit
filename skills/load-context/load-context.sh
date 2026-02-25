@@ -52,7 +52,7 @@ QUICK=$(cat <<'ORIENTATION'
 ### Active Skills
 - **last30days** (borrowed) — research agent, searches last 30 days. Installed at ~/.claude/skills/last30days. Requires OpenAI API key.
 - **api-key-prompt** (built) — secure runtime key entry, never stores keys. Located at skills/api-key-prompt/set-api-key.sh.
-
+- **load-context** (built) — copies context block to clipboard. Alias: `context`. Shortcut: ⌘⇧C.
 ---
 
 ### Open Work
@@ -68,7 +68,7 @@ QUICK=$(cat <<'ORIENTATION'
 - Toolkit Phase 2 complete — folder structure, GitHub, Claude Code verified
 - api-key-prompt skill rebuilt for zsh, supports Anthropic/OpenAI/Schwab/QuickBooks/custom
 - iCloud sync enabled on iMac, toolkit synced successfully
-
+- load-context skill built with alias and ⌘⇧C keyboard shortcut
 ---
 
 *To load full project file details, run load-context.sh and choose Full.*
