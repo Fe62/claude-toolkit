@@ -40,3 +40,8 @@ for detail; this is just the trail of breadcrumbs.
 - Supports Anthropic, OpenAI, Schwab, QuickBooks, plus any new service on the fly
 - Keys entered silently, exported to session only, never written to file
 - Written for zsh (MacBook Pro M1)
+
+### 2026-02-24 — load-context skill built
+- Created skills/load-context/load-context.sh
+- Two modes: Quick (orientation block) and Full (orientation + all project files)
+- Copies to clipboard via pbcopy — paste into any new Claude conversation
