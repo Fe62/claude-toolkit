@@ -53,24 +53,34 @@ QUICK=$(cat <<'ORIENTATION'
 - **last30days** (borrowed) — research agent, searches last 30 days. Installed at ~/.claude/skills/last30days. Requires OpenAI API key.
 - **api-key-prompt** (built) — secure runtime key entry, never stores keys. Located at skills/api-key-prompt/set-api-key.sh.
 - **load-context** (built) — copies context block to clipboard. Alias: `context`. Shortcut: ⌘⇧C.
+- **pdf-to-qbo** (built) — converts Wells Fargo PDF statements to QBO for QB Desktop Mac. Located at skills/pdf-to-qbo/convert_statements.py. Auto-detects BANK vs CREDITCARD from folder name. Handles WF Signify (Format A) and WF Signature/FA (Format B) CC formats. Requires pdfplumber.
+
 ---
 
 ### Open Work
 - [ ] iMac skills recovery (api-key-prompt, quickbooks) before machine retires
 - [ ] iCloud selective sync strategy for iMac (work/personal separation)
-- [ ] Rebuild quickbooks-automation with full PRD
+- [ ] Run pdf-to-qbo on full-year checking statements (P&A.checking.25)
 - [ ] Evaluate last30days for adaptation into owned version
 - [ ] Explore community skills: github.com/hesreallyhim/awesome-claude-code
 
 ---
+
+### Recent Completions (2026-02-28)
+- pdf-to-qbo skill built and tested — converts WF PDFs to QBO, runs locally, no upload limits
+- Validated QBO import into QB Desktop Mac (checked format, LEDGERBAL, INTU.BID all required)
+- Dual credit card format support: Signify Business Essential + Signature/FA card
+- WellsSignify.25: 455 transactions across 14 statements ✓
+- FA.cc: 14 statements parsed and QBO generated ✓
+- Committed to github.com/Fe62/claude-toolkit
 
 ### Recent Completions (2026-02-24)
 - Toolkit Phase 2 complete — folder structure, GitHub, Claude Code verified
 - api-key-prompt skill rebuilt for zsh, supports Anthropic/OpenAI/Schwab/QuickBooks/custom
 - iCloud sync enabled on iMac, toolkit synced successfully
 - load-context skill built with alias and ⌘⇧C keyboard shortcut
----
 
+---
 *To load full project file details, run load-context.sh and choose Full.*
 ORIENTATION
 )

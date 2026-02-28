@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-02-23
+Last updated: 2026-02-28
 
 ---
 
@@ -34,9 +34,6 @@ Last updated: 2026-02-23
 | Notes | API keys managed via prompt-on-entry skill (see below). Never hardcode. |
 
 ---
-
-## Planned / In Progress
-
 ### api-key-prompt
 | Field | Detail |
 |---|---|
@@ -48,23 +45,28 @@ Last updated: 2026-02-23
 | Purpose | Prompts for API key entry at runtime rather than storing keys in plain text files. Used by last30days and any other skill requiring API authentication. |
 | Priority | High — rebuild early, all other API-dependent skills depend on this |
 
-### quickbooks-automation
-| Field | Detail |
-|---|---|
-| Status | built (incomplete) |
-| Health | needs-setup |
-| Source | Originally built, resides on iMac — needs recovery |
-| Installed | Unknown — check ~/.claude/skills/ on iMac |
-| Dependencies | TBD — QuickBooks API credentials |
-| Purpose | TBD — automation of QuickBooks workflows (details to be recovered from iMac and redeveloped) |
-| Priority | Medium — revisit once toolkit foundation is stable |
-| Notes | Was not fully worked out — will redesign from scratch with PRD |
+## pdf-to-qbo
+- **Status:** installed, tested
+- **Location:** skills/pdf-to-qbo/convert_statements.py
+- **Usage:** python3 convert_statements.py "/path/to/folder"
+- **Auto-detects:** BANK vs CREDITCARD from folder name
+- **Handles:** WF Signify (Format A) and WF Signature/FA (Format B) CC statements
+- **Output:** [folder-name].qbo written into same folder
+- **Tested:** WellsSignify.25 (455 txns), FA.cc (14 statements), checking (5 txns)
+- **Notes:** Requires pdfplumber. PDF filenames must start with MMDDYY.
+
+## Planned / In Progress
 
 ---
 
 ## Retired Skills
 
-_Nothing retired yet._
+### quickbooks-automation
+| Field | Detail |
+|---|---|
+| Status | retired |
+| Retired | 2026-02-28 |
+| Notes | Superseded by pdf-to-qbo skill, which handles the WF statement import workflow that was originally planned here. |
 
 ---
 

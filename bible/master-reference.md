@@ -1,6 +1,6 @@
 # Master Reference — Claude Toolkit Bible
 
-Last updated: 2026-02-23
+Last updated: 2026-02-28
 
 ---
 
@@ -73,10 +73,23 @@ in plain text. Required dependency for last30days and any future
 API-dependent skill. Originally built, currently on iMac — recovery 
 and rebuild is early priority.
 
-### quickbooks-automation (to be rebuilt)
-QuickBooks workflow automation. Was incomplete at time of toolkit build. 
-Will be redesigned from scratch with full PRD once toolkit foundation 
-is stable.
+## QBO Import — QB Desktop Mac
+- Format: OFX 1.x SGML only (not XML/OFX 2.x)
+- Required: <INTU.BID>3000</INTU.BID> — Wells Fargo Intuit bank ID
+- Required: <LEDGERBAL> block with ending balance and as-of date
+- .qbo files may not download from Claude.ai — save as .txt and rename
+- WF Signify format: "Transaction Details" section, no card prefix
+- WF Signature/FA format: Payments/Credits/Purchases sections, 4-digit card prefix per line
+
+### pdf-to-qbo (built)
+Local Python script that converts Wells Fargo PDF bank and credit card statements
+to QBO format for QB Desktop Mac import. Handles two CC statement layouts:
+WF Signify (Format A) and WF Signature/FA (Format B). Installed at
+skills/pdf-to-qbo/convert_statements.py. Requires pdfplumber.
+
+### quickbooks-automation (retired)
+Superseded by pdf-to-qbo (2026-02-28). The pdf-to-qbo skill handles
+the WF statement import workflow that was originally planned here.
 
 ---
 
@@ -116,12 +129,18 @@ Keys should only exist in environment variables or be entered at
 runtime via prompt. If a key is accidentally exposed, revoke it 
 immediately at the provider's API dashboard before doing anything else.
 
+### 2026-02-28 — QB Desktop Mac QBO import requirements
+QB Desktop Mac requires OFX 1.x SGML format — XML-based OFX 2.x is rejected silently.
+Wells Fargo has at least two distinct CC statement layouts requiring separate parsers.
+When QBO files won't download from Claude.ai, save as .txt and manually rename to .qbo.
+
 ---
 
 ## Open Mini-Projects
 
 _Smaller items that don't warrant a full PRD but need to be done._
 
+- [ ] Run pdf-to-qbo on full-year checking statements (P&A.checking.25)
 - [ ] iCloud selective sync strategy — keep work/personal separated on iMac
 - [ ] Recover skills from iMac before machine is retired
 - [ ] Rebuild api-key-prompt skill

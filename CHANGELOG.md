@@ -1,4 +1,4 @@
-2026-02-23 — Claude Code authenticated via API credits, Pro + API credits strategy confirmed# Changelog
+# Changelog
 
 Format: [YYYY-MM-DD] — What changed and why (brief)
 
@@ -14,8 +14,8 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 - Added skills-registry/skills-inventory.md with last30days entry
 - Initialized as private GitHub repo
 - Working copy established in iCloud Drive
-— Claude Code authenticated via API credits, Pro + API credits strategy confirmeded
----
+- Claude Code authenticated via API credits, Pro + API credits strategy confirmed
+
 
 ## How to Use This File
 
@@ -45,3 +45,10 @@ for detail; this is just the trail of breadcrumbs.
 - Created skills/load-context/load-context.sh
 - Two modes: Quick (orientation block) and Full (orientation + all project files)
 - Copies to clipboard via pbcopy — paste into any new Claude conversation
+
+### 2026-02-28 — pdf-to-qbo skill completed
+- Built local PDF-to-QBO converter for Wells Fargo bank and credit card statements
+- Added dual CC format support (WF Signify Format A, WF Signature/FA Format B)
+- Fixed QB Desktop Mac import errors: LEDGERBAL block and INTU.BID required
+- quickbooks-automation retired; replaced by pdf-to-qbo
+- Created session-context.md for cross-session tracking
