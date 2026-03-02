@@ -43,5 +43,15 @@ Never hardcode API keys in any file. Always use the prompt-on-entry
 method or environment variables. See skills-registry for the API key 
 management skill.
 
+## End-of-Session Updates
+
+When asked to update toolkit documentation:
+- session-context.md — top-level context, keep concise, dated completion blocks
+- skills-registry/skills-inventory.md — one entry per skill, use established table format
+- bible/master-reference.md — reusable lessons only, no session-specific detail
+- CHANGELOG.md — reverse chronological, one entry per date, bullet format
+- Always stage but never commit — Flint reviews and commits manually
+- Make targeted edits only — do not rewrite sections that don't need changing
+
 ## Current Active Skills
 See /skills-registry/skills-inventory.md for full list.

@@ -1,6 +1,6 @@
 # Master Reference — Claude Toolkit Bible
 
-Last updated: 2026-02-28
+Last updated: 2026-03-01
 
 ---
 
@@ -119,6 +119,54 @@ the final commit. Two sections to touch:
 Treat load-context.sh as a living document, not a snapshot.
 ---
 
+## Raspberry Pi / ARM Python Installs
+
+### pyenv on Raspberry Pi
+Install build dependencies BEFORE running `pyenv install` or compiled Python will be missing modules:
+```
+sudo apt install libbz2-dev libncurses-dev libffi-dev libreadline-dev libsqlite3-dev liblzma-dev
+```
+Set local Python version with `pyenv local X.X.X` — leaves global unchanged.
+
+### Poetry on ARM — Do Not Use
+Poetry install hangs indefinitely on Raspberry Pi ARM. Workaround:
+1. Parse poetry.lock with a toml script to generate requirements-core.txt
+2. Install with pip instead
+Note: Poetry 2.x also removed the `export` command — the workaround is required regardless.
+
+### ARM-Incompatible Packages
+Exclude these when installing Python AI/data stacks on ARM:
+`contourpy`, `matplotlib`, `pillow`, `tiktoken`
+
+### System Deps to Pre-Install Before pip
+```
+sudo apt install libjpeg-dev zlib1g-dev libpng-dev rustc cargo
+```
+
+---
+
+## Tailscale
+
+### Tailscale CLI on macOS
+The Tailscale CLI is not on the shell PATH by default on macOS.
+Full path: `/Applications/Tailscale.app/Contents/MacOS/Tailscale`
+Example: `/Applications/Tailscale.app/Contents/MacOS/Tailscale ip -4 hostname`
+
+---
+
+## Machine Inventory
+
+| Hostname | Tailscale IP | Notes |
+|---|---|---|
+| femacbook | 100.74.137.113 | Primary dev machine (MacBook Pro M1) |
+| fepi41 | 100.72.119.28 | Raspberry Pi, 8GB RAM, Python 3.11.9 via pyenv |
+| brekpi41 | 100.77.133.46 | Raspberry Pi — offline as of 2026-03-01 |
+| direct-lighting | 100.110.71.13 | Lighting controller |
+
+Use Tailscale hostnames as canonical machine names throughout all toolkit files.
+
+---
+
 ## Lessons Learned
 
 _Hard-won insights. Updated as projects complete._
@@ -128,6 +176,12 @@ Never paste API keys into any conversation, file, or shared document.
 Keys should only exist in environment variables or be entered at 
 runtime via prompt. If a key is accidentally exposed, revoke it 
 immediately at the provider's API dashboard before doing anything else.
+
+### 2026-03-01 — Raspberry Pi Python environment
+Poetry hangs indefinitely on ARM — never use it. Use a toml script to extract requirements from poetry.lock and install with pip. Always install pyenv build deps before compiling Python. fepi41 has 8GB RAM — well-resourced for API-based workloads.
+
+### 2026-03-01 — Tailscale CLI on macOS
+Not on shell PATH. Always use full path: `/Applications/Tailscale.app/Contents/MacOS/Tailscale`.
 
 ### 2026-02-28 — QB Desktop Mac QBO import requirements
 QB Desktop Mac requires OFX 1.x SGML format — XML-based OFX 2.x is rejected silently.

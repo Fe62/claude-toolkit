@@ -46,6 +46,13 @@ for detail; this is just the trail of breadcrumbs.
 - Two modes: Quick (orientation block) and Full (orientation + all project files)
 - Copies to clipboard via pbcopy — paste into any new Claude conversation
 
+### 2026-03-01 — Raspberry Pi expansion + ai-hedge-fund
+- Created raspberry-pi-expansion-2026-03.md PRD
+- Confirmed Tailscale machine inventory (fepi41, brekpi41, direct-lighting, femacbook)
+- Installed Python 3.11.9 via pyenv on fepi41; ai-hedge-fund cloned and running
+- Documented ARM Python install patterns and Poetry workaround in master-reference.md
+- Added ai-hedge-fund to skills-inventory.md
+
 ### 2026-02-28 — pdf-to-qbo skill completed
 - Built local PDF-to-QBO converter for Wells Fargo bank and credit card statements
 - Added dual CC format support (WF Signify Format A, WF Signature/FA Format B)
