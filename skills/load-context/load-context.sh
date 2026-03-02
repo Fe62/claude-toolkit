@@ -20,7 +20,7 @@ QUICK=$(cat <<'ORIENTATION'
 
 **Owner:** Flint  
 **Primary machine:** MacBook Pro M1  
-**Secondary machine:** iMac 2017 (transitional, terminal only)  
+**Secondary machine:** direct-lighting (transitional, terminal only)
 **Working copy:** iCloud Drive → claude-toolkit/  
 **GitHub:** github.com/Fe62/claude-toolkit (private, push deliberately)  
 **File format:** Plain markdown throughout  

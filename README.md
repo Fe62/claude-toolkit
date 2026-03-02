@@ -96,7 +96,7 @@ claude-toolkit/
 | Machine | Role | Claude Code | Notes |
 |---|---|---|---|
 | MacBook Pro M1 | Primary | Full | Main working machine |
-| iMac 2017 | Secondary | Terminal only | Transitional, replacing soon |
+| direct-lighting | Secondary | Terminal only | Transitional, replacing soon |
 
 ---
 
