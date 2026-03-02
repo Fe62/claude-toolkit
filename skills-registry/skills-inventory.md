@@ -106,7 +106,7 @@ Sources for new skills worth evaluating:
 - api-key-prompt: needs rebuild
 - quickbooks: needs rebuild
 
-### iMac 2017 (terminal only)
+### direct-lighting (terminal only)
 - last30days: verify installation
 - api-key-prompt: likely installed here — recover before machine is replaced
 - quickbooks: likely installed here — recover before machine is replaced

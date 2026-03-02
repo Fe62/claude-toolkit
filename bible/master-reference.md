@@ -34,7 +34,7 @@ These don't change project to project. They govern everything.
 | Item | Detail |
 |---|---|
 | Primary machine | MacBook Pro M1 |
-| Secondary machine | iMac 2017 (terminal only, transitional) |
+| Secondary machine | direct-lighting (terminal only, transitional) |
 | Claude Code | Installed on both |
 | Working copy | iCloud Drive |
 | Version control | GitHub (private, push deliberately) |

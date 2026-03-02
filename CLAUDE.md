@@ -3,7 +3,7 @@
 ## Who I Am
 This toolkit belongs to Flint. I work across two machines:
 - MacBook Pro M1 (primary)
-- iMac 2017 (terminal-only, transitional)
+- direct-lighting (terminal-only, transitional)
 
 ## What This Toolkit Is
 A portable, version-controlled library of skills, prompts, subagents, and 
