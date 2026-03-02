@@ -1,6 +1,6 @@
 # Master Reference — Claude Toolkit Bible
 
-Last updated: 2026-03-01
+Last updated: 2026-03-02
 
 ---
 
@@ -111,6 +111,15 @@ keyboard shortcut? If the skill will be run frequently or at the start of
 sessions, add an alias to ~/.zshrc and consider an Automator Quick Action
 for a keyboard shortcut. Document both in the skill's README.
 
+### 2026-03-02 — Slash command design: interactive flows beat single prompts
+When a skill requires gathering information before making changes, use a sequential
+question flow with confirmation at each step rather than a single summary prompt.
+Gaps and corrections surface earlier and updates are more accurate.
+
+### 2026-03-02 — Register skill file and inventory entry together
+When creating a new slash command, add its skills-inventory.md entry in the same
+session. Don't leave skills undocumented — the registry becomes unreliable.
+
 ### 2026-02-24 — load-context maintenance convention
 When any skill is completed or retired, update load-context.sh before
 the final commit. Two sections to touch:
@@ -152,18 +161,30 @@ The Tailscale CLI is not on the shell PATH by default on macOS.
 Full path: `/Applications/Tailscale.app/Contents/MacOS/Tailscale`
 Example: `/Applications/Tailscale.app/Contents/MacOS/Tailscale ip -4 hostname`
 
+## SSH Remotes (Claude Code)
+
+### macOS hosts cannot be SSH remotes
+Claude Code SSH remotes are Linux-only. macOS machines (including iMac/direct-lighting)
+cannot be added as SSH remotes regardless of SSH connectivity. Use terminal SSH directly
+for those machines — do not attempt to add them in Claude Code.
+
+### SSH key auth before adding remotes
+Always run `ssh-copy-id user@host` before adding a remote to Claude Code.
+Password-based remotes prompt every session — key auth is required for friction-free use.
+
 ---
 
 ## Machine Inventory
 
-| Hostname | Tailscale IP | Notes |
-|---|---|---|
-| femacbook | 100.74.137.113 | Primary dev machine (MacBook Pro M1) |
-| fepi41 | 100.72.119.28 | Raspberry Pi, 8GB RAM, Python 3.11.9 via pyenv |
-| brekpi41 | 100.77.133.46 | Raspberry Pi — offline as of 2026-03-01 |
-| direct-lighting | 100.110.71.13 | Lighting controller |
+| Hostname | Tailscale IP | Username | Notes |
+|---|---|---|---|
+| femacbook | 100.74.137.113 | — | Primary dev machine (MacBook Pro M1) |
+| fepi41 | 100.72.119.28 | — | Raspberry Pi, 8GB RAM, Python 3.11.9 via pyenv |
+| brekpi41 | 100.77.133.46 | flint | Raspberry Pi — offline as of 2026-03-01 |
+| direct-lighting | 100.110.71.13 | directlightingllc | Lighting controller (iMac) |
 
 Use Tailscale hostnames as canonical machine names throughout all toolkit files.
+Document usernames explicitly — do not assume consistency across machines.
 
 ---
 
@@ -182,6 +203,15 @@ Poetry hangs indefinitely on ARM — never use it. Use a toml script to extract 
 
 ### 2026-03-01 — Tailscale CLI on macOS
 Not on shell PATH. Always use full path: `/Applications/Tailscale.app/Contents/MacOS/Tailscale`.
+
+### 2026-03-02 — Claude Code SSH remotes are Linux-only
+macOS hosts cannot be added as SSH remotes in Claude Code. Use terminal SSH directly
+for macOS machines. For Linux remotes, run ssh-copy-id first — password-based remotes
+add friction every session.
+
+### 2026-03-02 — Document machine usernames explicitly
+Usernames are not consistent across machines (brekpi41 uses `flint`, direct-lighting uses
+`directlightingllc`). Always document the username in the machine inventory. Never assume.
 
 ### 2026-02-28 — QB Desktop Mac QBO import requirements
 QB Desktop Mac requires OFX 1.x SGML format — XML-based OFX 2.x is rejected silently.

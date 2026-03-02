@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-03-01
+Last updated: 2026-03-02
 
 ---
 
@@ -58,6 +58,32 @@ Last updated: 2026-03-01
 | Known issues | Michael Burry agent has upstream parsing error — harmless, not Pi-related |
 | Test run | 2026-03-01 — Growth Analyst bearish on AAPL, portfolio manager HOLD ✓ |
 | Added | 2026-03-01 |
+
+---
+
+### simplify
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Source | ~/.claude/commands/simplify.md |
+| Type | Custom slash command (`/simplify`) |
+| Dependencies | None |
+| Purpose | Post-change code review. Checks changed code for reuse (duplication, reinvented wheels), quality (over-engineering, dead code, unclear naming), and efficiency (unnecessary loops, redundant ops). Fixes issues directly rather than reporting them. Shows a summary of changes when done. |
+| Added | 2026-03-02 |
+
+---
+
+### update
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Source | ~/.claude/commands/update.md |
+| Type | Custom slash command (`/update`) |
+| Dependencies | session-context.md, skills-inventory.md, bible/master-reference.md, CHANGELOG.md |
+| Purpose | End-of-session toolkit documentation update. Works through 5 sequential questions with confirmation at each step (session summary, skill changes, open work resolved, new open items, lessons learned), then drafts targeted updates to all four files. Stages with `git add -A` but never commits. |
+| Last revised | 2026-03-02 — rewrote from single-summary prompt to 5-step interactive flow |
 
 ---
 ## pdf-to-qbo

@@ -4,6 +4,17 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ---
 
+## 2026-03
+
+### 2026-03-02 — Slash commands: update + simplify
+- Rewrote /update skill to use 5-step interactive flow (was single-summary prompt)
+- Created /simplify skill for post-change code review (reuse, quality, efficiency)
+- Added inventory entries for both in skills-inventory.md
+- Added SSH remote conventions to master-reference.md (Linux-only, ssh-copy-id first)
+- Updated machine inventory with confirmed usernames (brekpi41: flint, direct-lighting: directlightingllc)
+
+---
+
 ## 2026-02
 
 ### 2026-02-23 — Initial build

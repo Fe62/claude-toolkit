@@ -1,60 +1,43 @@
-# End-of-Session Update Prompt
+# Toolkit End-of-Session Update
 
-## How to use
-1. Open Claude Code from toolkit root
-2. Paste this prompt
-3. Fill in the SESSION SUMMARY section
-4. Claude will read current files, make targeted updates, stage for review
-
----
-
-## PROMPT (paste into Claude Code)
-
-I need you to update the toolkit documentation for today's session. 
-Read the following files first, then make the updates described below.
-
-**Files to read:**
-- `session-context.md` (toolkit root)
+Read the following files before making any changes:
+- `session-context.md`
 - `skills-registry/skills-inventory.md`
 - `bible/master-reference.md`
 - `CHANGELOG.md`
 
-**SESSION SUMMARY:**
-<!-- Fill this in before running -->
-Date: 
-What we built or changed:
-Skills added or modified:
-Open items resolved:
-New open items:
-Lessons learned / bible-worthy notes:
+Then work through these questions in order, waiting for my confirmation before moving to the next:
 
----
+1. Review your tool calls, file changes, and commands from this session. Draft a summary 
+   of what was built or changed. Show it to me and ask: "Does this look right, anything 
+   to add or correct?"
 
-**Update instructions:**
+2. Check if any skill files were created or modified this session. Draft what changed. 
+   Show it to me and ask: "Anything to add or correct?"
 
-1. **session-context.md**
-   - Add completed items to Recent Completions with today's date
-   - Remove resolved open items from Open Work
-   - Add any new open items to Open Work
-   - Add new skills to Active Skills if any
+3. Show me the current Open Work list from session-context.md and ask: "Which of these 
+   got resolved today?"
 
-2. **skills-registry/skills-inventory.md**
-   - Add or update any skill entries based on SESSION SUMMARY
-   - Update "Last updated" date at top
+4. Review this session for any unfinished threads, partial work, or decisions that were 
+   deferred. Suggest new open items, then ask: "Anything else to add?"
 
-3. **bible/master-reference.md**
-   - Add any lessons learned as new entries
-   - Only add if genuinely reusable — don't add session-specific details
+5. Review this session for patterns, mistakes avoided, or wins worth repeating. Suggest 
+   lessons, then ask: "I'll also check with Claude.ai — paste any additional lessons here, 
+   or say none."
 
-4. **CHANGELOG.md**
-   - Add a new entry at the top in this format:
-     ## YYYY-MM-DD
-     - [what changed]
-     - [what changed]
+Once you have all my answers, draft the updates to all four files without asking further questions:
 
-**After making all updates:**
-- Show me a summary of every change made
-- Stage all changed files with: git add -A
+1. **session-context.md** — add completions with today's date, update Open Work (remove resolved, add new), update Active Skills if needed
+2. **skills-registry/skills-inventory.md** — add or update skill entries, update "Last updated" date
+3. **bible/master-reference.md** — add genuine reusable lessons only, nothing session-specific
+4. **CHANGELOG.md** — new entry at top, format:
+```
+   ## YYYY-MM-DD
+   - item
+   - item
+```
+
+After all updates:
+- Show me a diff summary of every change made
+- Run `git add -A`
 - Do NOT commit — I will review and commit manually
-
----
