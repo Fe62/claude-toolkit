@@ -21,7 +21,7 @@ _Updated at end of each session via the /update skill._
 
 - [ ] Add fepi41 as SSH remote in Claude Code
 - [ ] Power on brekpi41, confirm username, add as SSH remote in Claude Code
-- [ ] Sweep "iMac 2017" references → replace with "direct-lighting" in CLAUDE.md, master-reference.md, skills-inventory.md
+- [x] Sweep "iMac 2017" references → replace with "direct-lighting" in CLAUDE.md, master-reference.md, skills-inventory.md
 - [ ] Push toolkit updates to GitHub
 - [ ] Close raspberry-pi-expansion-2026-03.md PRD (after above items complete)
 - [ ] iMac Pre-Retirement Checklist
