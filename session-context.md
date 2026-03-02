@@ -30,7 +30,7 @@ _Updated at end of each session via the /update skill._
 - [ ] Evaluate last30days for owned adaptation — set a review date
 - [ ] Explore community skills: github.com/hesreallyhim/awesome-claude-code
 - [ ] Add update and simplify to Active Skills table in session-context.md
-- [ ] Push toolkit updates to GitHub
+- [x] Push toolkit updates to GitHub
 
 ---
 
