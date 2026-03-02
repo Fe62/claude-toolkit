@@ -23,7 +23,7 @@ _Updated at end of each session via the /update skill._
 - [ ] Power on brekpi41, confirm username, add as SSH remote in Claude Code
 - [x] Sweep "iMac 2017" references → replace with "direct-lighting" across all toolkit files (CLAUDE.md, master-reference.md, skills-inventory.md, README.md, load-context.sh)
 - [ ] Push toolkit updates to GitHub
-- [ ] Close raspberry-pi-expansion-2026-03.md PRD (after above items complete)
+- [x] Close raspberry-pi-expansion-2026-03.md PRD
 - [ ] iMac Pre-Retirement Checklist
 - [ ] Install gh (GitHub CLI) via Homebrew
 - [ ] Install jq via Homebrew

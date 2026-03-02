@@ -1,8 +1,8 @@
 # Raspberry Pi Expansion + AI Hedge Fund
 
-**Document status:** Active  
-**Date started:** 2026-03-01  
-**Date completed:**  
+**Document status:** Closed
+**Date started:** 2026-03-01
+**Date completed:** 2026-03-01
 **Owner:** Flint  
 
 ---
@@ -36,8 +36,8 @@ virattt/ai-hedge-fund repo for learning and exploration only.
 - [x] Dependencies installed
 - [x] .env file created with Anthropic API key (no hardcoded keys)
 - [x] Successful test run confirmed
-- [ ] Skills inventory updated in toolkit
-- [ ] PRD closed and bible entry written
+- [x] Skills inventory updated in toolkit
+- [x] PRD closed and bible entry written
 
 ---
 
@@ -68,9 +68,7 @@ virattt/ai-hedge-fund repo for learning and exploration only.
 | brekpi41 | Available | 100.77.133.46 | flint (assumed) | TBD | Offline as of 2026-03-01 |
 | direct-lighting | Transitional | 100.110.71.33 | — | — | Online |
 
-> **Note:** direct-lighting name needs to be swept across all toolkit files — 
-> CLAUDE.md, master-reference.md, skills-inventory.md, and any file that 
-> references "iMac 2017" or "iMac". Do this before the machine retires.
+> **Note:** direct-lighting rename sweep completed 2026-03-01 across all toolkit files (CLAUDE.md, master-reference.md, skills-inventory.md, README.md, load-context.sh).
 
 ---
 
@@ -127,10 +125,10 @@ virattt/ai-hedge-fund repo for learning and exploration only.
 - [x] Michael Burry parsing error noted — known upstream issue, not Pi-related
 
 ### Phase 5 — Log and close
-- [ ] Add ai-hedge-fund entry to skills-inventory.md
-- [ ] Write bible entry
-- [ ] Push toolkit updates to GitHub
-- [ ] Mark PRD complete
+- [x] Add ai-hedge-fund entry to skills-inventory.md
+- [x] Write bible entry
+- [x] Push toolkit updates to GitHub
+- [x] Mark PRD complete
 
 ---
 
