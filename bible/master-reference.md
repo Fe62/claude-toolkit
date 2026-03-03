@@ -154,6 +154,111 @@ sudo apt install libjpeg-dev zlib1g-dev libpng-dev rustc cargo
 
 ---
 
+## Deploying FastAPI + Vite on Raspberry Pi (Always-On via Tailscale)
+
+_Completed 2026-03-03. Source: ai-hedge-fund-ui-2026-03.md._
+
+### Architecture
+Build the Vite frontend to static files once; serve them from the FastAPI backend using
+a `/{full_path:path}` catch-all route (not `app.mount("/", StaticFiles(...))`).
+One process, one port, no dev server running permanently.
+
+### Frontend Build
+```bash
+cd app/frontend
+npm install
+npx vite build          # NOT npm run build — upstream TS errors fail the tsc gate
+```
+- `npm run build` runs `tsc && vite build`. If upstream code has TypeScript errors, the
+  whole build fails. `npx vite build` skips tsc — Vite transpiles TS itself. Use this
+  for repos you don't fully own.
+- Linux filesystems are case-sensitive. Imports that work on macOS may fail on Pi.
+  Watch for errors like `Cannot find module './components/layout'` when the file is
+  `Layout.tsx`. Fix the import, don't rename the file.
+
+### Wiring dist/ into FastAPI
+```python
+from pathlib import Path
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
+# ... all routes and include_router() calls above this line ...
+
+_dist_dir = Path(__file__).parent.parent / "frontend" / "dist"
+
+if _dist_dir.exists():
+    # Hashed assets: browsers may cache these (filename changes when content changes)
+    app.mount("/assets", StaticFiles(directory=str(_dist_dir / "assets")), name="assets")
+
+    @app.get("/favicon.ico", include_in_schema=False)
+    async def favicon():
+        return FileResponse(str(_dist_dir / "favicon.ico"))
+
+    # SPA catch-all: must be last — all API routes registered above take priority.
+    # Serves index.html with no-store so browsers always re-fetch it.
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_spa(full_path: str):
+        file_path = _dist_dir / full_path
+        if full_path and file_path.is_file():
+            return FileResponse(str(file_path))
+        return FileResponse(
+            str(_dist_dir / "index.html"),
+            headers={"Cache-Control": "no-store"},
+        )
+```
+- **Do NOT use `app.mount("/", StaticFiles(..., html=True))`** — Mount objects use partial-match
+  priority and intercept before FastAPI's `redirect_slashes` can fire, causing trailing-slash
+  routes to return 404 instead of redirecting. Use the catch-all route above instead.
+- Use `Path(__file__)` not a relative path — safe regardless of working directory
+- If any existing route uses `GET /`, rename it (e.g. `/health`) before adding the catch-all.
+- Mount `/assets` separately for hashed asset files — these are safe to cache in the browser.
+
+### systemd Service
+```ini
+[Unit]
+Description=AI Hedge Fund Web UI
+After=network.target
+
+[Service]
+Type=simple
+User=flint
+WorkingDirectory=/home/flint/ai-hedge-fund
+EnvironmentFile=/home/flint/ai-hedge-fund/.env
+ExecStart=/home/flint/.pyenv/versions/3.11.9/bin/python -m uvicorn app.backend.main:app --host 0.0.0.0 --port 8000
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+- `EnvironmentFile` loads `.env` key=value pairs directly — no export prefix needed.
+  systemd ignores `#` comment lines.
+- `WorkingDirectory` must be the repo root when the app uses package-level imports
+  (`from app.backend.routes import ...`).
+- Use absolute path to pyenv Python in `ExecStart`.
+- flint has no passwordless sudo on fepi41. Stage the file as the user, then run
+  `sudo mv ~/service-name.service /etc/systemd/system/` from an interactive session.
+
+### Enabling and Starting
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable ai-hedge-fund
+sudo systemctl start ai-hedge-fund
+sudo systemctl status ai-hedge-fund   # confirm active (running)
+sudo reboot                            # confirm it survives reboot
+```
+
+### Key Gotchas
+- Always bind uvicorn to `--host 0.0.0.0` — `127.0.0.1` is unreachable from other machines
+  even on Tailscale.
+- Kill any manually-started uvicorn process before starting the systemd service —
+  port 8000 conflict will silently prevent the service from binding.
+- **Vite bakes `VITE_API_URL` at build time.** If unset, your default fallback is embedded in the
+  JS bundle. Always use `''` (empty string / relative URL) as the fallback — never `http://localhost:8000`.
+  When the frontend is served by the same backend, relative URLs route correctly and no CORS config is needed.
+
+---
+
 ## Tailscale
 
 ### Tailscale CLI on macOS
@@ -212,6 +317,41 @@ add friction every session.
 ### 2026-03-02 — Document machine usernames explicitly
 Usernames are not consistent across machines (brekpi41 uses `flint`, direct-lighting uses
 `directlightingllc`). Always document the username in the machine inventory. Never assume.
+
+### 2026-03-03 — FastAPI + Vite SPA deployment on Pi
+`npm run build` fails on upstream TS errors; `npx vite build` bypasses tsc cleanly.
+Linux case-sensitive imports will surface bugs that macOS dev masked.
+Use `Path(__file__)` not CWD-relative paths.
+
+### 2026-03-03 — Vite bakes API URLs into the JS bundle
+`import.meta.env.VITE_API_URL` is resolved at build time, not runtime. If the env var is
+not set, whatever the fallback string is (e.g. `http://localhost:8000`) gets embedded
+permanently in the compiled JS. When that JS runs in a browser on a different machine,
+all API calls go to localhost on the *browser's* machine. Always default to `''` (empty
+string) so API calls are relative to wherever the page is served from.
+
+### 2026-03-03 — Do not use app.mount("/", StaticFiles(...)) for SPA serving
+`app.mount()` creates a Mount object that uses partial-match routing. A mount at `"/"`
+matches every path before FastAPI's `redirect_slashes` mechanism can fire, so routes like
+`GET /api-keys` (which the router would redirect to `/api-keys/`) return 404 instead.
+Fix: replace the mount with an explicit `@app.get("/{full_path:path}")` catch-all Route.
+Route objects do full matching and don't block redirect_slashes. Register it last.
+
+### 2026-03-03 — Always serve index.html with Cache-Control: no-store
+After a Vite rebuild, asset filenames change (content-hashed). If the browser has cached
+the old index.html, it will reference the old (now deleted) JS filename and fail silently.
+The catch-all route must set `headers={"Cache-Control": "no-store"}` on index.html
+responses. Hashed asset files under /assets/ are safe to cache (filename changes = cache bust).
+
+### 2026-03-03 — systemd EnvironmentFile for .env
+systemd's EnvironmentFile directive reads key=value pairs directly from a .env file.
+No export prefixes needed. Comment lines (#) are ignored. Cleaner than baking env
+vars into the service file or wrapper script.
+
+### 2026-03-03 — Kill orphan processes before starting systemd service
+If uvicorn was started manually for testing, kill it before enabling the systemd service.
+A process already bound to port 8000 will silently prevent systemd from binding —
+the service may show `active (running)` while the old process is actually serving traffic.
 
 ### 2026-02-28 — QB Desktop Mac QBO import requirements
 QB Desktop Mac requires OFX 1.x SGML format — XML-based OFX 2.x is rejected silently.

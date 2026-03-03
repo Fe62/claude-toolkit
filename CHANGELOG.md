@@ -6,6 +6,15 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-03
 
+### 2026-03-03 — ai-hedge-fund web UI deployed on fepi41
+- Deployed React/Vite frontend + FastAPI backend as always-on service on fepi41
+- Frontend built to static files, served by FastAPI backend; systemd service auto-starts on reboot
+- Accessible at http://100.72.119.28:8000 over Tailscale from FeMacBook
+- Post-deploy fixes: replaced localhost API URLs with relative paths (Vite bakes URLs at build time);
+  replaced app.mount("/", StaticFiles(...)) with /{full_path:path} catch-all route (fixes redirect_slashes
+  blocking); added Cache-Control: no-store on index.html (prevents stale asset hash caching)
+- Updated master-reference.md with corrected FastAPI+Vite deployment patterns and three new lessons
+
 ### 2026-03-02 — Slash commands: update + simplify
 - Rewrote /update skill to use 5-step interactive flow (was single-summary prompt)
 - Created /simplify skill for post-change code review (reuse, quality, efficiency)

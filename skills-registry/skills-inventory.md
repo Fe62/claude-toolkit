@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-03-02
+Last updated: 2026-03-03
 
 ---
 
@@ -52,12 +52,18 @@ Last updated: 2026-03-02
 | Health | active |
 | Source | https://github.com/virattt/ai-hedge-fund |
 | Installed | fepi41 ~/ai-hedge-fund |
-| Dependencies | Python 3.11.9 (via pyenv), Anthropic API key in .env, requirements-core.txt via pip |
+| Dependencies | Python 3.11.9 (via pyenv), Anthropic API key in .env, requirements-core.txt via pip, Node.js v20.19.2 |
 | Purpose | Multi-agent AI hedge fund system. Analysts run against tickers and return signals; portfolio manager returns BUY/SELL/HOLD decisions. |
+| Web UI | React/Vite frontend built to static files; served by FastAPI backend at http://100.72.119.28:8000 |
+| Service | systemd ai-hedge-fund.service on fepi41 — enabled, auto-starts on reboot, Restart=on-failure |
+| Access | http://100.72.119.28:8000 (Tailscale only — not public internet) |
 | Install notes | Do NOT use Poetry on ARM — hangs. Generate requirements-core.txt from poetry.lock via toml script. Exclude: contourpy, matplotlib, pillow, tiktoken. Pre-install: libjpeg-dev zlib1g-dev libpng-dev rustc cargo. Install pyenv build deps first: libbz2-dev libncurses-dev libffi-dev libreadline-dev libsqlite3-dev liblzma-dev. |
+| Frontend build | Use `npx vite build` (not `npm run build`) — upstream TypeScript errors fail tsc gate. Also fix case-sensitive import: App.tsx `./components/layout` → `./components/Layout`. |
+| Service mgmt | `sudo systemctl [start\|stop\|restart\|status] ai-hedge-fund` |
 | Known issues | Michael Burry agent has upstream parsing error — harmless, not Pi-related |
-| Test run | 2026-03-01 — Growth Analyst bearish on AAPL, portfolio manager HOLD ✓ |
+| Test run | 2026-03-01 — Growth Analyst bearish on AAPL, portfolio manager HOLD ✓ (CLI) |
 | Added | 2026-03-01 |
+| Web UI added | 2026-03-03 |
 
 ---
 
