@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-03-04
+Last updated: 2026-03-05
 
 ---
 
@@ -93,7 +93,9 @@ Last updated: 2026-03-04
 | Purpose | One-way Discord delivery via webhooks. No persistent bot process. Routes morning briefings, news alerts, portfolio snapshots, and agent run results to #research, #trade-alerts, #agent-runs channels in "Fe Trading" server. |
 | Config | ~/.hedge-fund-discord.env — 4 webhook URLs, chmod 600, never git. Load with `set -a; source ~/.hedge-fund-discord.env; set +a` |
 | Gotchas | Use discord.com not discordapp.com (legacy, returns 403). Always set `User-Agent: DiscordBot (url, version)` — Python default UA triggers Cloudflare 1010. yfinance pin to 0.2.54 on ARM (1.2.0 fails, curl_cffi no armhf prebuilt). |
+| Watchlist | ~/hedge-fund/memory/watchlist.json on fepi41 — single source of truth for holdings; update when positions change; recalculate weights to sum to 100% after any add/remove |
 | Added | 2026-03-04 |
+| Updated | 2026-03-05 — real holdings loaded; costBasis → cost_basis key corrected; NaN guard added for mutual funds |
 
 ---
 

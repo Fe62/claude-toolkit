@@ -6,6 +6,14 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-03
 
+### 2026-03-05 — portfolio-tracker real holdings
+- Replaced placeholder tickers in watchlist.json on fepi41 with real 14-position portfolio
+- Removed JACTX (mutual fund — no yfinance price data)
+- Recalculated weights for remaining 14 positions to sum to 100%
+- Fixed costBasis → cost_basis key mismatch in portfolio-tracker.sh
+- Added math.isnan() guard so unpriceable tickers show N/A instead of corrupting portfolio totals
+- Tracker confirmed working and posting to Discord #research
+
 ### 2026-03-04 — ai-hedge-fund Discord comms layer
 - Created "Fe Trading" Discord server; configured webhooks for #research, #trade-alerts, #agent-runs
 - Adapted three scheduled tools from Nick Nemo's repo: morning-briefing.sh (6:15 AM), news-alert.py (every 30 min market hours), portfolio-tracker.sh (1:15 PM)

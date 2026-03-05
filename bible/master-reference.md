@@ -414,6 +414,12 @@ curl_cffi (a 1.2.0 dependency) has no armhf prebuilt and fails to compile. Pin y
 ### 2026-03-04 — yfinance batch download avoids rate limits
 Calling fast_info per ticker in a loop triggers rate limits. Use `yf.download()` for multi-ticker data fetches.
 
+### 2026-03-05 — watchlist.json is the single source of truth for portfolio-tracker
+No script changes needed when holdings change — edit watchlist.json only. Recalculate weights to sum to 100% after any add/remove. Mutual funds (e.g. JACTX) have no intraday price data in yfinance — exclude them. Guard against NaN prices with `math.isnan()` before accumulating totals, or one bad ticker poisons all portfolio math.
+
+### 2026-03-05 — yfinance rate limits on repeated manual runs
+Running portfolio-tracker.sh multiple times in a session triggers `YFRateLimitError`. The scheduled cron job (once daily) is fine; ad-hoc reruns in the same hour are not. Wait 15–30 minutes between manual test runs.
+
 ### 2026-03-04 — virattt CLI requires --analysts-all for non-interactive scripting
 Without `--analysts-all`, the upstream script prompts interactively and can't be run from cron or shell wrappers.
 
