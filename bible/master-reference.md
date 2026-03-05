@@ -1,6 +1,6 @@
 # Master Reference — Claude Toolkit Bible
 
-Last updated: 2026-03-02
+Last updated: 2026-03-04
 
 ---
 
@@ -259,6 +259,60 @@ sudo reboot                            # confirm it survives reboot
 
 ---
 
+## Discord Webhooks for Scheduled Delivery (fepi41)
+
+_Completed 2026-03-04. Source: ai-hedge-fund comms project._
+
+### Why webhooks, not a bot
+For scheduled one-way posting (briefings, alerts, snapshots), Discord webhooks are the correct tool.
+Simple HTTP POST, no persistent process, no ARM compatibility issues. Bots add complexity only
+needed for interactive/bidirectional communication.
+
+### Cloudflare User-Agent requirement
+Python's default User-Agent (`python-urllib/3.x` or `python-requests/x.x`) triggers Cloudflare
+error 1010 (bot detection) on discord.com. Always set:
+```python
+headers={
+    "Content-Type": "application/json",
+    "User-Agent": "DiscordBot (https://github.com/Fe62/claude-toolkit, 1.0)"
+}
+```
+Without this, all webhook POSTs return 403 Forbidden. Applies to both `urllib.request` and `requests`.
+
+### Use discord.com, not discordapp.com
+The legacy `discordapp.com` domain returns 403. Always use `discord.com`.
+
+### Webhook URL security
+Treat webhook URLs exactly like API keys:
+- Store in `~/.hedge-fund-discord.env`, `chmod 600`, never git
+- Load with `set -a; source ~/.hedge-fund-discord.env; set +a`
+- Regenerate immediately if exposed in chat or logs
+
+### Node.js on armhf — use nvm, not NodeSource
+NodeSource dropped armhf (32-bit ARM) support. Installing via NodeSource returns
+"Unsupported architecture: armhf". Fix:
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+nvm install 22
+```
+
+### yfinance on ARM
+yfinance 1.2.0 fails on armhf — pulls in `curl_cffi` which has no armhf prebuilt and
+fails to compile from source. Pin to last working version:
+```bash
+pip install "yfinance==0.2.54"
+```
+
+### yfinance batch download over per-ticker loop
+Calling `yf.Ticker(ticker).fast_info` in a loop triggers rate limits. Use batch download:
+```python
+data = yf.download(" ".join(tickers), period="2d", progress=False, auto_adjust=True)
+prices = data["Close"].iloc[-1]
+prev_prices = data["Close"].iloc[-2]
+```
+
+---
+
 ## Tailscale
 
 ### Tailscale CLI on macOS
@@ -347,6 +401,21 @@ responses. Hashed asset files under /assets/ are safe to cache (filename changes
 systemd's EnvironmentFile directive reads key=value pairs directly from a .env file.
 No export prefixes needed. Comment lines (#) are ignored. Cleaner than baking env
 vars into the service file or wrapper script.
+
+### 2026-03-04 — NodeSource dropped armhf; use nvm on 32-bit ARM
+NodeSource v22+ does not support armhf (armv7l). Use nvm to install Node.js on Raspberry Pi with 32-bit userland.
+
+### 2026-03-04 — Discord webhooks require DiscordBot User-Agent
+Python's default User-Agent triggers Cloudflare 1010 on discord.com. Always set `User-Agent: DiscordBot (url, version)` or webhook POSTs return 403. Also: use discord.com, not discordapp.com.
+
+### 2026-03-04 — yfinance 1.2.0 breaks on armhf; pin to 0.2.54
+curl_cffi (a 1.2.0 dependency) has no armhf prebuilt and fails to compile. Pin yfinance to 0.2.54 on ARM.
+
+### 2026-03-04 — yfinance batch download avoids rate limits
+Calling fast_info per ticker in a loop triggers rate limits. Use `yf.download()` for multi-ticker data fetches.
+
+### 2026-03-04 — virattt CLI requires --analysts-all for non-interactive scripting
+Without `--analysts-all`, the upstream script prompts interactively and can't be run from cron or shell wrappers.
 
 ### 2026-03-03 — Kill orphan processes before starting systemd service
 If uvicorn was started manually for testing, kill it before enabling the systemd service.

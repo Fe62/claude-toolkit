@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-03-03
+Last updated: 2026-03-04
 
 ---
 
@@ -61,9 +61,39 @@ Last updated: 2026-03-03
 | Frontend build | Use `npx vite build` (not `npm run build`) — upstream TypeScript errors fail tsc gate. Also fix case-sensitive import: App.tsx `./components/layout` → `./components/Layout`. |
 | Service mgmt | `sudo systemctl [start\|stop\|restart\|status] ai-hedge-fund` |
 | Known issues | Michael Burry agent has upstream parsing error — harmless, not Pi-related |
+| Bug patched | 2026-03-04 — news_sentiment.py UnboundLocalError on empty company_news; add `sentiments_classified_by_llm = 0` before `if company_news:` block |
+| CLI flags | `--tickers TICKER,... --analysts-all --model claude-sonnet-4-5-20250929 --start-date ... --end-date ...` — both --tickers and --analysts-all required for non-interactive scripting |
+| API key gotcha | Key entered via web UI can be truncated (first char dropped). Verify: `grep ANTHROPIC ~/ai-hedge-fund/.env \| cut -c1-30` — should show `ANTHROPIC_API_KEY=sk-ant-` |
 | Test run | 2026-03-01 — Growth Analyst bearish on AAPL, portfolio manager HOLD ✓ (CLI) |
 | Added | 2026-03-01 |
 | Web UI added | 2026-03-03 |
+
+---
+
+### nick-hedgefund-tools
+| Field | Detail |
+|---|---|
+| Status | borrowed |
+| Health | active |
+| Source | https://gitlab.com/nick.nemo/ai-hedgefund |
+| Installed | fepi41: ~/hedge-fund/tools/ (adapted scripts); ~/nick-hedgefund-review (reference) |
+| Purpose | Investment automation scripts. morning-briefing, news-alert, portfolio-tracker adapted and running on cron. Advanced tools (edgar-monitor, insider-clusters, econometrics) available for later phases. |
+| Cost model | Tier 1 free (yfinance/FRED/EDGAR data), Tier 2 ~$0.05 (light Claude synthesis), Tier 3 ~$0.15-0.50 (deep research / virattt full run) |
+| Notes | Not a virattt fork — standalone system. Discord-native. Python + shell scripts. 27 scheduled jobs on source repo. |
+| Added | 2026-03-04 |
+
+---
+
+### discord-webhook-delivery
+| Field | Detail |
+|---|---|
+| Status | custom |
+| Health | active |
+| Installed | fepi41: ~/.hedge-fund-discord.env (webhooks), ~/hedge-fund/tools/ (scripts) |
+| Purpose | One-way Discord delivery via webhooks. No persistent bot process. Routes morning briefings, news alerts, portfolio snapshots, and agent run results to #research, #trade-alerts, #agent-runs channels in "Fe Trading" server. |
+| Config | ~/.hedge-fund-discord.env — 4 webhook URLs, chmod 600, never git. Load with `set -a; source ~/.hedge-fund-discord.env; set +a` |
+| Gotchas | Use discord.com not discordapp.com (legacy, returns 403). Always set `User-Agent: DiscordBot (url, version)` — Python default UA triggers Cloudflare 1010. yfinance pin to 0.2.54 on ARM (1.2.0 fails, curl_cffi no armhf prebuilt). |
+| Added | 2026-03-04 |
 
 ---
 

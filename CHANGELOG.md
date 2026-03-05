@@ -6,6 +6,16 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-03
 
+### 2026-03-04 — ai-hedge-fund Discord comms layer
+- Created "Fe Trading" Discord server; configured webhooks for #research, #trade-alerts, #agent-runs
+- Adapted three scheduled tools from Nick Nemo's repo: morning-briefing.sh (6:15 AM), news-alert.py (every 30 min market hours), portfolio-tracker.sh (1:15 PM)
+- Built agent-run.sh wrapper for on-demand virattt runs
+- Resolved ARM issues: nvm for Node.js v22 (NodeSource dropped armhf), yfinance pinned to 0.2.54 (curl_cffi no armhf prebuilt)
+- Fixed Discord 403: Cloudflare requires DiscordBot User-Agent header; switched discordapp.com → discord.com
+- Patched virattt news_sentiment.py UnboundLocalError upstream bug
+- Added nick-hedgefund-tools and discord-webhook-delivery to skills-inventory.md
+- Added Discord webhooks section and 5 new lessons to master-reference.md
+
 ### 2026-03-03 — ai-hedge-fund web UI deployed on fepi41
 - Deployed React/Vite frontend + FastAPI backend as always-on service on fepi41
 - Frontend built to static files, served by FastAPI backend; systemd service auto-starts on reboot
