@@ -6,6 +6,10 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-03
 
+### 2026-03-05 — personal OS + data consolidation PRDs
+- Created personal-os-2026-03.md PRD in /projects — Obsidian vault, OCR pipeline, inventory agent identified as future skills
+- Created data-consolidation-2026-03.md work order in /projects — human agent data pipeline, ready to start
+
 ### 2026-03-05 — portfolio-tracker real holdings
 - Replaced placeholder tickers in watchlist.json on fepi41 with real 14-position portfolio
 - Removed JACTX (mutual fund — no yfinance price data)
