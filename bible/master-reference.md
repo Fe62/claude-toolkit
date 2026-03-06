@@ -417,6 +417,19 @@ Calling fast_info per ticker in a loop triggers rate limits. Use `yf.download()`
 ### 2026-03-05 — watchlist.json is the single source of truth for portfolio-tracker
 No script changes needed when holdings change — edit watchlist.json only. Recalculate weights to sum to 100% after any add/remove. Mutual funds (e.g. JACTX) have no intraday price data in yfinance — exclude them. Guard against NaN prices with `math.isnan()` before accumulating totals, or one bad ticker poisons all portfolio math.
 
+### 2026-03-06 — Shell variables with spaces in paths fail silently on macOS
+Setting `VAULT=~/Library/Mobile\ Documents/...` and then using `"$VAULT/subfolder"` in the
+same shell block produces empty expansions — the variable appears set but mkdir receives
+a blank prefix and tries to create `/subfolder` at root (read-only on macOS). Fix: use the
+explicit full path with double-quotes throughout, e.g. `"/Users/Flint/Library/Mobile Documents/..."`.
+Alternatively, assign with `$HOME`: `VAULT="$HOME/Library/Mobile Documents/..."` works if
+`$HOME` is set, but verify before relying on it in non-interactive shells.
+
+### 2026-03-06 — README in every vault folder serves dual purpose
+A README.md in each folder is visible as a note in Obsidian and readable by agents before
+they act. Include: folder purpose, what lives here, and explicit agent permissions (read/write/delete).
+This pattern makes agent scope self-documenting and prevents accidental cross-folder writes.
+
 ### 2026-03-05 — yfinance rate limits on repeated manual runs
 Running portfolio-tracker.sh multiple times in a session triggers `YFRateLimitError`. The scheduled cron job (once daily) is fine; ad-hoc reruns in the same hour are not. Wait 15–30 minutes between manual test runs.
 

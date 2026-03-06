@@ -9,6 +9,7 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-03-06 | Obsidian vault structure — 30 folders and 26 files created in iCloud Drive/vault/; README in every folder with purpose and agent permissions; seed files: connector-registry.md, project-template.md, daily note stub; vault live in Obsidian |
 | 2026-03-05 | personal OS + data consolidation — created personal-os-2026-03.md PRD and data-consolidation-2026-03.md work order in /projects; Obsidian vault, OCR pipeline, and inventory agent identified as future skills |
 | 2026-03-05 | portfolio-tracker real holdings — replaced placeholder tickers with real 14-position portfolio in watchlist.json on fepi41; removed JACTX (mutual fund, no yfinance data); recalculated weights to sum to 100%; fixed costBasis → cost_basis key mismatch; added NaN guard for unresolvable tickers |
 | 2026-03-04 | ai-hedge-fund Discord comms layer — "Fe Trading" server, 4 webhook channels, morning-briefing/news-alert/portfolio-tracker on cron, agent-run.sh on-demand; nvm for Node.js v22 (NodeSource armhf blocked); yfinance pinned 0.2.54; Cloudflare DiscordBot User-Agent fix; news_sentiment.py upstream bug patched |
@@ -34,7 +35,6 @@ _Updated at end of each session via the /update skill._
 - [ ] Evaluate last30days for owned adaptation — set a review date
 - [ ] Explore community skills: github.com/hesreallyhim/awesome-claude-code
 - [ ] Evaluate market-snapshot.py from Nick's tools (hourly SPY/QQQ/VIX)
-- [ ] Obsidian vault — folder structure session (personal OS project)
 - [ ] Data consolidation — human agent pipeline (data-consolidation-2026-03.md, ready to start)
 - [x] Add update and simplify to Active Skills table in session-context.md
 - [x] Push toolkit updates to GitHub

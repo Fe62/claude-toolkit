@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-03-05
+Last updated: 2026-03-06
 
 ---
 
@@ -133,6 +133,20 @@ Last updated: 2026-03-05
 - **Output:** [folder-name].qbo written into same folder
 - **Tested:** WellsSignify.25 (455 txns), FA.cc (14 statements), checking (5 txns)
 - **Notes:** Requires pdfplumber. PDF filenames must start with MMDDYY.
+
+---
+
+### obsidian-vault
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Installed | iCloud Drive/vault/ — syncs to all devices |
+| Purpose | Personal OS knowledge vault. Plain markdown throughout. Folders: inbox, daily, projects, areas, knowledge, resources, archive, assets. Every folder has a README with purpose and agent permission model. |
+| Opened in | Obsidian (free) — vault at ~/Library/Mobile Documents/com~apple~CloudDocs/vault |
+| Agent rules | Always folder-scoped. /archive and /assets read-only by default. /inbox is the only open-write folder. connector-registry.md in /resources tracks all active data paths. |
+| Seed files | resources/connector-registry.md, resources/templates/project-template.md |
+| Added | 2026-03-06 |
 
 ---
 

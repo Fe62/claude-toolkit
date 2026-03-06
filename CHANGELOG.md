@@ -6,6 +6,14 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-03
 
+### 2026-03-06 — Obsidian vault structure live
+- Created 30 folders and 26 files in iCloud Drive/vault/ on femacbook
+- README in every folder — purpose + agent permission model
+- Seed files: connector-registry.md, project-template.md, today's daily note stub
+- Vault opened in Obsidian and confirmed live
+- Added obsidian-vault entry to skills-inventory.md
+- Added two lessons to master-reference.md (shell path spaces, README-per-folder pattern)
+
 ### 2026-03-05 — personal OS + data consolidation PRDs
 - Created personal-os-2026-03.md PRD in /projects — Obsidian vault, OCR pipeline, inventory agent identified as future skills
 - Created data-consolidation-2026-03.md work order in /projects — human agent data pipeline, ready to start
