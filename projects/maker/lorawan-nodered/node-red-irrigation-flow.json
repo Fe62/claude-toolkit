@@ -1,0 +1,193 @@
+[
+  {
+    "id": "group-ui",
+    "type": "ui_group",
+    "name": "Irrigation Manual Control",
+    "tab": "tab-ui",
+    "order": 1,
+    "disp": true,
+    "width": 6
+  },
+  {
+    "id": "tab-ui",
+    "type": "ui_tab",
+    "name": "Irrigation Dashboard",
+    "icon": "opacity",
+    "order": 1
+  },
+  {
+    "id": "inject-schedule",
+    "type": "inject",
+    "z": "flow1",
+    "name": "Daily 6AM",
+    "props": [],
+    "repeat": "",
+    "crontab": "0 6 * * *",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 100,
+    "y": 60,
+    "wires": [
+      [
+        "function-check-all"
+      ]
+    ]
+  },
+  {
+    "id": "function-check-all",
+    "type": "function",
+    "z": "flow1",
+    "name": "Check Moisture All Valves",
+    "func": "// Threshold moisture for irrigation\nconst threshold = 35;\nlet messages = [];\n\n// Loop through 8 valves\nfor (let i = 1; i <= 8; i++) {\n  let moisture = flow.get(`moisture${i}`) || 999;\n  if (moisture < threshold) {\n    let payload = {\n      port: 1,\n      payload_raw: Buffer.from([i])\n    };\n    messages.push({ payload: payload, valve: i });\n  }\n}\nreturn [messages];",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 290,
+    "y": 60,
+    "wires": [
+      [
+        "switch-to-gateway"
+      ]
+    ]
+  },
+  {
+    "id": "switch-to-gateway",
+    "type": "switch",
+    "z": "flow1",
+    "name": "Route to Node 1 or 2",
+    "property": "valve",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "lte",
+        "v": "4",
+        "vt": "num"
+      },
+      {
+        "t": "gt",
+        "v": "4",
+        "vt": "num"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 540,
+    "y": 60,
+    "wires": [
+      [
+        "ttn-node1"
+      ],
+      [
+        "ttn-node2"
+      ]
+    ]
+  },
+  {
+    "id": "ttn-node1",
+    "type": "http request",
+    "z": "flow1",
+    "name": "Send to Node 1",
+    "method": "POST",
+    "ret": "obj",
+    "url": "https://<region>.cloud.thethings.network/api/v3/as/applications/<app-id>/devices/<node1-id>/down/push",
+    "headers": [
+      {
+        "keyType": "Authorization",
+        "keyValue": "Bearer NNSXS.<your-api-key>"
+      },
+      {
+        "keyType": "Content-Type",
+        "keyValue": "application/json"
+      }
+    ],
+    "x": 780,
+    "y": 40,
+    "wires": [
+      [
+        "debug"
+      ]
+    ]
+  },
+  {
+    "id": "ttn-node2",
+    "type": "http request",
+    "z": "flow1",
+    "name": "Send to Node 2",
+    "method": "POST",
+    "ret": "obj",
+    "url": "https://<region>.cloud.thethings.network/api/v3/as/applications/<app-id>/devices/<node2-id>/down/push",
+    "headers": [
+      {
+        "keyType": "Authorization",
+        "keyValue": "Bearer NNSXS.<your-api-key>"
+      },
+      {
+        "keyType": "Content-Type",
+        "keyValue": "application/json"
+      }
+    ],
+    "x": 780,
+    "y": 80,
+    "wires": [
+      [
+        "debug"
+      ]
+    ]
+  },
+  {
+    "id": "debug",
+    "type": "debug",
+    "z": "flow1",
+    "name": "Debug Valve Trigger",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "complete": "true",
+    "targetType": "full",
+    "x": 1000,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "manual-valve1",
+    "type": "ui_button",
+    "z": "flow1",
+    "name": "Valve 1 ON",
+    "group": "group-ui",
+    "order": 1,
+    "width": "3",
+    "height": "1",
+    "passthru": false,
+    "label": "Valve 1",
+    "payload": "{\"port\":1,\"payload_raw\":[1]}",
+    "payloadType": "json",
+    "x": 120,
+    "y": 180,
+    "wires": [
+      [
+        "ttn-node1"
+      ]
+    ]
+  },
+  {
+    "id": "manual-valve5",
+    "type": "ui_button",
+    "z": "flow1",
+    "name": "Valve 5 ON",
+    "group": "group-ui",
+    "order": 2,
+    "width": "3",
+    "height": "1",
+    "passthru": false,
+    "label": "Valve 5",
+    "payload": "{\"port\":1,\"payload_raw\":[5]}",
+    "payloadType": "json",
+    "x": 120,
+    "y": 220,
+    "wires": [
+      [
+        "ttn-node2"
+      ]
+    ]
+  }
+]

@@ -1,0 +1,132 @@
+[
+  {
+    "id": "flow_relay_node1",
+    "type": "tab",
+    "label": "Temperature - relay-node1",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "ui_tab_relay-node1",
+    "type": "ui_tab",
+    "name": "Temp relay-node1",
+    "icon": "dashboard",
+    "order": 1
+  },
+  {
+    "id": "ui_group_temp_relay-node1",
+    "type": "ui_group",
+    "name": "Temperature relay-node1",
+    "tab": "ui_tab_relay-node1",
+    "order": 1,
+    "disp": true,
+    "width": 6
+  },
+  {
+    "id": "func_temp_relay-node1",
+    "type": "function",
+    "z": "flow_relay_node1",
+    "name": "Extract Temp relay-node1",
+    "func": "if (\n  msg.payload &&\n  msg.payload.uplink_message &&\n  msg.payload.uplink_message.decoded_payload &&\n  typeof msg.payload.uplink_message.decoded_payload.temperatureF !== \"undefined\"\n) {\n  msg.payload = msg.payload.uplink_message.decoded_payload.temperatureF;\n  return msg;\n}\nreturn null;\n",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 320,
+    "y": 120,
+    "wires": [
+      [
+        "gauge_temp_relay-node1"
+      ]
+    ]
+  },
+  {
+    "id": "gauge_temp_relay-node1",
+    "type": "ui_gauge",
+    "z": "flow_relay_node1",
+    "name": "Temp relay-node1",
+    "group": "ui_group_temp_relay-node1",
+    "order": 1,
+    "width": 6,
+    "height": 1,
+    "gtype": "gage",
+    "title": "Temperature relay-node1",
+    "label": "\u00b0F",
+    "format": "{{value}}",
+    "min": 32,
+    "max": 120,
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": 80,
+    "seg2": 100,
+    "x": 560,
+    "y": 120,
+    "wires": []
+  },
+  {
+    "id": "flow_relay_node_2",
+    "type": "tab",
+    "label": "Temperature - relay-node-2",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "ui_tab_relay-node-2",
+    "type": "ui_tab",
+    "name": "Temp relay-node-2",
+    "icon": "dashboard",
+    "order": 1
+  },
+  {
+    "id": "ui_group_temp_relay-node-2",
+    "type": "ui_group",
+    "name": "Temperature relay-node-2",
+    "tab": "ui_tab_relay-node-2",
+    "order": 1,
+    "disp": true,
+    "width": 6
+  },
+  {
+    "id": "func_temp_relay-node-2",
+    "type": "function",
+    "z": "flow_relay_node_2",
+    "name": "Extract Temp relay-node-2",
+    "func": "if (\n  msg.payload &&\n  msg.payload.uplink_message &&\n  msg.payload.uplink_message.decoded_payload &&\n  typeof msg.payload.uplink_message.decoded_payload.temperatureF !== \"undefined\"\n) {\n  msg.payload = msg.payload.uplink_message.decoded_payload.temperatureF;\n  return msg;\n}\nreturn null;\n",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 320,
+    "y": 220,
+    "wires": [
+      [
+        "gauge_temp_relay-node-2"
+      ]
+    ]
+  },
+  {
+    "id": "gauge_temp_relay-node-2",
+    "type": "ui_gauge",
+    "z": "flow_relay_node_2",
+    "name": "Temp relay-node-2",
+    "group": "ui_group_temp_relay-node-2",
+    "order": 1,
+    "width": 6,
+    "height": 1,
+    "gtype": "gage",
+    "title": "Temperature relay-node-2",
+    "label": "\u00b0F",
+    "format": "{{value}}",
+    "min": 32,
+    "max": 120,
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": 80,
+    "seg2": 100,
+    "x": 560,
+    "y": 220,
+    "wires": []
+  }
+]

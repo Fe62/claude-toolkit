@@ -9,6 +9,7 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-03-12 | Data consolidation Pass 3 & 4 (fefamacbook) — vault at 33,269 files; QB entity map finalized; G&G = GAG = Garbage&Greed LLC; dot-notation convention confirmed sufficient |
 | 2026-03-06 | Obsidian vault structure — 30 folders and 26 files created in iCloud Drive/vault/; README in every folder with purpose and agent permissions; seed files: connector-registry.md, project-template.md, daily note stub; vault live in Obsidian |
 | 2026-03-05 | personal OS + data consolidation — created personal-os-2026-03.md PRD and data-consolidation-2026-03.md work order in /projects; Obsidian vault, OCR pipeline, and inventory agent identified as future skills |
 | 2026-03-05 | portfolio-tracker real holdings — replaced placeholder tickers with real 14-position portfolio in watchlist.json on fepi41; removed JACTX (mutual fund, no yfinance data); recalculated weights to sum to 100%; fixed costBasis → cost_basis key mismatch; added NaN guard for unresolvable tickers |
@@ -26,7 +27,6 @@ _Updated at end of each session via the /update skill._
 ## Open Work
 
 - [ ] iMac Pre-Retirement Checklist
-- [ ] Install gh (GitHub CLI) via Homebrew
 - [ ] Install jq via Homebrew
 - [ ] Recover api-key-prompt skill
 - [ ] Recover quickbooks skill
@@ -35,7 +35,13 @@ _Updated at end of each session via the /update skill._
 - [ ] Evaluate last30days for owned adaptation — set a review date
 - [ ] Explore community skills: github.com/hesreallyhim/awesome-claude-code
 - [ ] Evaluate market-snapshot.py from Nick's tools (hourly SPY/QQQ/VIX)
-- [ ] Data consolidation — human agent pipeline (data-consolidation-2026-03.md, ready to start)
+- [ ] Data consolidation — direct-lighting (Pass 3 migration pending)
+- [ ] _review/ triage — 8,852 files flagged, later session
+- [ ] Ellsworth folder in _review → vault/areas/finance/ellsworth-trust/
+- [ ] QB files → sort into active/legacy/old-quicken under assets/documents/quickbooks/
+- [ ] Empty Trash — after all migration confirmed
+- [ ] Delete ~/Documents originals — after Trash emptied
+- [ ] Evaluate Pass 3 script as template for direct-lighting migration
 - [x] Add update and simplify to Active Skills table in session-context.md
 - [x] Push toolkit updates to GitHub
 

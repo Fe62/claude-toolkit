@@ -6,6 +6,14 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-03
 
+### 2026-03-12 — Data consolidation: Pass 3 & 4 migration
+- Built and ran Pass 3 migration script — 33,238 files sorted into staging by dot-notation prefix + folder-override rules; vault now at 33,269 files
+- Pass 4 (Media/) resolved: Camera Uploads → ~/Pictures/, Femusic FLAC → ~/Music/Femusic/, 8 PDFs rescued to vault (5 Flatiron → legacy-orgs/flatiron/, 3 FE personal → areas/personal/FE.pers/); Media/ folder removed from Documents
+- QB entity map finalized (3 active: personal/P&A/Ellsworth; 8 legacy; 2 old Quicken); G&G = GAG = Garbage&Greed LLC confirmed equivalent
+- Facebook export (76MB) preserved in vault/archive/ as authoritative copy; account data cleared
+- Dot-notation naming convention confirmed sufficient — no second-level subfolder sort needed
+- Registered dot-notation-migration as reusable skill template
+
 ### 2026-03-06 — Obsidian vault structure live
 - Created 30 folders and 26 files in iCloud Drive/vault/ on femacbook
 - README in every folder — purpose + agent permission model

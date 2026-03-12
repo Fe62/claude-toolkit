@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-03-06
+Last updated: 2026-03-12
 
 ---
 
@@ -147,6 +147,18 @@ Last updated: 2026-03-06
 | Agent rules | Always folder-scoped. /archive and /assets read-only by default. /inbox is the only open-write folder. connector-registry.md in /resources tracks all active data paths. |
 | Seed files | resources/connector-registry.md, resources/templates/project-template.md |
 | Added | 2026-03-06 |
+
+---
+
+### dot-notation-migration
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Source | skills/migrate-pass3/migrate-pass3-2026-03.md |
+| Purpose | Template script for sorting files into a vault by dot-notation prefix and folder-override rules. Built for Pass 3 of personal data consolidation (33,238 files). Reusable pattern for future migrations. |
+| Key patterns | DRY_RUN = True default; shutil.copy2 for metadata preservation; _review/ prefix for human-attention flags |
+| Added | 2026-03-12 |
 
 ---
 

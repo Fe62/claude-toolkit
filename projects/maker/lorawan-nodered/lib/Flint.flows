@@ -1,0 +1,816 @@
+[
+    {
+        "id": "tab-system-core",
+        "type": "tab",
+        "label": "System Core"
+    },
+    {
+        "id": "tab-uplink-processing",
+        "type": "tab",
+        "label": "Uplink Processing"
+    },
+    {
+        "id": "tab-scheduler",
+        "type": "tab",
+        "label": "Scheduler"
+    },
+    {
+        "id": "tab-dashboard",
+        "type": "tab",
+        "label": "Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "tab-email-alerts",
+        "type": "tab",
+        "label": "Email Alerts"
+    },
+    {
+        "id": "tab-testing",
+        "type": "tab",
+        "label": "Testing"
+    },
+    {
+        "id": "19e3636d1f9a8957",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "ui_tab_irrigation",
+        "type": "ui_tab",
+        "name": "Irrigation",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "ui_group_manual",
+        "type": "ui_group",
+        "name": "Manual Overrides",
+        "tab": "ui_tab_irrigation",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ui_group_soil",
+        "type": "ui_group",
+        "name": "Soil Moisture",
+        "tab": "ui_tab_irrigation",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ui_group_temp",
+        "type": "ui_group",
+        "name": "Temperatures",
+        "tab": "ui_tab_irrigation",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ui_tab_relay-node1",
+        "type": "ui_tab",
+        "name": "Temp relay-node1",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "ui_group_temp_relay-node1",
+        "type": "ui_group",
+        "name": "Temperature relay-node1",
+        "tab": "ui_tab_relay-node1",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "ui_tab_relay-node-2",
+        "type": "ui_tab",
+        "name": "Temp relay-node-2",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "ui_group_temp_relay-node-2",
+        "type": "ui_group",
+        "name": "Temperature relay-node-2",
+        "tab": "ui_tab_relay-node-2",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "ui_tab_rain",
+        "type": "ui_tab",
+        "name": "Rain",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "ui_group_rain",
+        "type": "ui_group",
+        "name": "Rain Override",
+        "tab": "ui_tab_rain",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "ui-tab",
+        "type": "ui_tab",
+        "z": "tab-dashboard",
+        "name": "Irrigation Control",
+        "icon": "water",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ui-group",
+        "type": "ui_group",
+        "z": "tab-dashboard",
+        "name": "Irrigation Settings",
+        "tab": "ui-tab",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "433c3134900aadcc",
+        "type": "tls-config",
+        "name": "TTN TLS",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "26fb0b277330dcce",
+        "type": "mqtt-broker",
+        "name": "TTN MQTT 1",
+        "broker": "nam1.cloud.thethings.network",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": false,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "uplink-tracker",
+        "type": "function",
+        "z": "tab-uplink-processing",
+        "name": "Universal Uplink Tracker (global)",
+        "func": "// Universal Uplink Tracker for TTN v3 JSON\nlet device = msg.device_id\n    || (msg.end_device_ids && msg.end_device_ids.device_id)\n    || (msg.payload && msg.payload.end_device_ids && msg.payload.end_device_ids.device_id)\n    || (msg.topic && msg.topic.match(/devices\\/(.+?)\\/up/) ? msg.topic.match(/devices\\/(.+?)\\/up/)[1] : null);\n\nlet ts = msg.timestamp ? (msg.timestamp * 1000) : Date.now();\n\n// TTN v3 decoded payload path\nlet decoded = null;\nif (msg.payload && msg.payload.uplink_message && msg.payload.uplink_message.decoded_payload) {\n    decoded = msg.payload.uplink_message.decoded_payload;\n}\n\n// Store in global context\nif (device) {\n    global.set(\"last_seen_\" + device, ts);\n    if (decoded && typeof decoded.soil_pct !== \"undefined\") global.set(device + \"_soil_pct\", decoded.soil_pct);\n    if (decoded && typeof decoded.temperatureF !== \"undefined\") global.set(device + \"_tempF\", decoded.temperatureF);\n    if (decoded && typeof decoded.battery_mV !== \"undefined\") global.set(device + \"_battery_mV\", decoded.battery_mV);\n\n    node.status({ fill: \"green\", shape: \"dot\", text: `${device} @ ${new Date(ts).toLocaleTimeString()}` });\n} else {\n    node.warn(\"No device id found in uplink\");\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 240,
+        "wires": [
+            [
+                "50db1a569abe4fca"
+            ]
+        ]
+    },
+    {
+        "id": "soil-formatter",
+        "type": "function",
+        "z": "tab-uplink-processing",
+        "name": "Soil Formatter",
+        "func": "// Soil Moisture Formatter for dashboard\nlet device = (msg.payload && msg.payload.end_device_ids) ? msg.payload.end_device_ids.device_id : null;\nlet decoded = (msg.payload && msg.payload.uplink_message && msg.payload.uplink_message.decoded_payload) \n              ? msg.payload.uplink_message.decoded_payload : null;\nif (device && decoded && typeof decoded.soil_pct !== \"undefined\") {\n    msg.topic = device + \" Soil Moisture\";\n    msg.payload = { device, soil_pct: decoded.soil_pct, battery_mV: decoded.battery_mV || null, last_seen: new Date(global.get(\"last_seen_\"+device)||0).toLocaleString() };\n    return msg;\n}\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "relay-formatter",
+        "type": "function",
+        "z": "tab-uplink-processing",
+        "name": "Relay Temp Formatter",
+        "func": "// Relay Temperature Formatter for dashboard\nlet device = (msg.payload && msg.payload.end_device_ids) ? msg.payload.end_device_ids.device_id : null;\nlet decoded = (msg.payload && msg.payload.uplink_message && msg.payload.uplink_message.decoded_payload) \n              ? msg.payload.uplink_message.decoded_payload : null;\nif (device && decoded && typeof decoded.temperatureF !== \"undefined\") {\n    msg.topic = device + \" Temperature\";\n    msg.payload = { device, tempF: decoded.temperatureF, last_seen: new Date(global.get(\"last_seen_\"+device)||0).toLocaleString() };\n    return msg;\n}\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6366645f9d50489a",
+        "type": "mqtt in",
+        "z": "tab-uplink-processing",
+        "name": "MQTT uplinks ",
+        "topic": "v3/5571-258-irri@ttn/devices/+/up",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "26fb0b277330dcce",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 260,
+        "wires": [
+            [
+                "uplink-tracker"
+            ]
+        ]
+    },
+    {
+        "id": "50db1a569abe4fca",
+        "type": "debug",
+        "z": "tab-uplink-processing",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "scheduler",
+        "type": "function",
+        "z": "tab-scheduler",
+        "name": "Irrigation Scheduler (global)",
+        "func": "// Irrigation Scheduler (global context)\nlet moistureThresholds = {\n    ss1: 40, ss2: 40, ss3: 40, ss4: 40,\n    ss5: 40, ss6: 40, ss7: 40, ss8: 40\n};\n\nlet valveMap = {\n    ss1: { vnode: 'relay-node1', fport: 6 },\n    ss2: { vnode: 'relay-node1', fport: 7 },\n    ss3: { vnode: 'relay-node1', fport: 8 },\n    ss4: { vnode: 'relay-node1', fport: 9 },\n    ss5: { vnode: 'relay-node-2', fport: 6 },\n    ss6: { vnode: 'relay-node-2', fport: 7 },\n    ss7: { vnode: 'relay-node-2', fport: 8 },\n    ss8: { vnode: 'relay-node-2', fport: 9 }\n};\n\nlet schedule = {\n    \"relay-node1\": [0, 2, 4],    // Sunday, Tuesday, Thursday\n    \"relay-node-2\": [1, 3, 5]    // Monday, Wednesday, Friday\n};\n\nlet now = new Date();\nlet dow = now.getDay();\nlet scheduleType = msg.topic || 'scheduled';\nlet delay = 0;\n\nlet interval = global.get(\"irrigation_interval\") || 5 * 60 * 1000;\nlet failsafeMinutes = global.get(\"failsafe_minutes\") || 1;\nlet rain = global.get(\"rain_override\") || false;\n\nif (rain) {\n    node.warn(\"Irrigation skipped due to rain override.\");\n    return null;\n}\n\nfunction sendDown(vnode, fport, on) {\n    node.send([{\n        topic: `v3/5571-258-irri@ttn/devices/${vnode}/down/push`,\n        payload: {\n            downlinks: [{\n                frm_payload: Buffer.from([on ? 1 : 0]).toString('base64'),\n                f_port: fport,\n                confirmed: true,\n                priority: \"NORMAL\"\n            }]\n        },\n        qos: 1,\n        retain: false\n    }, null]);\n}\n\nfor (let vnode in schedule) {\n    if (scheduleType === 'scheduled' && !schedule[vnode].includes(dow)) continue;\n\n    for (let sensor in valveMap) {\n        let map = valveMap[sensor];\n        if (map.vnode !== vnode) continue;\n\n        let moisture = global.get(sensor + \"_soil_pct\") || 0;\n        let temp = global.get(vnode + \"_tempF\") || 80;\n        let threshold = moistureThresholds[sensor];\n        let hot = temp >= 100;\n\n        let shouldRun =\n            (scheduleType === 'scheduled' && moisture <= threshold) ||\n            ((scheduleType === 'override-4pm' || scheduleType === 'override-6pm') && hot && moisture <= threshold);\n\n        if (shouldRun) {\n            setTimeout(() => sendDown(vnode, map.fport, true), delay);\n            setTimeout(() => sendDown(vnode, map.fport, false), delay + interval);\n            delay += interval;\n        }\n    }\n}\n\n// Global failsafe OFF\nsetTimeout(() => {\n    node.warn(`Failsafe OFF: buffer ${failsafeMinutes} min`);\n    for (let sensor in valveMap) {\n        let map = valveMap[sensor];\n        sendDown(map.vnode, map.fport, false);\n    }\n}, delay + interval + failsafeMinutes * 60 * 1000);\n\nreturn null;\n",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 240,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "soil-table",
+        "type": "ui_table",
+        "z": "tab-dashboard",
+        "group": "ui-group",
+        "name": "Soil Sensors",
+        "order": 1,
+        "width": 12,
+        "height": 6,
+        "columns": [
+            {
+                "field": "device",
+                "title": "Device",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "soil_pct",
+                "title": "Soil %",
+                "width": "15%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "battery_mV",
+                "title": "Battery (mV)",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "last_seen",
+                "title": "Last Seen",
+                "width": "45%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 850,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "relay-table",
+        "type": "ui_table",
+        "z": "tab-dashboard",
+        "group": "ui-group",
+        "name": "Relays",
+        "order": 2,
+        "width": 12,
+        "height": 4,
+        "columns": [
+            {
+                "field": "device",
+                "title": "Relay",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "tempF",
+                "title": "Temp (°F)",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "last_seen",
+                "title": "Last Seen",
+                "width": "50%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 850,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "alloff-btn",
+        "type": "ui_button",
+        "z": "tab-dashboard",
+        "name": "All Valves OFF Now",
+        "group": "ui-group",
+        "order": 10,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "All Valves OFF Now",
+        "tooltip": "",
+        "color": "#ffffff",
+        "bgcolor": "#d9534f",
+        "className": "",
+        "icon": "fa-power-off",
+        "payload": "OFF",
+        "payloadType": "str",
+        "topic": "alloff",
+        "topicType": "str",
+        "x": 470,
+        "y": 60,
+        "wires": [
+            [
+                "94014aa0929ef964"
+            ]
+        ]
+    },
+    {
+        "id": "366c8803210a432b",
+        "type": "mqtt out",
+        "z": "tab-dashboard",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "26fb0b277330dcce",
+        "x": 1010,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "94014aa0929ef964",
+        "type": "function",
+        "z": "tab-dashboard",
+        "name": "All Valves Off Builder",
+        "func": "// Send OFF to all valve ports immediately\nlet valveMap = [\n    { vnode: 'relay-node1', fport: 6 }, { vnode: 'relay-node1', fport: 7 },\n    { vnode: 'relay-node1', fport: 8 }, { vnode: 'relay-node1', fport: 9 },\n    { vnode: 'relay-node-2', fport: 6 }, { vnode: 'relay-node-2', fport: 7 },\n    { vnode: 'relay-node-2', fport: 8 }, { vnode: 'relay-node-2', fport: 9 }\n];\n\nlet msgs = valveMap.map(v => ({\n    topic: `v3/5571-258-irri@ttn/devices/${v.vnode}/down/push`,\n    payload: {\n        downlinks: [\n            {\n                frm_payload: Buffer.from([0]).toString('base64'),\n                f_port: v.fport,\n                confirmed: true,\n                priority: \"NORMAL\"\n            }\n        ]\n    },\n    qos: 1,\n    retain: false\n}));\n\nreturn [msgs];\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 60,
+        "wires": [
+            [
+                "366c8803210a432b"
+            ]
+        ]
+    },
+    {
+        "id": "05e86a6e02bbc376",
+        "type": "function",
+        "z": "tab-dashboard",
+        "name": "Build Tables",
+        "func": "// Build soil & relay tables from global context\n\nlet devices = [\"ss1\", \"ss2\", \"ss3\", \"ss4\", \"ss5\", \"ss6\", \"ss7\", \"ss8\"];\nlet soil = [];\n\nfor (let d of devices) {\n    soil.push({\n        device: d,\n        soil_pct: global.get(d + \"_soil_pct\"),\n        battery_mV: global.get(d + \"_battery_mV\"),\n        last_seen: (function () {\n            let ts = global.get(\"last_seen_\" + d);\n            return ts ? new Date(ts).toLocaleString() : \"\";\n        })()\n    });\n}\n\nlet relays = [\"relay-node1\", \"relay-node-2\"];\nlet relayRows = [];\n\nfor (let r of relays) {\n    relayRows.push({\n        device: r,\n        tempF: global.get(r + \"_tempF\"),\n        last_seen: (function () {\n            let ts = global.get(\"last_seen_\" + r);\n            return ts ? new Date(ts).toLocaleString() : \"\";\n        })()\n    });\n}\n\n// Output 1 = soil table, Output 2 = relay table\nreturn [\n    { payload: soil },\n    { payload: relayRows }\n];\n\n",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 320,
+        "wires": [
+            [
+                "soil-table"
+            ],
+            [
+                "relay-table"
+            ]
+        ]
+    },
+    {
+        "id": "936437ee60650385",
+        "type": "inject",
+        "z": "tab-dashboard",
+        "name": "Refresh tables (60s)",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "x": 420,
+        "y": 340,
+        "wires": [
+            [
+                "05e86a6e02bbc376"
+            ]
+        ]
+    },
+    {
+        "id": "263964287d21c721",
+        "type": "ui_dropdown",
+        "z": "tab-dashboard",
+        "name": "Relay Selector",
+        "label": "Select Relay",
+        "group": "ui-group",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "options": [
+            {
+                "label": "relay-node1 port 6",
+                "value": "relay-node1-6",
+                "type": "str"
+            },
+            {
+                "label": "relay-node1 port 7",
+                "value": "relay-node1-7",
+                "type": "str"
+            },
+            {
+                "label": "relay-node1 port 8",
+                "value": "relay-node1-8",
+                "type": "str"
+            },
+            {
+                "label": "relay-node1 port 9",
+                "value": "relay-node1-9",
+                "type": "str"
+            },
+            {
+                "label": "relay-node-2 port 6",
+                "value": "relay-node-2-6",
+                "type": "str"
+            },
+            {
+                "label": "relay-node-2 port 7",
+                "value": "relay-node-2-7",
+                "type": "str"
+            },
+            {
+                "label": "relay-node-2 port 8",
+                "value": "relay-node-2-8",
+                "type": "str"
+            },
+            {
+                "label": "relay-node-2 port 9",
+                "value": "relay-node-2-9",
+                "type": "str"
+            }
+        ],
+        "x": 440,
+        "y": 180,
+        "wires": [
+            [
+                "8e46a3d082601f11"
+            ]
+        ]
+    },
+    {
+        "id": "8e46a3d082601f11",
+        "type": "function",
+        "z": "tab-dashboard",
+        "name": "Set global.relay_selection",
+        "func": "global.set(\"relay_selection\", msg.payload);\nnode.status({fill:\"green\",shape:\"dot\",text:`selection=${msg.payload}`});\nreturn null;",
+        "outputs": 0,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ccabbbc2741f88bb",
+        "type": "ui_switch",
+        "z": "tab-dashboard",
+        "name": "Relay ON/OFF",
+        "label": "Relay Control",
+        "group": "ui-group",
+        "order": 2,
+        "width": 6,
+        "height": 1,
+        "topic": "relay_state",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "fa-toggle-on",
+        "oncolor": "green",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "fa-toggle-off",
+        "offcolor": "grey",
+        "x": 460,
+        "y": 120,
+        "wires": [
+            [
+                "1d4a65d39b912b72"
+            ]
+        ]
+    },
+    {
+        "id": "1d4a65d39b912b72",
+        "type": "function",
+        "z": "tab-dashboard",
+        "name": "Relay Control Builder",
+        "func": "// Build TTN downlink from relay selection + ON/OFF switch state\nlet sel = global.get(\"relay_selection\"); // e.g., \"relay-node1-6\"\nif (!sel) {\n    node.warn(\"No relay selected\");\n    return null;\n}\n\nlet m = sel.match(/^(relay-node1|relay-node-2)-(\\d+)$/);\nif (!m) {\n    node.warn(\"Bad relay selection format: \" + sel);\n    return null;\n}\n\nlet vnode = m[1];          // relay-node1 or relay-node-2\nlet fport = Number(m[2]);  // port number from dropdown\nlet on = Number(msg.payload) === 1;  // switch state → 1=ON, 0=OFF\n\n// Build downlink message for TTN\nmsg.topic = `v3/5571-258-irri@ttn/devices/${vnode}/down/push`;\nmsg.payload = {\n    downlinks: [\n        {\n            frm_payload: Buffer.from([on ? 1 : 0]).toString('base64'),\n            f_port: fport,\n            confirmed: true,\n            priority: \"NORMAL\"\n        }\n    ]\n};\nmsg.qos = 1;\nmsg.retain = false;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 780,
+        "y": 100,
+        "wires": [
+            [
+                "366c8803210a432b"
+            ]
+        ]
+    },
+    {
+        "id": "daily-summary",
+        "type": "function",
+        "z": "tab-email-alerts",
+        "name": "Daily Summary + Alerts",
+        "func": "// Daily Summary + Alerts (global context)\nlet now = new Date();\nlet hour = now.getHours();\n\nlet summaryHour = global.get(\"summary_hour\") || 7;\nlet lastSent = global.get(\"daily_summary_last_sent\") || \"\";\nlet todayKey = now.toISOString().slice(0, 10) + \"-\" + summaryHour;\n\n// Only send once per day at the configured hour\n//if (hour !== summaryHour || lastSent === todayKey) {\n//\n  //  return null;\n//}\n\nlet thresholdHrs = global.get(\"alert_threshold_hours\") || 4;\nlet thresholdMs = thresholdHrs * 60 * 60 * 1000;\n\nlet devices = [\n    \"ss1\", \"ss2\", \"ss3\", \"ss4\", \"ss5\", \"ss6\", \"ss7\", \"ss8\",\n    \"relay-node1\", \"relay-node-2\"\n];\n\nlet interval = global.get(\"irrigation_interval\") || 300000;\nlet failsafe = global.get(\"failsafe_minutes\") || 1;\nlet rain = global.get(\"rain_override\") || false;\n\nlet nowMs = Date.now();\nlet lastSeenLines = [];\nlet soilLines = [];\nlet tempLines = [];\nlet batteryLines = [];\nlet offline = [];\n\nfor (let d of devices) {\n    let ts = global.get(\"last_seen_\" + d);\n    if (ts) {\n        let mins = ((nowMs - ts) / 60000).toFixed(1);\n        lastSeenLines.push(`${d}: ${new Date(ts).toLocaleString()} (${mins} min ago)`);\n        if (nowMs - ts > thresholdMs) {\n            offline.push(`❌ ${d} offline > ${thresholdHrs} hrs`);\n        }\n    } else {\n        lastSeenLines.push(`${d}: never`);\n        offline.push(`❌ ${d} never seen`);\n    }\n\n    let s = global.get(d + \"_soil_pct\");\n    if (typeof s !== \"undefined\") {\n        soilLines.push(`${d}: ${s}%`);\n    }\n\n    let b = global.get(d + \"_battery_mV\");\n    if (typeof b !== \"undefined\") {\n        batteryLines.push(`${d}: ${b} mV`);\n    }\n}\n\nfor (let r of [\"relay-node1\", \"relay-node-2\"]) {\n    let t = global.get(r + \"_tempF\");\n    if (typeof t !== \"undefined\") {\n        tempLines.push(`${r}: ${t}°F`);\n    }\n}\n\nlet body = `\n🌱 Irrigation System Daily Summary\n\n⏱ Interval: ${(interval / 60000)} min\n🛑 Failsafe: ${failsafe} min\n🌧 Rain override: ${rain}\n\n📡 Last Seen:\n${lastSeenLines.join(\"\\n\")}\n\n💧 Soil Moisture:\n${soilLines.length ? soilLines.join(\"\\n\") : \"No data\"}\n\n🔋 Soil Battery:\n${batteryLines.length ? batteryLines.join(\"\\n\") : \"No data\"}\n\n🌡 Temps:\n${tempLines.length ? tempLines.join(\"\\n\") : \"No data\"}\n`;\n\nif (offline.length > 0) {\n    body += `\\n\\n⚠️ Alerts:\\n${offline.join(\"\\n\")}`;\n}\n\nmsg.topic = \"🌱 Daily Irrigation Summary\";\nmsg.payload = body;\n\n// Mark sent\nglobal.set(\"daily_summary_last_sent\", todayKey);\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 140,
+        "wires": [
+            [
+                "88b28050cfb02bec"
+            ]
+        ]
+    },
+    {
+        "id": "88b28050cfb02bec",
+        "type": "e-mail",
+        "z": "tab-email-alerts",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "name": "flintellsworth@mac.com",
+        "dname": "Irrigation",
+        "x": 560,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "6ea0b65ae1e517c7",
+        "type": "inject",
+        "z": "tab-email-alerts",
+        "name": "Email check (5m)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 07 * * *",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "daily-summary"
+            ]
+        ]
+    },
+    {
+        "id": "407d637b88b2bc86",
+        "type": "function",
+        "z": "tab-email-alerts",
+        "name": "Test Email Builder",
+        "func": "msg.topic = \"🌱 Test Irrigation Summary\";\nmsg.payload = \"This is a test email from Node-RED.\";\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 280,
+        "wires": [
+            [
+                "88b28050cfb02bec"
+            ]
+        ]
+    }
+]

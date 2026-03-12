@@ -1,6 +1,6 @@
 # Master Reference — Claude Toolkit Bible
 
-Last updated: 2026-03-04
+Last updated: 2026-03-12
 
 ---
 
@@ -445,6 +445,24 @@ the service may show `active (running)` while the old process is actually servin
 QB Desktop Mac requires OFX 1.x SGML format — XML-based OFX 2.x is rejected silently.
 Wells Fargo has at least two distinct CC statement layouts requiring separate parsers.
 When QBO files won't download from Claude.ai, save as .txt and manually rename to .qbo.
+
+### 2026-03-12 — shutil.copy2 preserves file metadata in migrations
+`shutil.copy2` copies both file content and metadata (creation/modified dates). Prefer it
+over `shutil.copy` for any file migration where timestamp preservation matters.
+
+### 2026-03-12 — DRY_RUN = True as default in migration scripts
+Set `DRY_RUN = True` at the top of any migration script. This makes it safe to run and review
+before committing actual file moves. Flip to False only when dry run output looks correct.
+
+### 2026-03-12 — Underscore prefix sorts to top in Finder for human-attention folders
+Name folders requiring human review with a leading underscore (e.g. `_review/`). On macOS,
+underscore sorts before letters — these folders appear at the top of Finder, a natural
+visual signal that human attention is needed.
+
+### 2026-03-12 — zsh strips inline # comments from pasted command lines
+zsh does not accept inline `#` comments on the same line as a command. When pasting
+multi-line commands from notes or scripts, strip all `#` comments before running —
+they will be interpreted as part of the argument, not ignored.
 
 ---
 
