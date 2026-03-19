@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-03-12
+Last updated: 2026-03-14
 
 ---
 
@@ -160,6 +160,53 @@ Last updated: 2026-03-12
 | Key patterns | DRY_RUN = True default; shutil.copy2 for metadata preservation; _review/ prefix for human-attention flags |
 | Added | 2026-03-12 |
 
+### node-red-irrigation
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Installed | fepi41: ~/.node-red/Flint.flows |
+| Purpose | TTN v3 LoRaWAN irrigation control layer. Receives uplinks from relay node, soil sensors, and sewer sensor via MQTT. Controls valve open/close via TTN downlinks. Tracks soil moisture, relay port states, and water usage via NR context (file-backed). Exposes HTTP API at /api/status and /api/clear-daily-log for n8n oversight layer. Posts valve command and sewer alert events to n8n webhooks. |
+| Devices | relay-node1 (4 valves, ports 6-9), ss1/ss2/ss3/ss5/ss6/ss7 (soil sensors), sew1 (sewer depth) |
+| TTN app | 5571-258-irri @ nam1.cloud.thethings.network:8883 |
+| Context storage | file-backed (localfilesystem) — survives restarts; set in settings.js contextStorage block |
+| Migration note | If n8n moves to Mac Mini, update valve-webhook-req and sewer-webhook-req node URLs from localhost:5678 to Mac Mini Tailscale IP |
+| Added | 2026-03-14 |
+
+---
+
+### n8n-oversight
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Installed | fepi41: ~/.local/lib/node_modules/n8n; systemd user service n8n.service; port 5678 |
+| Purpose | Oversight and alerting layer above Node-RED irrigation system. 6 workflows: WF-1 heartbeat (offline/recovery alerts), WF-2 daily morning status, WF-3 daily water usage report + log clear, WF-4 valve command watchdog (90s ack check), WF-5 sewer emergency relay, WF-6 sewer polling backup. |
+| Version | n8n 1.123.25 (Node 20 compatible; v2.x requires Node ≥22) |
+| Install method | npm config set prefix ~/.local; npm install -g n8n@1.123.25 --ignore-scripts; npm rebuild sqlite3 (isolated-vm won't build on aarch64 Node 20) |
+| Service | systemd --user; loginctl enable-linger required; N8N_SECURE_COOKIE=false required for HTTP access |
+| API | http://127.0.0.1:5678/api/v1 (JWT auth); use 127.0.0.1 not localhost (Pi resolves IPv6 first) |
+| Workflow IDs | WF-1: EkSdpiFTrkLqQAKj, WF-2: OKnkrHDXvwGxQ589, WF-3: r63ynZ01PjKziRYh, WF-4: WrPRl0Kbtu94cDen, WF-5: azvAZyFAuyXHva7m, WF-6: Ygcj18XrURvC8Vmf |
+| Dedup method | $getWorkflowStaticData('global') persists between executions — tracks per-device state transitions without external DB |
+| Future | Long-term host: Mac Mini (always-on). When migrating, update NR webhook URLs in valve-webhook-req and sewer-webhook-req nodes |
+| Added | 2026-03-14 |
+
+---
+
+### ghostty-terminal-env
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Source | https://ghostty.org |
+| Installed | femacbook — app via direct download; configs in dotfiles |
+| Dependencies | Ghostty, tmux, Starship prompt (all via Homebrew); Tailscale for SSH shortcuts |
+| Purpose | GPU-accelerated terminal host for tmux sessions. Runs as infrastructure dashboard via `control` alias — opens split panes SSHed into fepi41 and brekpi41. Session state persists via tmux-resurrect/continuum. |
+| Config files | ~/.config/ghostty/config, ~/.tmux.conf, ~/.tmux/scripts/control-room.sh, ~/.ssh/config, ~/.zshrc |
+| Shell | zsh + Starship prompt (fish installed but not active) |
+| Key aliases | `control` (dashboard), `ta` (attach), `tn` (new session), `tl` (list) |
+| Rebuild | See bible: "Ghostty Terminal Environment" |
+| Added | 2026-03-12 |
 ---
 
 ## Planned / In Progress

@@ -6,6 +6,15 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-03
 
+### 2026-03-14 — Node-RED irrigation audit + n8n oversight layer
+- Audited Node-RED flows on fepi41 (TTN v3/LoRaWAN irrigation system); 87→94 nodes after 11 fixes
+- Fixes: TLS linked to MQTT broker, sewer downlink topic corrected, file-backed context storage enabled, scheduler wiring and water journalling logic repaired, relay-state-parser added, sewer thresholds write to globals, HTTP API endpoints (/api/status, /api/clear-daily-log) added, valve and sewer webhook events wired to n8n
+- Installed n8n 1.123.25 on fepi41 (port 5678) as systemd user service; overcame 5 ARM/Node 20 install obstacles
+- Built and activated 6 n8n workflows: WF-1 heartbeat, WF-2 daily status, WF-3 water report, WF-4 valve watchdog, WF-5 sewer emergency relay, WF-6 sewer polling backup
+- Email alerting confirmed working; ss4/ss8 removed from WF-1 (not yet deployed); ss7 flagged for battery check
+- Added node-red-irrigation and n8n-oversight to skills-inventory.md
+- Added 6 lessons to master-reference.md (IPv6, n8n ARM install, linger, API quirks, static data dedup, email formatting)
+
 ### 2026-03-12 — Data consolidation: Pass 3 & 4 migration
 - Built and ran Pass 3 migration script — 33,238 files sorted into staging by dot-notation prefix + folder-override rules; vault now at 33,269 files
 - Pass 4 (Media/) resolved: Camera Uploads → ~/Pictures/, Femusic FLAC → ~/Music/Femusic/, 8 PDFs rescued to vault (5 Flatiron → legacy-orgs/flatiron/, 3 FE personal → areas/personal/FE.pers/); Media/ folder removed from Documents

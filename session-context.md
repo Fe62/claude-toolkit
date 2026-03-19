@@ -3,12 +3,17 @@
 _Tracks completions, open work, and active skill state across sessions._
 _Updated at end of each session via the /update skill._
 
----
+--
+##Machine Inventory
+
+| femacbook | Primary | 100.74.137.113 | flint | — | Online |
+> **femacbook terminal:** Ghostty + tmux + Starship (zsh). SSH shortcuts: `ssh fepi`, `ssh brek`, `ssh dl`. Infrastructure dashboard: `control` alias.
 
 ## Completions
 
 | Date | What |
 |---|---|
+| 2026-03-14 | Node-RED irrigation audit (87→94 nodes), 11 fixes applied, HTTP API endpoints added, webhook events to n8n wired; n8n 1.123.25 installed on fepi41 (port 5678, systemd user service); 6 oversight workflows built and activated (WF-1 heartbeat, WF-2 daily status, WF-3 water report, WF-4 valve watchdog, WF-5 sewer relay, WF-6 sewer poll); email alerting confirmed working |
 | 2026-03-12 | Data consolidation Pass 3 & 4 (fefamacbook) — vault at 33,269 files; QB entity map finalized; G&G = GAG = Garbage&Greed LLC; dot-notation convention confirmed sufficient |
 | 2026-03-06 | Obsidian vault structure — 30 folders and 26 files created in iCloud Drive/vault/; README in every folder with purpose and agent permissions; seed files: connector-registry.md, project-template.md, daily note stub; vault live in Obsidian |
 | 2026-03-05 | personal OS + data consolidation — created personal-os-2026-03.md PRD and data-consolidation-2026-03.md work order in /projects; Obsidian vault, OCR pipeline, and inventory agent identified as future skills |
@@ -26,6 +31,10 @@ _Updated at end of each session via the /update skill._
 
 ## Open Work
 
+- [ ] Check ss7 battery (last transmission early February, likely dead)
+- [ ] When ss4/ss8 sensors deployed: add back to WF-1 THRESHOLDS in n8n heartbeat workflow
+- [ ] Migrate n8n from fepi41 to Mac Mini when available — update NR webhook URLs in valve-webhook-req and sewer-webhook-req nodes
+- [ ] Install n8n on brekpi41 — offline-capable config (no internet dependency, self-maintaining; brekpi cycles on battery + Starlink)
 - [ ] iMac Pre-Retirement Checklist
 - [ ] Install jq via Homebrew
 - [ ] Recover api-key-prompt skill
@@ -58,3 +67,5 @@ _Updated at end of each session via the /update skill._
 | ai-hedge-fund | fepi41 ~/ai-hedge-fund | active (borrowed) |
 | update | ~/.claude/commands/update.md | active |
 | simplify | ~/.claude/commands/simplify.md | active |
+| node-red-irrigation | fepi41: ~/.node-red/Flint.flows | active |
+| n8n-oversight | fepi41: ~/.n8n, port 5678 | active |
