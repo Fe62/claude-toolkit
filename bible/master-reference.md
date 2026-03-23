@@ -1,6 +1,6 @@
 # Master Reference — Claude Toolkit Bible
 
-Last updated: 2026-03-12
+Last updated: 2026-03-23
 
 ---
 
@@ -338,7 +338,8 @@ Password-based remotes prompt every session — key auth is required for frictio
 | Hostname | Tailscale IP | Username | Notes |
 |---|---|---|---|
 | femacbook | 100.74.137.113 | — | Primary dev machine (MacBook Pro M1) |
-| fepi41 | 100.72.119.28 | — | Raspberry Pi, 8GB RAM, Python 3.11.9 via pyenv |
+| fepi41 | 100.72.119.28 | flint | Raspberry Pi 8GB, Node-RED + ai-hedge-fund + n8n 1.x |
+| octopi | 192.168.1.125 / 100.82.140.84 | pi | Raspberry Pi 4 4GB, Argon ONE M.2, OctoPi 1.1.0, TAZ 5, n8n 2.x Docker |
 | brekpi41 | 100.77.133.46 | flint | Raspberry Pi — offline as of 2026-03-01 |
 | direct-lighting | 100.110.71.13 | directlightingllc | Lighting controller (iMac) |
 
@@ -502,6 +503,44 @@ Some email clients (including Apple Mail) don't render `\n`-only line breaks in 
 and Unicode box/line characters (─, │) display as garbage. For reliable cross-client rendering:
 - Use `\r\n` for line breaks in email body strings
 - Use plain ASCII `---` as section separators
+
+### 2026-03-23 — n8n v2 webhook nodes require a webhookId UUID
+Without a `webhookId` field in the webhook node object, n8n v2 never registers the webhook
+even when the workflow is active and `POST /api/v1/workflows/{id}/activate` returns 200.
+Symptom: `{"code":404,"message":"The requested webhook ... is not registered."}`.
+Fix: add `"webhookId": "<uuid>"` to the webhook node before activating. If the workflow was
+already created without it, use: deactivate → PUT (with webhookId added) → activate.
+
+### 2026-03-23 — n8n v2 PUT /api/v1/workflows rejects extra fields
+Fetching a workflow via GET and PUT-ting it back as-is returns 400 "must NOT have additional
+properties". Only these fields are accepted: `name`, `nodes`, `connections`, `settings`.
+Strip everything else (`active`, `tags`, `createdAt`, `updatedAt`, `versionId`, `staticData`,
+`pinData`, `meta`, `shared`, etc.) before PUT.
+
+### 2026-03-23 — n8n v2 first-run setup and API key creation
+Owner account: `POST /rest/owner/setup` (not `/api/v1/`).
+API key: `POST /rest/api-keys` — requires `scopes: [...]` array and `expiresAt: null` explicitly.
+JWT session cookie from login does NOT work as Bearer token for `/api/v1/` — must use
+`X-N8N-API-KEY` header with the `rawApiKey` value returned at key creation time.
+
+### 2026-03-23 — OctoPi: cloud-init overrides hostname on every boot
+Editing `/etc/hostname` or `/etc/hosts` directly does not survive reboot on OctoPi.
+cloud-init resets both files. Fix: set `preserve_hostname: true` in `/etc/cloud/cloud.cfg`.
+
+### 2026-03-23 — Ghostty TERM over SSH to Raspberry Pi
+Ghostty's terminal type is not recognized by Debian. Sessions opened from Ghostty show
+rendering issues. Fix: add `export TERM=xterm-256color` to `~/.bashrc` on the Pi.
+Without this, must run it manually at the start of every SSH session.
+
+### 2026-03-23 — Argon ONE M.2 board needs Pi attached for USB flashing
+The M.2 board does not receive enough power from Mac USB alone when the Pi is detached.
+Attempting to flash the SSD via Mac appears to work but produces a non-bootable result.
+Correct method: boot a temp SD card on the Pi → flash SSD from within the running Pi using `dd`.
+
+### 2026-03-23 — LulzBot dropped from Ultimaker Cura ~v5.x
+LulzBot printer profiles (including TAZ 5) were removed from Ultimaker Cura around v5.
+Use LulzBot's own Cura fork from lulzbot.com/software for native TAZ profiles and
+built-in OctoPrint integration.
 
 ### 2026-03-14 — zsh strips inline # comments from pasted command lines
 zsh does not accept inline `#` comments on the same line as a command. When pasting

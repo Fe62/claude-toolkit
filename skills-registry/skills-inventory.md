@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-03-14
+Last updated: 2026-03-23
 
 ---
 
@@ -190,6 +190,23 @@ Last updated: 2026-03-14
 | Dedup method | $getWorkflowStaticData('global') persists between executions — tracks per-device state transitions without external DB |
 | Future | Long-term host: Mac Mini (always-on). When migrating, update NR webhook URLs in valve-webhook-req and sewer-webhook-req nodes |
 | Added | 2026-03-14 |
+
+---
+
+### octopi-n8n
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Installed | octopi: Docker container `n8n`, port 5678; volume `n8n_data` |
+| Version | n8n 2.12.3 |
+| Purpose | Print event automation for TAZ 5. OctoPrint-Webhooks plugin (v3.0.3, 2blane fork) fires on PrintStarted/Done/Failed/Error → n8n "TAZ 5 Print Events" workflow → Discord `#print-alerts` embed + GitHub commit to `Fe62/direct-lighting-print-log/print-log.md` |
+| Access | `http://100.82.140.84:5678` (Tailscale only); owner: flint@directlighting.com |
+| Workflow ID | `aQxDfVn7PKw28Qhy` |
+| OctoPrint plugin | OctoPrint-Webhooks v3.0.3; webhook target: `http://127.0.0.1:5678/webhook/print-event` (127.0.0.1 not localhost — Pi resolves IPv6 first) |
+| Docker | `--restart unless-stopped`, volume `n8n_data`, `N8N_SECURE_COOKIE=false` |
+| Migration note | If n8n moves off octopi, update OctoPrint webhook URL in plugin settings |
+| Added | 2026-03-23 |
 
 ---
 

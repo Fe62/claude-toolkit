@@ -7,12 +7,14 @@ _Updated at end of each session via the /update skill._
 ##Machine Inventory
 
 | femacbook | Primary | 100.74.137.113 | flint | — | Online |
+| octopi | 3D Print | 192.168.1.125 / 100.82.140.84 | pi | Raspberry Pi 4 4GB, Argon ONE M.2, OctoPi 1.1.0, TAZ 5 |
 > **femacbook terminal:** Ghostty + tmux + Starship (zsh). SSH shortcuts: `ssh fepi`, `ssh brek`, `ssh dl`. Infrastructure dashboard: `control` alias.
 
 ## Completions
 
 | Date | What |
 |---|---|
+| 2026-03-23 | octopi setup — Pi 4 in Argon ONE M.2, OctoPi 1.1.0, Tailscale 100.82.140.84; Docker + n8n 2.12.3; OctoPrint-Webhooks plugin; "TAZ 5 Print Events" n8n workflow (Discord #print-alerts + GitHub job log); all services persist across reboot |
 | 2026-03-14 | Node-RED irrigation audit (87→94 nodes), 11 fixes applied, HTTP API endpoints added, webhook events to n8n wired; n8n 1.123.25 installed on fepi41 (port 5678, systemd user service); 6 oversight workflows built and activated (WF-1 heartbeat, WF-2 daily status, WF-3 water report, WF-4 valve watchdog, WF-5 sewer relay, WF-6 sewer poll); email alerting confirmed working |
 | 2026-03-12 | Data consolidation Pass 3 & 4 (fefamacbook) — vault at 33,269 files; QB entity map finalized; G&G = GAG = Garbage&Greed LLC; dot-notation convention confirmed sufficient |
 | 2026-03-06 | Obsidian vault structure — 30 folders and 26 files created in iCloud Drive/vault/; README in every folder with purpose and agent permissions; seed files: connector-registry.md, project-template.md, daily note stub; vault live in Obsidian |
@@ -53,6 +55,14 @@ _Updated at end of each session via the /update skill._
 - [ ] Evaluate Pass 3 script as template for direct-lighting migration
 - [x] Add update and simplify to Active Skills table in session-context.md
 - [x] Push toolkit updates to GitHub
+- [ ] octopi: purchase and mount USB webcam on TAZ 5 frame (gooseneck/arm, front-facing)
+- [ ] octopi: Obico calibration (pending webcam)
+- [ ] octopi: OctoLapse configuration (pending webcam)
+- [ ] octopi: test print — confirm Discord notification and GitHub job log fire end-to-end
+- [ ] octopi: add `export TERM=xterm-256color` to ~/.bashrc on Pi (permanent fix for Ghostty SSH sessions)
+- [ ] octopi: add octopi pane to Ghostty control-room dashboard
+- [ ] octopi: write admin guide (Tailscale, SSH, n8n, OctoPrint admin, plugin updates)
+- [ ] octopi: write shop staff user guide (local network access, print ops, basic troubleshooting)
 
 ---
 
@@ -69,3 +79,4 @@ _Updated at end of each session via the /update skill._
 | simplify | ~/.claude/commands/simplify.md | active |
 | node-red-irrigation | fepi41: ~/.node-red/Flint.flows | active |
 | n8n-oversight | fepi41: ~/.n8n, port 5678 | active |
+| octopi-n8n | octopi: Docker n8n, port 5678 | active |

@@ -6,6 +6,16 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-03
 
+### 2026-03-23 — octopi setup: OctoPrint Pi for TAZ 5
+- Set up Raspberry Pi 4 4GB (Argon ONE M.2, OctoPi 1.1.0, Kingston 128GB SSD) as always-on 3D print management node on Direct Lighting network
+- Installed Tailscale; Pi now at 100.82.140.84; SSH over Tailscale confirmed
+- Installed Docker 29.3.0; deployed n8n 2.12.3 as Docker container (persistent volume, --restart unless-stopped, port 5678)
+- Installed OctoPrint-Webhooks plugin v3.0.3 (2blane fork); fires on PrintStarted/Done/Failed/Error
+- Built "TAZ 5 Print Events" n8n workflow: OctoPrint webhook → Discord #print-alerts embed + GitHub commit to Fe62/direct-lighting-print-log
+- All services (Tailscale, Docker/n8n, OctoPrint) survive reboot; webhook re-registers correctly
+- Added octopi-n8n to skills-inventory; added octopi to machine inventory
+- Added n8n v2 API lessons and OctoPi hardware lessons to master-reference.md
+
 ### 2026-03-14 — Node-RED irrigation audit + n8n oversight layer
 - Audited Node-RED flows on fepi41 (TTN v3/LoRaWAN irrigation system); 87→94 nodes after 11 fixes
 - Fixes: TLS linked to MQTT broker, sewer downlink topic corrected, file-backed context storage enabled, scheduler wiring and water journalling logic repaired, relay-state-parser added, sewer thresholds write to globals, HTTP API endpoints (/api/status, /api/clear-daily-log) added, valve and sewer webhook events wired to n8n
