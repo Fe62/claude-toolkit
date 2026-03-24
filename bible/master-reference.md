@@ -16,16 +16,7 @@ context when starting a new session on a new machine or project.
 
 ---
 
-## Core Principles
 
-These don't change project to project. They govern everything.
-
-1. **Plan first** — no project starts without a PRD and plan in /projects
-2. **Own your skills** — borrowed skills are a liability; adapt or rebuild over time
-3. **Local first** — iCloud working copy, GitHub for backup, minimize API calls
-4. **Simple over clever** — one layer of complexity at a time
-5. **Never hardcode keys** — API keys always via prompt-on-entry or environment variables
-6. **Keep the registry current** — log every skill immediately after installing
 
 ---
 
@@ -333,18 +324,7 @@ Password-based remotes prompt every session — key auth is required for frictio
 
 ---
 
-## Machine Inventory
 
-| Hostname | Tailscale IP | Username | Notes |
-|---|---|---|---|
-| femacbook | 100.74.137.113 | — | Primary dev machine (MacBook Pro M1) |
-| fepi41 | 100.72.119.28 | flint | Raspberry Pi 8GB, Node-RED + ai-hedge-fund + n8n 1.x |
-| octopi | 192.168.1.125 / 100.82.140.84 | pi | Raspberry Pi 4 4GB, Argon ONE M.2, OctoPi 1.1.0, TAZ 5, n8n 2.x Docker |
-| brekpi41 | 100.77.133.46 | flint | Raspberry Pi — offline as of 2026-03-01 |
-| direct-lighting | 100.110.71.13 | directlightingllc | Lighting controller (iMac) |
-
-Use Tailscale hostnames as canonical machine names throughout all toolkit files.
-Document usernames explicitly — do not assume consistency across machines.
 
 ---
 
@@ -582,16 +562,7 @@ Activate plugins: `Ctrl+b Shift+i`
 
 **Note:** Ghostty config is minimal — it's mainly a fast host for tmux. All session management is tmux's job, not Ghostty's.
 
-## Open Mini-Projects
 
-_Smaller items that don't warrant a full PRD but need to be done._
-
-- [ ] Run pdf-to-qbo on full-year checking statements (P&A.checking.25)
-- [ ] iCloud selective sync strategy — keep work/personal separated on iMac
-- [ ] Recover skills from iMac before machine is retired
-- [ ] Rebuild api-key-prompt skill
-- [ ] Evaluate last30days for adaptation into owned version
-- [ ] Explore Claude Code plugin marketplace for useful community skills
 
 ---
 

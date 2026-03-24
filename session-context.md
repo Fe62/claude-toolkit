@@ -6,9 +6,16 @@ _Updated at end of each session via the /update skill._
 --
 ##Machine Inventory
 
-| femacbook | Primary | 100.74.137.113 | flint | — | Online |
-| octopi | 3D Print | 192.168.1.125 / 100.82.140.84 | pi | Raspberry Pi 4 4GB, Argon ONE M.2, OctoPi 1.1.0, TAZ 5 |
+| Hostname | Tailscale IP | Username | Notes |
+|---|---|---|---|
+| femacbook | 100.72.76.32 | Flint | Primary dev machine (MacBook Pro M1) |
+| fepi41 | 100.72.119.28 | flint | Raspberry Pi 8GB, Node-RED + ai-hedge-fund + n8n 1.x |
+| octopi | 192.168.1.125 / 100.82.140.84 | pi | Raspberry Pi 4 4GB, Argon ONE M.2, OctoPi 1.1.0, TAZ 5, n8n 2.x Docker |
+| brekpi41 | 100.77.133.46 | flint | Raspberry Pi — confirm IP when back online |
+| direct-lighting | 100.110.71.33 | directlightingllc | Lighting controller (iMac) |
+
 > **femacbook terminal:** Ghostty + tmux + Starship (zsh). SSH shortcuts: `ssh fepi`, `ssh brek`, `ssh dl`. Infrastructure dashboard: `control` alias.
+> Use Tailscale hostnames as canonical machine names. Always document usernames explicitly.
 
 ## Completions
 
