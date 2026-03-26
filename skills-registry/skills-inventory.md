@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-03-23
+Last updated: 2026-03-25
 
 ---
 
@@ -201,12 +201,20 @@ Last updated: 2026-03-23
 | Installed | octopi: Docker container `n8n`, port 5678; volume `n8n_data` |
 | Version | n8n 2.12.3 |
 | Purpose | Print event automation for TAZ 5. OctoPrint-Webhooks plugin (v3.0.3, 2blane fork) fires on PrintStarted/Done/Failed/Error → n8n "TAZ 5 Print Events" workflow → Discord `#print-alerts` embed + GitHub commit to `Fe62/direct-lighting-print-log/print-log.md` |
+| Local IP (WiFi) | 192.168.1.126 — normal operating address |
+| Local IP (Ethernet) | 192.168.1.125 — used when moved to office for diagnostics/updates |
 | Access | `http://100.82.140.84:5678` (Tailscale only); owner: flint@directlighting.com |
 | Workflow ID | `aQxDfVn7PKw28Qhy` |
 | OctoPrint plugin | OctoPrint-Webhooks v3.0.3; webhook target: `http://127.0.0.1:5678/webhook/print-event` (127.0.0.1 not localhost — Pi resolves IPv6 first) |
+| Webcam | Suyin HD USB via mjpg-streamer, port 8080, all interfaces |
+| Stream URL | `http://192.168.1.126:8080/?action=stream` |
+| Snapshot URL | `http://192.168.1.126:8080/?action=snapshot` |
+| Obico | Camera feed live and calibrated |
+| OctoLapse | Configured |
 | Docker | `--restart unless-stopped`, volume `n8n_data`, `N8N_SECURE_COOKIE=false` |
 | Migration note | If n8n moves off octopi, update OctoPrint webhook URL in plugin settings |
 | Added | 2026-03-23 |
+| Updated | 2026-03-25 — webcam/Obico/OctoLapse added; dual local IPs documented |
 
 ---
 

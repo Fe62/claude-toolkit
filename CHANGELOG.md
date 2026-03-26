@@ -6,6 +6,15 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-03
 
+### 2026-03-25 — octopi webcam, Obico, OctoLapse, test print
+- Installed Suyin HD USB webcam via mjpg-streamer (port 8080, all interfaces); stream/snapshot URLs confirmed
+- Obico camera feed live and calibrated; OctoLapse configured
+- Heated bed enabled in OctoPrint printer profile; Cura reconnected at 192.168.1.126
+- Test print complete — ABS 2.85mm on PEI, clean result
+- Corrected octopi local IP: .126 WiFi (normal operation), .125 ethernet (office/diagnostics)
+- Updated octopi-n8n skill entry with webcam/Obico/OctoLapse details and dual IP clarification
+- Added two lessons to master-reference.md (dual local IPs, mjpg-streamer setup)
+
 ### 2026-03-23 — octopi setup: OctoPrint Pi for TAZ 5
 - Set up Raspberry Pi 4 4GB (Argon ONE M.2, OctoPi 1.1.0, Kingston 128GB SSD) as always-on 3D print management node on Direct Lighting network
 - Installed Tailscale; Pi now at 100.82.140.84; SSH over Tailscale confirmed

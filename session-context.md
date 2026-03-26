@@ -10,7 +10,7 @@ _Updated at end of each session via the /update skill._
 |---|---|---|---|
 | femacbook | 100.72.76.32 | Flint | Primary dev machine (MacBook Pro M1) |
 | fepi41 | 100.72.119.28 | flint | Raspberry Pi 8GB, Node-RED + ai-hedge-fund + n8n 1.x |
-| octopi | 192.168.1.125 / 100.82.140.84 | pi | Raspberry Pi 4 4GB, Argon ONE M.2, OctoPi 1.1.0, TAZ 5, n8n 2.x Docker |
+| octopi | 192.168.1.126 (WiFi) / 192.168.1.125 (eth) / 100.82.140.84 | pi | Raspberry Pi 4 4GB, Argon ONE M.2, OctoPi 1.1.0, TAZ 5, n8n 2.x Docker |
 | brekpi41 | 100.77.133.46 | flint | Raspberry Pi — confirm IP when back online |
 | direct-lighting | 100.110.71.33 | directlightingllc | Lighting controller (iMac) |
 
@@ -21,6 +21,7 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-03-25 | octopi webcam + Obico + OctoLapse — Suyin HD USB cam via mjpg-streamer port 8080; Obico camera feed live and calibrated; OctoLapse configured; heated bed enabled in OctoPrint profile; Cura reconnected at new IP; test print complete (ABS 2.85mm on PEI, clean) |
 | 2026-03-23 | octopi setup — Pi 4 in Argon ONE M.2, OctoPi 1.1.0, Tailscale 100.82.140.84; Docker + n8n 2.12.3; OctoPrint-Webhooks plugin; "TAZ 5 Print Events" n8n workflow (Discord #print-alerts + GitHub job log); all services persist across reboot |
 | 2026-03-14 | Node-RED irrigation audit (87→94 nodes), 11 fixes applied, HTTP API endpoints added, webhook events to n8n wired; n8n 1.123.25 installed on fepi41 (port 5678, systemd user service); 6 oversight workflows built and activated (WF-1 heartbeat, WF-2 daily status, WF-3 water report, WF-4 valve watchdog, WF-5 sewer relay, WF-6 sewer poll); email alerting confirmed working |
 | 2026-03-12 | Data consolidation Pass 3 & 4 (fefamacbook) — vault at 33,269 files; QB entity map finalized; G&G = GAG = Garbage&Greed LLC; dot-notation convention confirmed sufficient |
@@ -62,10 +63,7 @@ _Updated at end of each session via the /update skill._
 - [ ] Evaluate Pass 3 script as template for direct-lighting migration
 - [x] Add update and simplify to Active Skills table in session-context.md
 - [x] Push toolkit updates to GitHub
-- [ ] octopi: purchase and mount USB webcam on TAZ 5 frame (gooseneck/arm, front-facing)
-- [ ] octopi: Obico calibration (pending webcam)
-- [ ] octopi: OctoLapse configuration (pending webcam)
-- [ ] octopi: test print — confirm Discord notification and GitHub job log fire end-to-end
+- [ ] octopi: confirm mjpg-streamer autostarts on boot (verify service configured)
 - [ ] octopi: add `export TERM=xterm-256color` to ~/.bashrc on Pi (permanent fix for Ghostty SSH sessions)
 - [ ] octopi: add octopi pane to Ghostty control-room dashboard
 - [ ] octopi: write admin guide (Tailscale, SSH, n8n, OctoPrint admin, plugin updates)

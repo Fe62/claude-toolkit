@@ -1,6 +1,6 @@
 # Master Reference — Claude Toolkit Bible
 
-Last updated: 2026-03-23
+Last updated: 2026-03-25
 
 ---
 
@@ -521,6 +521,18 @@ Correct method: boot a temp SD card on the Pi → flash SSD from within the runn
 LulzBot printer profiles (including TAZ 5) were removed from Ultimaker Cura around v5.
 Use LulzBot's own Cura fork from lulzbot.com/software for native TAZ profiles and
 built-in OctoPrint integration.
+
+### 2026-03-25 — octopi has two local IPs
+192.168.1.126 is the WiFi address (normal operating address).
+192.168.1.125 is the ethernet address (used when moved to office for diagnostics/updates).
+Tailscale 100.82.140.84 is the canonical remote address regardless of which LAN interface is active.
+
+### 2026-03-25 — mjpg-streamer for OctoPrint webcam on Raspberry Pi
+Suyin HD USB webcam works via mjpg-streamer on port 8080, bound to all interfaces.
+Stream URL: `http://<ip>:8080/?action=stream`
+Snapshot URL: `http://<ip>:8080/?action=snapshot`
+Both Obico and OctoLapse consume these URLs. Bind to all interfaces (not just localhost) so
+OctoPrint and Obico can reach the stream from different processes/contexts.
 
 ### 2026-03-14 — zsh strips inline # comments from pasted command lines
 zsh does not accept inline `#` comments on the same line as a command. When pasting
