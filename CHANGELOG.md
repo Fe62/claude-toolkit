@@ -6,6 +6,12 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-03
 
+### 2026-03-26 — octopi TAZ 5 documentation suite
+- Wrote taz5-admin-guide.docx — full system reference (network, plugins, Cura, Obico, n8n, multi-user, maintenance)
+- Wrote taz5-user-guide.docx — print workflows, monitoring, filament loading, bed leveling, materials reference, troubleshooting
+- Wrote taz5-new-user-setup.docx — 1-page onboarding sheet (software → account → Cura → API key → first print)
+- Added three-tier doc pattern lesson to master-reference.md
+
 ### 2026-03-25 — octopi webcam, Obico, OctoLapse, test print
 - Installed Suyin HD USB webcam via mjpg-streamer (port 8080, all interfaces); stream/snapshot URLs confirmed
 - Obico camera feed live and calibrated; OctoLapse configured

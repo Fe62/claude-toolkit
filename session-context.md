@@ -21,6 +21,7 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-03-26 | octopi TAZ 5 documentation suite — taz5-admin-guide.docx (full system reference), taz5-user-guide.docx (print workflows, materials, troubleshooting), taz5-new-user-setup.docx (1-page onboarding sheet) |
 | 2026-03-25 | octopi webcam + Obico + OctoLapse — Suyin HD USB cam via mjpg-streamer port 8080; Obico camera feed live and calibrated; OctoLapse configured; heated bed enabled in OctoPrint profile; Cura reconnected at new IP; test print complete (ABS 2.85mm on PEI, clean) |
 | 2026-03-23 | octopi setup — Pi 4 in Argon ONE M.2, OctoPi 1.1.0, Tailscale 100.82.140.84; Docker + n8n 2.12.3; OctoPrint-Webhooks plugin; "TAZ 5 Print Events" n8n workflow (Discord #print-alerts + GitHub job log); all services persist across reboot |
 | 2026-03-14 | Node-RED irrigation audit (87→94 nodes), 11 fixes applied, HTTP API endpoints added, webhook events to n8n wired; n8n 1.123.25 installed on fepi41 (port 5678, systemd user service); 6 oversight workflows built and activated (WF-1 heartbeat, WF-2 daily status, WF-3 water report, WF-4 valve watchdog, WF-5 sewer relay, WF-6 sewer poll); email alerting confirmed working |
@@ -66,8 +67,7 @@ _Updated at end of each session via the /update skill._
 - [ ] octopi: confirm mjpg-streamer autostarts on boot (verify service configured)
 - [ ] octopi: add `export TERM=xterm-256color` to ~/.bashrc on Pi (permanent fix for Ghostty SSH sessions)
 - [ ] octopi: add octopi pane to Ghostty control-room dashboard
-- [ ] octopi: write admin guide (Tailscale, SSH, n8n, OctoPrint admin, plugin updates)
-- [ ] octopi: write shop staff user guide (local network access, print ops, basic troubleshooting)
+- [ ] octopi: store taz5-admin-guide.docx, taz5-user-guide.docx, taz5-new-user-setup.docx somewhere accessible (shared drive or vault)
 
 ---
 

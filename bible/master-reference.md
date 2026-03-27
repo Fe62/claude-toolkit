@@ -1,6 +1,6 @@
 # Master Reference — Claude Toolkit Bible
 
-Last updated: 2026-03-25
+Last updated: 2026-03-26
 
 ---
 
@@ -521,6 +521,14 @@ Correct method: boot a temp SD card on the Pi → flash SSD from within the runn
 LulzBot printer profiles (including TAZ 5) were removed from Ultimaker Cura around v5.
 Use LulzBot's own Cura fork from lulzbot.com/software for native TAZ profiles and
 built-in OctoPrint integration.
+
+### 2026-03-26 — Three-tier doc set for shared lab/shop equipment
+For equipment used by multiple people with different skill levels, a three-tier documentation
+set reduces friction and support burden:
+1. **Admin guide** — full system reference (network, accounts, services, plugins, maintenance)
+2. **User guide** — operational workflows (print setup, monitoring, materials, troubleshooting)
+3. **Onboarding sheet** — 1-page linear flow: software downloads → account → connection → first use
+The onboarding sheet has the highest ROI — it eliminates the most common first-day friction.
 
 ### 2026-03-25 — octopi has two local IPs
 192.168.1.126 is the WiFi address (normal operating address).
