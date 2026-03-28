@@ -6,6 +6,12 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-03
 
+### 2026-03-28 — last30days skill reinstalled
+- Reinstalled /last30days skill at ~/.claude/skills/last30days; confirmed working with DMX lighting trends research run
+- X (15 posts) and web (18 pages) returned results; Reddit/HN/Bluesky blocked by macOS SSL cert errors (CERTIFICATE_VERIFY_FAILED)
+- ~/Documents/Last30Days/ established as canonical output folder for research summaries
+- Updated skills-inventory.md with reinstall date, output folder, and SSL known issue
+
 ### 2026-03-26 — octopi TAZ 5 documentation suite
 - Wrote taz5-admin-guide.docx — full system reference (network, plugins, Cura, Obico, n8n, multi-user, maintenance)
 - Wrote taz5-user-guide.docx — print workflows, monitoring, filament loading, bed leveling, materials reference, troubleshooting

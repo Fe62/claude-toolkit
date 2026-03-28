@@ -21,6 +21,7 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-03-28 | last30days skill reinstalled at ~/.claude/skills/last30days; DMX lighting trends research confirmed working (X + web); SSL cert errors blocking Reddit/HN/Bluesky on macOS noted |
 | 2026-03-26 | octopi TAZ 5 documentation suite — taz5-admin-guide.docx (full system reference), taz5-user-guide.docx (print workflows, materials, troubleshooting), taz5-new-user-setup.docx (1-page onboarding sheet) |
 | 2026-03-25 | octopi webcam + Obico + OctoLapse — Suyin HD USB cam via mjpg-streamer port 8080; Obico camera feed live and calibrated; OctoLapse configured; heated bed enabled in OctoPrint profile; Cura reconnected at new IP; test print complete (ABS 2.85mm on PEI, clean) |
 | 2026-03-23 | octopi setup — Pi 4 in Argon ONE M.2, OctoPi 1.1.0, Tailscale 100.82.140.84; Docker + n8n 2.12.3; OctoPrint-Webhooks plugin; "TAZ 5 Print Events" n8n workflow (Discord #print-alerts + GitHub job log); all services persist across reboot |
@@ -52,7 +53,7 @@ _Updated at end of each session via the /update skill._
 - [ ] Recover quickbooks skill
 - [ ] Document pdfplumber as explicit dependency (requirements.txt or registry note)
 - [ ] iCloud selective sync strategy (work/personal separation)
-- [ ] Evaluate last30days for owned adaptation — set a review date
+- [ ] Fix last30days SSL cert errors on macOS — Reddit/HN/Bluesky blocked by CERTIFICATE_VERIFY_FAILED; try `/Applications/Python*/Install\ Certificates.command` or `pip install --upgrade certifi`
 - [ ] Explore community skills: github.com/hesreallyhim/awesome-claude-code
 - [ ] Evaluate market-snapshot.py from Nick's tools (hourly SPY/QQQ/VIX)
 - [ ] Data consolidation — direct-lighting (Pass 3 migration pending)

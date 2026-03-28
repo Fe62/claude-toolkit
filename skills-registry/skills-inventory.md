@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-03-26
+Last updated: 2026-03-28
 
 ---
 
@@ -30,8 +30,11 @@ Last updated: 2026-03-26
 | Installed | ~/.claude/skills/last30days |
 | Dependencies | OpenAI API key, xAI API key (optional) |
 | Purpose | Research agent — searches internet, Reddit, and other sources for information from the last 30 days. Use for staying current on Claude Code techniques, trends, best practices, any time-sensitive research query. |
-| Risk | External dependency — if source repo changes or disappears, skill may break. Candidate for adaptation into owned version. |
+| Risk | External dependency — if source repo changes or disappears, skill may break. |
+| Output | Raw research saved to ~/Documents/Last30Days/ (via --save-dir flag) |
+| Known issue | Reddit, HN, and Bluesky fail on macOS with CERTIFICATE_VERIFY_FAILED — Python macOS SSL cert issue, not skill bug. Fix: run /Applications/Python*/Install\ Certificates.command or pip install --upgrade certifi |
 | Notes | API keys managed via prompt-on-entry skill (see below). Never hardcode. |
+| Reinstalled | 2026-03-28 |
 
 ---
 ### api-key-prompt
