@@ -542,6 +542,27 @@ Snapshot URL: `http://<ip>:8080/?action=snapshot`
 Both Obico and OctoLapse consume these URLs. Bind to all interfaces (not just localhost) so
 OctoPrint and Obico can reach the stream from different processes/contexts.
 
+### 2026-03-28 — CadQuery requires Python 3.10–3.12 on macOS
+OCP (OpenCASCADE Python bindings) has no pre-built wheels for Python 3.14.
+Install Python 3.12 via Homebrew and invoke CadQuery scripts explicitly:
+```bash
+brew install python@3.12
+/opt/homebrew/bin/python3.12 -m pip install cadquery --break-system-packages
+/opt/homebrew/bin/python3.12 your_script.py
+```
+Font permission warnings on import (WarnockPro `.otf` files in `/Library/Fonts/`) are harmless — OCC font renderer, no effect on output.
+
+### 2026-03-28 — OpenSCAD headless on macOS Tahoe: skip `--render` flag
+`--render` forces CGAL/F6 mode and breaks on macOS Tahoe (Qt/GL incompatibility with stable build).
+Use the snapshot/nightly build from openscad.org, and omit `--render` for both PNG and STL export.
+F5 preview export produces valid STL for most geometry. For complex boolean operations, run F6
+render manually in the OpenSCAD GUI before slicing in Cura LE.
+
+### 2026-03-28 — Use `--autocenter --viewall` for OpenSCAD headless renders
+Fixed camera distances in headless renders clip or miss parts of different sizes.
+`--autocenter --viewall` makes the camera adapt automatically to any part's bounding box.
+Always use these flags for multi-view render scripts — eliminates blank or clipped frames.
+
 ### 2026-03-14 — zsh strips inline # comments from pasted command lines
 zsh does not accept inline `#` comments on the same line as a command. When pasting
 multi-line commands from notes or scripts, strip all `#` comments before running —

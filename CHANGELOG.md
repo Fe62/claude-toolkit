@@ -6,6 +6,14 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-03
 
+### 2026-03-28 — taz5-cad skill built and tested
+- Built taz5-cad skill (6 files: SKILL.md, machine-config.md, material-profiles.md, tool-decision.md, render.sh, CLAUDE.md) and /taz5-cad slash command
+- Skill tested end-to-end: flange generated in OpenSCAD, Pass 0 sanity check + 4-view autonomous render loop, STL exported manifold/clean
+- Installed OpenSCAD 2026.03.16 (snapshot, macOS Tahoe-compatible) and CadQuery 2.7.0 (under python3.12 — python3.14 lacks OCP wheels)
+- Added OpenSCAD missing-binary guard to render.sh; documented python3.12 invocation requirement
+- Added 3 lessons to master-reference.md (CadQuery python version, OpenSCAD Tahoe --render flag, --autocenter --viewall)
+- Fixed last30days SSL cert errors (ran Install Certificates.command for Python 3.14)
+
 ### 2026-03-28 — last30days skill reinstalled
 - Reinstalled /last30days skill at ~/.claude/skills/last30days; confirmed working with DMX lighting trends research run
 - X (15 posts) and web (18 pages) returned results; Reddit/HN/Bluesky blocked by macOS SSL cert errors (CERTIFICATE_VERIFY_FAILED)

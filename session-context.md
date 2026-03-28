@@ -21,6 +21,7 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-03-28 | taz5-cad skill built (SKILL.md, machine-config.md, material-profiles.md, tool-decision.md, render.sh, CLAUDE.md); /taz5-cad slash command created; tested end-to-end with flange (4-view render loop, STL export clean); OpenSCAD 2026.03.16 + CadQuery 2.7.0 installed on femacbook |
 | 2026-03-28 | last30days skill reinstalled at ~/.claude/skills/last30days; DMX lighting trends research confirmed working (X + web); SSL cert errors blocking Reddit/HN/Bluesky on macOS noted |
 | 2026-03-26 | octopi TAZ 5 documentation suite — taz5-admin-guide.docx (full system reference), taz5-user-guide.docx (print workflows, materials, troubleshooting), taz5-new-user-setup.docx (1-page onboarding sheet) |
 | 2026-03-25 | octopi webcam + Obico + OctoLapse — Suyin HD USB cam via mjpg-streamer port 8080; Obico camera feed live and calibrated; OctoLapse configured; heated bed enabled in OctoPrint profile; Cura reconnected at new IP; test print complete (ABS 2.85mm on PEI, clean) |
@@ -53,7 +54,10 @@ _Updated at end of each session via the /update skill._
 - [ ] Recover quickbooks skill
 - [ ] Document pdfplumber as explicit dependency (requirements.txt or registry note)
 - [ ] iCloud selective sync strategy (work/personal separation)
-- [ ] Fix last30days SSL cert errors on macOS — Reddit/HN/Bluesky blocked by CERTIFICATE_VERIFY_FAILED; try `/Applications/Python*/Install\ Certificates.command` or `pip install --upgrade certifi`
+- [ ] Back up ~/.claude/commands/taz5-cad.md to toolkit or dotfiles repo (not tracked in git)
+- [ ] Install yt-dlp for last30days YouTube support (`brew install yt-dlp`)
+- [ ] Test taz5-cad skill with a CadQuery part (first real use of python3.12 path)
+- [ ] Phase 2: auto-upload STL to OctoPrint after final taz5-cad render (n8n already on octopi)
 - [ ] Explore community skills: github.com/hesreallyhim/awesome-claude-code
 - [ ] Evaluate market-snapshot.py from Nick's tools (hourly SPY/QQQ/VIX)
 - [ ] Data consolidation — direct-lighting (Pass 3 migration pending)
@@ -86,3 +90,4 @@ _Updated at end of each session via the /update skill._
 | node-red-irrigation | fepi41: ~/.node-red/Flint.flows | active |
 | n8n-oversight | fepi41: ~/.n8n, port 5678 | active |
 | octopi-n8n | octopi: Docker n8n, port 5678 | active |
+| taz5-cad | skills/taz5-cad/ + ~/.claude/commands/taz5-cad.md | active |

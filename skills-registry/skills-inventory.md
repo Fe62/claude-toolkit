@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-03-28
+Last updated: 2026-03-28 (session 2)
 
 ---
 
@@ -218,6 +218,24 @@ Last updated: 2026-03-28
 | Migration note | If n8n moves off octopi, update OctoPrint webhook URL in plugin settings |
 | Added | 2026-03-23 |
 | Updated | 2026-03-25 — webcam/Obico/OctoLapse added; dual local IPs documented |
+
+---
+
+### taz5-cad
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Installed | skills/taz5-cad/ (toolkit); ~/.claude/commands/taz5-cad.md (slash command — not in git, back up if machine rebuilt) |
+| Type | Custom slash command (`/taz5-cad`) + skill files |
+| Dependencies | OpenSCAD 2026.03.16 (`/Applications/OpenSCAD.app`) — snapshot build, Tahoe-compatible; CadQuery 2.7.0 under `/opt/homebrew/bin/python3.12` (python3/3.14 lacks OCP wheels) |
+| Purpose | Generate print-ready parts for LulzBot TAZ 5 from plain language. Selects OpenSCAD vs CadQuery, generates parametric code, runs Pass 0 sanity render, then 2–3 autonomous 4-view render/critique/refine rounds before presenting final STL. ABS/PETG profiles and machine constraints baked in. |
+| Output | ~/Desktop/taz5-renders/ — STL + 4 PNGs per part |
+| Tested | 2026-03-28 — flange (2"×3", 1" center hole, 4×M4, 6mm boss); 4-view loop clean, STL manifold NoError |
+| Render notes | --render flag (CGAL/F6) breaks on macOS Tahoe — render.sh uses F5 preview export. For complex booleans, run F6 manually in OpenSCAD GUI before slicing. |
+| CadQuery notes | Always invoke with `/opt/homebrew/bin/python3.12`. Font permission warnings on import (WarnockPro) are harmless. |
+| Phase 2 | Auto-upload STL to OctoPrint; slice profile selection; n8n → Discord print status |
+| Added | 2026-03-28 |
 
 ---
 
