@@ -22,6 +22,8 @@
 set -e
 
 OPENSCAD="/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD"
+[ -x "$OPENSCAD" ] || { echo "Error: OpenSCAD not found at $OPENSCAD"; echo "Install: brew install --cask openscad (or snapshot from openscad.org)"; exit 1; }
+
 OUTDIR="$HOME/Desktop/taz5-renders"
 mkdir -p "$OUTDIR"
 

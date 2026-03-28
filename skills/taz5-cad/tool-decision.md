@@ -36,11 +36,14 @@ Trigger words that suggest CadQuery:
 **OpenSCAD:** `/Applications/OpenSCAD.app` — must be installed separately
 - Download: openscad.org (use snapshot/nightly on macOS Tahoe — stable has render issues)
 
-**CadQuery:** Install on first use
+**CadQuery:** Installed under Python 3.12 (default python3 is 3.14 — OCP wheels not yet available for 3.14)
 ```bash
-pip install cadquery
+# Already installed. To verify:
+/opt/homebrew/bin/python3.12 -c "import cadquery; print(cadquery.__version__)"
 ```
-Verify: `python3 -c "import cadquery; print(cadquery.__version__)"`
+Always invoke CadQuery scripts with `/opt/homebrew/bin/python3.12`, not `python3`.
+
+Font permission warnings on import (WarnockPro) are harmless — OCC font renderer, no effect on output.
 
 ---
 
