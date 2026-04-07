@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-03-28 (session 2)
+Last updated: 2026-04-06
 
 ---
 
@@ -20,6 +20,27 @@ Last updated: 2026-03-28 (session 2)
 ---
 
 ## Active Skills
+
+### feops-openclaw
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Host | feair (100.127.24.95, user: feair) |
+| Workspace | /Users/feair/.openclaw/workspace/ |
+| Gateway | loopback port 18789; Tailscale Serve at https://feairs-macbook-air.tail4bfd96.ts.net |
+| Channels | Telegram (bot, Flint only); iMessage +1 323-244-0868 (not yet paired) |
+| Purpose | FeOps — ops manager agent monitoring fepi41, brekpi41, octopi. Orchestrator/Coordinator role. Checks node reachability and service health, alerts Flint via Telegram. Future: coordinates service agents per SERVICE_AGENT_MESSAGE_CONTRACT.md |
+| Key files | SOUL.md (scope + web fetch policy), TOOLS.md (node inventory + thresholds), HEARTBEAT.md (ops checklist), AGENTS.md, MESSAGE_CONTRACT.md, SERVICE_AGENT_MESSAGE_CONTRACT.md, fepi41/brekpi41/octopi-openclaw-ops.md |
+| Models | Primary: openai-codex/gpt-5.4; fallbacks: kimi-k2.5, qwen2.5, claude-sonnet-4-6, gemini-3.1-pro |
+| SSH | ssh via sshpass: `sshpass -p '7787' ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes feair@100.127.24.95` |
+| Node connections | brekpi41: SSH tunnel pattern (Pi tunnels to Mac loopback); fepi41/octopi: not yet deployed |
+| Skills installed | ssh-exec (ClawHub) |
+| Operating mode | Solo mode — no service agents deployed yet; FeOps polls nodes directly |
+| Open work | Pair iMessage; add Victron polling method; delete BOOTSTRAP.md; rotate exposed tokens; deploy nodes on fepi41 + octopi |
+| Added | 2026-04-06 |
+
+---
 
 ### last30days
 | Field | Detail |

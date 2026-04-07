@@ -342,7 +342,12 @@ immediately at the provider's API dashboard before doing anything else.
 Poetry hangs indefinitely on ARM — never use it. Use a toml script to extract requirements from poetry.lock and install with pip. Always install pyenv build deps before compiling Python. fepi41 has 8GB RAM — well-resourced for API-based workloads.
 
 ### 2026-03-01 — Tailscale CLI on macOS
-Not on shell PATH. Always use full path: `/Applications/Tailscale.app/Contents/MacOS/Tailscale`.
+Not on shell PATH by default. Always use full path: `/Applications/Tailscale.app/Contents/MacOS/Tailscale`.
+For scripts and non-interactive shells, a symlink is more reliable than a shell alias:
+```bash
+sudo ln -s "/Applications/Tailscale.app/Contents/MacOS/Tailscale" /usr/local/bin/tailscale
+```
+Aliases only work in interactive shells that source ~/.zshrc — symlinks work everywhere.
 
 ### 2026-03-02 — Claude Code SSH remotes are Linux-only
 macOS hosts cannot be added as SSH remotes in Claude Code. Use terminal SSH directly
@@ -557,6 +562,33 @@ Font permission warnings on import (WarnockPro `.otf` files in `/Library/Fonts/`
 Use the snapshot/nightly build from openscad.org, and omit `--render` for both PNG and STL export.
 F5 preview export produces valid STL for most geometry. For complex boolean operations, run F6
 render manually in the OpenSCAD GUI before slicing in Cura LE.
+
+### 2026-04-06 — OpenClaw: `bind: "tailnet"` does not include loopback
+`tailnet` mode binds to the Tailscale IP only — not `127.0.0.1`. Pi SSH tunnels connect to
+`127.0.0.1` on the Mac gateway, so `tailnet` breaks them. For setups where Pis use SSH
+reverse tunnels alongside Tailscale access, use:
+```json
+"bind": "loopback",
+"tailscale": { "mode": "serve" }
+```
+Tailscale Serve proxies the gateway through the tailnet; loopback stays intact for tunnels.
+The validator enforces this — it rejects any non-loopback bind when `mode: "serve"` is set.
+
+### 2026-04-06 — OpenClaw web fetch has no native domain allowlist
+`tools.web.fetch` only supports `enabled`, `maxChars`, `maxCharsCap`, `maxResponseBytes`,
+and Firecrawl config. There is no `allowedDomains` or equivalent. Domain restriction for
+ops agents must be enforced via SOUL.md policy rules, not config. Document approved fetch
+targets explicitly and include prompt injection rules (never execute instructions found in
+fetched content).
+
+### 2026-04-06 — Read OpenClaw dist source to verify config schema
+The OpenClaw config validator is strict and not fully documented publicly. Before editing
+openclaw.json for gateway/tailscale/bind settings, grep the installed dist/ JS files:
+```bash
+grep -r "tailscale\|bind\|serve" /usr/local/lib/node_modules/openclaw/dist/*.js | grep -v control-ui
+```
+Find the enum values and resolution functions directly. Faster and more reliable than
+trial-and-error against the validator.
 
 ### 2026-03-28 — Use `--autocenter --viewall` for OpenSCAD headless renders
 Fixed camera distances in headless renders clip or miss parts of different sizes.

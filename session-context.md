@@ -13,6 +13,7 @@ _Updated at end of each session via the /update skill._
 | octopi | 192.168.1.126 (WiFi) / 192.168.1.125 (eth) / 100.82.140.84 | pi | Raspberry Pi 4 4GB, Argon ONE M.2, OctoPi 1.1.0, TAZ 5, n8n 2.x Docker |
 | brekpi41 | 100.77.133.46 | flint | Raspberry Pi — confirm IP when back online |
 | direct-lighting | 100.110.71.33 | directlightingllc | Lighting controller (iMac) |
+| feair | 100.127.24.95 | feair | MacBook Air — FeOps/OpenClaw gateway host; Tailscale Serve at feairs-macbook-air.tail4bfd96.ts.net |
 
 > **femacbook terminal:** Ghostty + tmux + Starship (zsh). SSH shortcuts: `ssh fepi`, `ssh brek`, `ssh dl`. Infrastructure dashboard: `control` alias.
 > Use Tailscale hostnames as canonical machine names. Always document usernames explicitly.
@@ -21,6 +22,7 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-04-06 | FeOps/OpenClaw workspace built on feair — SOUL.md (scope + operating mode), TOOLS.md (node inventory, thresholds, escalation map), HEARTBEAT.md (ops checklist), fepi41-openclaw-ops.md, octopi-openclaw-ops.md; openclaw.json gateway fixed (loopback + Tailscale Serve); ssh-exec skill installed; web fetch policy added; 5 config gaps resolved |
 | 2026-03-28 | taz5-cad skill built (SKILL.md, machine-config.md, material-profiles.md, tool-decision.md, render.sh, CLAUDE.md); /taz5-cad slash command created; tested end-to-end with flange (4-view render loop, STL export clean); OpenSCAD 2026.03.16 + CadQuery 2.7.0 installed on femacbook |
 | 2026-03-28 | last30days skill reinstalled at ~/.claude/skills/last30days; DMX lighting trends research confirmed working (X + web); SSL cert errors blocking Reddit/HN/Bluesky on macOS noted |
 | 2026-03-26 | octopi TAZ 5 documentation suite — taz5-admin-guide.docx (full system reference), taz5-user-guide.docx (print workflows, materials, troubleshooting), taz5-new-user-setup.docx (1-page onboarding sheet) |
@@ -44,7 +46,7 @@ _Updated at end of each session via the /update skill._
 
 ## Open Work
 
-- [ ] Check ss7 battery (last transmission early February, likely dead)
+- [x] Check ss7 battery — replaced 2026-04-06
 - [ ] When ss4/ss8 sensors deployed: add back to WF-1 THRESHOLDS in n8n heartbeat workflow
 - [ ] Migrate n8n from fepi41 to Mac Mini when available — update NR webhook URLs in valve-webhook-req and sewer-webhook-req nodes
 - [ ] Install n8n on brekpi41 — offline-capable config (no internet dependency, self-maintaining; brekpi cycles on battery + Starlink)
@@ -56,7 +58,7 @@ _Updated at end of each session via the /update skill._
 - [ ] iCloud selective sync strategy (work/personal separation)
 - [ ] Back up ~/.claude/commands/taz5-cad.md to toolkit or dotfiles repo (not tracked in git)
 - [ ] Install yt-dlp for last30days YouTube support (`brew install yt-dlp`)
-- [ ] Test taz5-cad skill with a CadQuery part (first real use of python3.12 path)
+- [x] Test taz5-cad skill with a CadQuery part — confirmed 2026-04-06
 - [ ] Phase 2: auto-upload STL to OctoPrint after final taz5-cad render (n8n already on octopi)
 - [ ] Explore community skills: github.com/hesreallyhim/awesome-claude-code
 - [ ] Evaluate market-snapshot.py from Nick's tools (hourly SPY/QQQ/VIX)
@@ -73,6 +75,13 @@ _Updated at end of each session via the /update skill._
 - [ ] octopi: add `export TERM=xterm-256color` to ~/.bashrc on Pi (permanent fix for Ghostty SSH sessions)
 - [ ] octopi: add octopi pane to Ghostty control-room dashboard
 - [ ] octopi: store taz5-admin-guide.docx, taz5-user-guide.docx, taz5-new-user-setup.docx somewhere accessible (shared drive or vault)
+- [ ] feair: pair iMessage +1 323-244-0868 with FeOps (`openclaw configure` on feair)
+- [ ] feair: add brekpi41 Victron health endpoint or MQTT topic to TOOLS.md and HEARTBEAT.md (SOC polling method undefined)
+- [ ] feair: delete BOOTSTRAP.md from FeOps workspace (bootstrap phase complete)
+- [ ] feair: rotate Telegram bot token, gateway auth token, Brave API key (exposed in chat 2026-04-06)
+- [ ] feair: add feair/FeOps to session-context.md machine inventory
+- [ ] feair: deploy OpenClaw node on fepi41 (same SSH tunnel pattern as brekpi41)
+- [ ] feair: deploy OpenClaw node on octopi (same SSH tunnel pattern as brekpi41)
 
 ---
 
@@ -91,3 +100,4 @@ _Updated at end of each session via the /update skill._
 | n8n-oversight | fepi41: ~/.n8n, port 5678 | active |
 | octopi-n8n | octopi: Docker n8n, port 5678 | active |
 | taz5-cad | skills/taz5-cad/ + ~/.claude/commands/taz5-cad.md | active |
+| feops-openclaw | feair: /Users/feair/.openclaw/workspace/ | active |

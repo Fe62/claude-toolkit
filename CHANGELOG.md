@@ -4,6 +4,17 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ---
 
+## 2026-04
+
+### 2026-04-06 — FeOps/OpenClaw workspace + config
+- Built FeOps workspace on feair: SOUL.md (scope + operating mode), TOOLS.md (node inventory, thresholds, escalation map), HEARTBEAT.md (ops checklist), fepi41-openclaw-ops.md, octopi-openclaw-ops.md
+- Fixed openclaw.json: gateway now `bind: loopback` + `tailscale.mode: serve`; Tailscale Serve active at feairs-macbook-air.tail4bfd96.ts.net
+- Added web fetch policy to SOUL.md; installed ssh-exec skill from ClawHub
+- Resolved all 5 original config gaps (Tailscale, fetch, SSH, iMessage, ackReactionScope)
+- Added feops-openclaw to skills-inventory and session-context machine inventory
+- Added 3 lessons to master-reference.md (OpenClaw bind/tailscale, fetch allowlist, dist source inspection)
+- ss7 battery replaced; taz5-cad CadQuery test confirmed
+
 ## 2026-03
 
 ### 2026-03-28 — taz5-cad skill built and tested
