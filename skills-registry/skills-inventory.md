@@ -166,11 +166,17 @@ Last updated: 2026-04-06
 | Status | built |
 | Health | active |
 | Installed | iCloud Drive/vault/ — syncs to all devices |
-| Purpose | Personal OS knowledge vault. Plain markdown throughout. Folders: inbox, daily, projects, areas, knowledge, resources, archive, assets. Every folder has a README with purpose and agent permission model. |
+| Purpose | Personal OS knowledge vault and external brain. Plain markdown throughout. AI-maintained wiki in knowledge/; raw source intake in raw/; CLAUDE.md schema controls AI behaviour. |
 | Opened in | Obsidian (free) — vault at ~/Library/Mobile Documents/com~apple~CloudDocs/vault |
-| Agent rules | Always folder-scoped. /archive and /assets read-only by default. /inbox is the only open-write folder. connector-registry.md in /resources tracks all active data paths. |
+| Agent rules | Always folder-scoped. /archive and /assets read-only by default. /inbox is the only open-write folder. /raw is read-only for AI. |
+| Schema | CLAUDE.md at vault root — loads automatically when Claude Code opened from vault. Defines folder map, naming conventions, YAML frontmatter, and 4 operational cycles. |
+| raw/ | Permanent source intake shelf: articles/, papers/, notes/, repos/. Files accumulate here, never deleted or moved by AI. |
+| knowledge/ | AI-maintained wiki: concepts/, references/, people/, index.md, log.md. index.md is the master index; log.md is the append-only operation log. |
+| Vault commands | vault/.claude/commands/: wiki-ingest (deduped ingest), import-last30days (pulls last30days dumps to raw/notes/), archive-conversation (saves Claude synthesis to raw/notes/) |
+| First ingested | 2026-04-07 — hooeem-2025-external-brain article: 6 concept pages, 1 reference, 1 person page |
 | Seed files | resources/connector-registry.md, resources/templates/project-template.md |
 | Added | 2026-03-06 |
+| Updated | 2026-04-07 — CLAUDE.md, raw/, knowledge/index.md, knowledge/log.md, vault commands added |
 
 ---
 

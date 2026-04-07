@@ -6,6 +6,15 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-04
 
+### 2026-04-07 — Vault external brain activation
+- Written CLAUDE.md schema at vault root — folder map, file conventions, YAML frontmatter, 4 operational cycles (INGEST/COMPILE/QUERY/LINT), scope rules
+- Added raw/ intake shelf (articles/, papers/, notes/, repos/) — permanent source accumulation, never modified by AI
+- Added knowledge/index.md (AI-maintained master index) and knowledge/log.md (append-only operation log)
+- Built 3 vault slash commands: /wiki-ingest (deduped ingest via references/), /import-last30days (last30days dumps → raw/notes/), /archive-conversation (Claude synthesis → raw/notes/)
+- Ran first INGEST pass: hooeem-2025-external-brain article → 6 concept pages, 1 reference, 1 person page, index and log updated
+- Added 3 lessons to master-reference.md (schema prerequisite, references-as-registry, Obsidian default save location)
+- Updated obsidian-vault skills-inventory entry with schema, raw/, commands, and first ingest
+
 ### 2026-04-06 — FeOps/OpenClaw workspace + config
 - Built FeOps workspace on feair: SOUL.md (scope + operating mode), TOOLS.md (node inventory, thresholds, escalation map), HEARTBEAT.md (ops checklist), fepi41-openclaw-ops.md, octopi-openclaw-ops.md
 - Fixed openclaw.json: gateway now `bind: loopback` + `tailscale.mode: serve`; Tailscale Serve active at feairs-macbook-air.tail4bfd96.ts.net

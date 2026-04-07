@@ -22,6 +22,7 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-04-07 | Vault external brain activation — CLAUDE.md schema written, raw/ intake folder created, knowledge/index.md + log.md added, 3 vault commands built (/wiki-ingest, /import-last30days, /archive-conversation), first INGEST pass run on hooeem external brain article (6 concepts, 1 reference, 1 person page) |
 | 2026-04-06 | FeOps/OpenClaw workspace built on feair — SOUL.md (scope + operating mode), TOOLS.md (node inventory, thresholds, escalation map), HEARTBEAT.md (ops checklist), fepi41-openclaw-ops.md, octopi-openclaw-ops.md; openclaw.json gateway fixed (loopback + Tailscale Serve); ssh-exec skill installed; web fetch policy added; 5 config gaps resolved |
 | 2026-03-28 | taz5-cad skill built (SKILL.md, machine-config.md, material-profiles.md, tool-decision.md, render.sh, CLAUDE.md); /taz5-cad slash command created; tested end-to-end with flange (4-view render loop, STL export clean); OpenSCAD 2026.03.16 + CadQuery 2.7.0 installed on femacbook |
 | 2026-03-28 | last30days skill reinstalled at ~/.claude/skills/last30days; DMX lighting trends research confirmed working (X + web); SSL cert errors blocking Reddit/HN/Bluesky on macOS noted |
@@ -82,6 +83,10 @@ _Updated at end of each session via the /update skill._
 - [ ] feair: add feair/FeOps to session-context.md machine inventory
 - [ ] feair: deploy OpenClaw node on fepi41 (same SSH tunnel pattern as brekpi41)
 - [ ] feair: deploy OpenClaw node on octopi (same SSH tunnel pattern as brekpi41)
+- [ ] vault: delete stray file at vault root (`1. Which extensions are bulk-excludable?...md`)
+- [ ] vault: set up Obsidian Web Clipper browser extension → routes clipped articles to raw/articles/
+- [ ] vault: install Dataview plugin in Obsidian — live queries against YAML frontmatter
+- [ ] vault: verify Obsidian default save location routes new files to raw/ not assets/
 
 ---
 
