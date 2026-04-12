@@ -6,6 +6,15 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-04
 
+### 2026-04-12 — Vault ollama-ingest pipeline
+- Built `vault/scripts/ollama-ingest.py` — batch legacy doc cataloging via Ollama/mistral:7b; pdftotext fast path + tesseract OCR fallback for image-based scanned PDFs; JSON registry dedup; `--limit`, `--ocr`, `--dry-run`, `--target` flags
+- Installed mistral:7b (`ollama pull`), tesseract (`brew install tesseract`); poppler already present
+- OCR fallback added mid-session after 80% image-PDF failure rate discovered in first 5-file test batch
+- Crontab installed: 2am daily, `--limit 50 --ocr`, logs to `knowledge/.ollama-ingest.log`
+- Confirmed Obsidian Web Clipper installed, Dataview plugin installed, default save location → raw/
+- Session archived + /wiki-ingest run: 6 new concept pages (ollama-ingest, local-llm-inference, ocr-pipeline, batch-processing-schedule, registry-pattern)
+- Added ollama-ingest to skills-inventory; updated obsidian-vault entry; added 4 lessons to master-reference.md
+
 ### 2026-04-07 — Vault external brain activation
 - Written CLAUDE.md schema at vault root — folder map, file conventions, YAML frontmatter, 4 operational cycles (INGEST/COMPILE/QUERY/LINT), scope rules
 - Added raw/ intake shelf (articles/, papers/, notes/, repos/) — permanent source accumulation, never modified by AI

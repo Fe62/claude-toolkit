@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-04-06
+Last updated: 2026-04-12
 
 ---
 
@@ -20,6 +20,25 @@ Last updated: 2026-04-06
 ---
 
 ## Active Skills
+
+### ollama-ingest
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Location | `vault/scripts/ollama-ingest.py` |
+| Type | Standalone Python script (not a slash command) |
+| Dependencies | `ollama` + `mistral:7b`; `pdftotext` + `pdftoppm` (poppler); `tesseract` (brew); macOS `textutil` (built-in); optional: `pypdf`, `python-docx` (pip) |
+| Purpose | Bulk legacy document cataloging into the vault wiki. Targets `archive/legacy-orgs/` (10,535 files). Extracts text via pdftotext → tesseract OCR fallback for image-based scanned PDFs. Sends financial-document-tuned prompt to Ollama/mistral:7b. Writes vault-schema reference pages, concept/person stubs, updates index.md and log.md. |
+| Scheduling | Crontab: `0 2 * * *`, `--limit 50 --ocr`, output → `knowledge/.ollama-ingest.log` |
+| Registry | `knowledge/.ollama-registry.json` — dedup + state; `no-text` skips auto-retried on `--ocr` runs |
+| Key flags | `--target`, `--model`, `--limit`, `--ocr`, `--dry-run`, `--verbose`, `--ext` |
+| Division of labor | Bulk/financial legacy docs → ollama-ingest (local, nightly, free); deep comprehension/articles → `/wiki-ingest` via Claude Code |
+| Slug namespace | `legacy-*` prefix — isolated from Claude Code wiki-ingest pages |
+| Common commands | `python3 scripts/ollama-ingest.py --dry-run` (progress check); `--limit 200 --ocr` (weekend catchup); `--target archive/legacy-orgs/efit --limit 50 --ocr` (subfolder sprint) |
+| Added | 2026-04-12 |
+
+---
 
 ### feops-openclaw
 | Field | Detail |
@@ -173,10 +192,12 @@ Last updated: 2026-04-06
 | raw/ | Permanent source intake shelf: articles/, papers/, notes/, repos/. Files accumulate here, never deleted or moved by AI. |
 | knowledge/ | AI-maintained wiki: concepts/, references/, people/, index.md, log.md. index.md is the master index; log.md is the append-only operation log. |
 | Vault commands | vault/.claude/commands/: wiki-ingest (deduped ingest), import-last30days (pulls last30days dumps to raw/notes/), archive-conversation (saves Claude synthesis to raw/notes/) |
+| Bulk ingest | vault/scripts/ollama-ingest.py — nightly Ollama/mistral:7b batch pipeline for legacy docs; see ollama-ingest skill entry |
+| Plugins | Dataview (live YAML frontmatter queries); Web Clipper (browser extension → raw/articles/) |
 | First ingested | 2026-04-07 — hooeem-2025-external-brain article: 6 concept pages, 1 reference, 1 person page |
 | Seed files | resources/connector-registry.md, resources/templates/project-template.md |
 | Added | 2026-03-06 |
-| Updated | 2026-04-07 — CLAUDE.md, raw/, knowledge/index.md, knowledge/log.md, vault commands added |
+| Updated | 2026-04-12 — ollama-ingest pipeline added; Dataview + Web Clipper installed; default save location confirmed raw/ |
 
 ---
 

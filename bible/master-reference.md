@@ -600,6 +600,31 @@ on Obsidian's "Default location for new notes" setting. After setting up a raw/ 
 verify in Obsidian Settings → Files and Links → Default location for new notes → set to raw/
 (or the appropriate subfolder). Also check "Default location for new attachments".
 
+### 2026-04-12 — Test with a small batch before scheduling any pipeline
+Before installing a cron job for a batch pipeline, always run `--dry-run` then a small verbose
+batch (5–10 items) and inspect the output quality. This session caught an 80% silent failure
+rate (image-based scanned PDFs returning no text) before committing to 210 nights of runs.
+Pattern: dry run → small verbose batch → check output → schedule.
+
+### 2026-04-12 — Slug namespace isolation prevents multi-tool wiki conflicts
+When two systems write to the same wiki (e.g. ollama-ingest + /wiki-ingest), a simple naming
+prefix (`legacy-*`) prevents slug collisions with zero coordination logic. Cheap, robust, and
+self-documenting. Apply any time multiple agents or tools share a single file store.
+
+### 2026-04-12 — Two-tier LLM strategy for knowledge pipelines
+Use a local model (Ollama/mistral:7b) for bulk structured extraction where speed and cost
+matter; use a frontier model (Claude) for deep comprehension where quality matters. A shared
+registry keeps the two systems from duplicating work. The local tier handles volume; the
+frontier tier handles nuance. This pattern generalises beyond knowledge bases to any pipeline
+where throughput and quality pull in opposite directions.
+
+### 2026-04-12 — JSON registry file makes batch pipelines resumable and idempotent
+A flat JSON file mapping `filepath → result` is sufficient state for most batch pipelines.
+On every run: load registry, skip items already present, process the rest, save after each
+item. Safe to interrupt at any point — no work duplicated, no progress lost. Extend the
+result value to store the failure reason so specific failure classes can be selectively
+retried (e.g. `"reason": "no-text"` → retry when OCR is enabled).
+
 ### 2026-04-06 — Read OpenClaw dist source to verify config schema
 The OpenClaw config validator is strict and not fully documented publicly. Before editing
 openclaw.json for gateway/tailscale/bind settings, grep the installed dist/ JS files:

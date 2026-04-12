@@ -22,6 +22,7 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-04-12 | Vault ollama-ingest pipeline — scripts/ollama-ingest.py built (batch PDF/doc cataloging via Ollama/mistral:7b, pdftotext + tesseract OCR fallback, JSON registry dedup, --limit/--ocr/--dry-run flags); mistral:7b pulled, tesseract installed; OCR fallback added after 80% image-PDF failure rate discovered in first test batch; crontab installed (2am daily, --limit 50 --ocr); conversation archived + /wiki-ingest run (6 new concept pages: ollama-ingest, local-llm-inference, ocr-pipeline, batch-processing-schedule, registry-pattern); Obsidian Web Clipper installed, Dataview plugin installed, default save location set to raw/ |
 | 2026-04-07 | Vault external brain activation — CLAUDE.md schema written, raw/ intake folder created, knowledge/index.md + log.md added, 3 vault commands built (/wiki-ingest, /import-last30days, /archive-conversation), first INGEST pass run on hooeem external brain article (6 concepts, 1 reference, 1 person page) |
 | 2026-04-06 | FeOps/OpenClaw workspace built on feair — SOUL.md (scope + operating mode), TOOLS.md (node inventory, thresholds, escalation map), HEARTBEAT.md (ops checklist), fepi41-openclaw-ops.md, octopi-openclaw-ops.md; openclaw.json gateway fixed (loopback + Tailscale Serve); ssh-exec skill installed; web fetch policy added; 5 config gaps resolved |
 | 2026-03-28 | taz5-cad skill built (SKILL.md, machine-config.md, material-profiles.md, tool-decision.md, render.sh, CLAUDE.md); /taz5-cad slash command created; tested end-to-end with flange (4-view render loop, STL export clean); OpenSCAD 2026.03.16 + CadQuery 2.7.0 installed on femacbook |
@@ -84,9 +85,11 @@ _Updated at end of each session via the /update skill._
 - [ ] feair: deploy OpenClaw node on fepi41 (same SSH tunnel pattern as brekpi41)
 - [ ] feair: deploy OpenClaw node on octopi (same SSH tunnel pattern as brekpi41)
 - [ ] vault: delete stray file at vault root (`1. Which extensions are bulk-excludable?...md`)
-- [ ] vault: set up Obsidian Web Clipper browser extension → routes clipped articles to raw/articles/
-- [ ] vault: install Dataview plugin in Obsidian — live queries against YAML frontmatter
-- [ ] vault: verify Obsidian default save location routes new files to raw/ not assets/
+- [x] vault: set up Obsidian Web Clipper browser extension — installed 2026-04-12
+- [x] vault: install Dataview plugin in Obsidian — installed 2026-04-12
+- [x] vault: verify Obsidian default save location routes new files to raw/ — confirmed 2026-04-12
+- [ ] vault: tune ollama-ingest --limit once first nightly run completes (check knowledge/.ollama-ingest.log runtime)
+- [ ] Push toolkit updates to GitHub
 
 ---
 
@@ -106,3 +109,4 @@ _Updated at end of each session via the /update skill._
 | octopi-n8n | octopi: Docker n8n, port 5678 | active |
 | taz5-cad | skills/taz5-cad/ + ~/.claude/commands/taz5-cad.md | active |
 | feops-openclaw | feair: /Users/feair/.openclaw/workspace/ | active |
+| ollama-ingest | vault/scripts/ollama-ingest.py | active |
