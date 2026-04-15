@@ -6,6 +6,15 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-04
 
+### 2026-04-14 — paychex-download Phase 2 complete
+- Completed `paychex_download.py` — full end-to-end download pipeline working
+- Root cause resolved: Paychex Flex uses OIDC Bearer JWT held in Angular's in-memory `$http` interceptor; captured via `XMLHttpRequest.setRequestHeader` monkey-patch before navigation
+- `getMostFrequentlyUsedReports` fires on RPTCTR_HTML load → Bearer token captured → used for `loadPackageFolders` + `getDownloadFolderRequestURL` fetch calls
+- Last successful run: 16 PDFs extracted to `/Volumes/Public/.../Q2/Payroll.0415/`
+- Created `SESSION-CONTEXT-phase3.md` with full Phase 3 spec (launchd, log, Discord, QB AppleScript)
+- Added paychex-download to skills-inventory and session-context active skills
+- Added 4 Playwright/CDP/Paychex lessons to master-reference.md
+
 ### 2026-04-12 — Vault ollama-ingest pipeline
 - Built `vault/scripts/ollama-ingest.py` — batch legacy doc cataloging via Ollama/mistral:7b; pdftotext fast path + tesseract OCR fallback for image-based scanned PDFs; JSON registry dedup; `--limit`, `--ocr`, `--dry-run`, `--target` flags
 - Installed mistral:7b (`ollama pull`), tesseract (`brew install tesseract`); poppler already present

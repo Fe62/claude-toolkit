@@ -611,6 +611,18 @@ When two systems write to the same wiki (e.g. ollama-ingest + /wiki-ingest), a s
 prefix (`legacy-*`) prevents slug collisions with zero coordination logic. Cheap, robust, and
 self-documenting. Apply any time multiple agents or tools share a single file store.
 
+### 2026-04-14 — Paychex Flex Bearer token is in Angular's in-memory $http interceptor only
+The `Authorization: Bearer <JWT>` OIDC token is held exclusively in AngularJS's `$http` interceptor — not in localStorage, sessionStorage, cookies, or any `window.*` global. The only way to capture it via Playwright CDP is to monkey-patch `XMLHttpRequest.prototype.setRequestHeader` via `page.evaluate()` before navigating. Angular's own page-load requests carry the token; intercept from there. Token lifetime ~30 minutes.
+
+### 2026-04-14 — x-payx-sid is not Paychex auth — Apache validates the Bearer JWT
+`x-payx-sid` is a session correlation ID. Apache-level 401 fires when the `Authorization: Bearer` JWT is absent or invalid. Having a valid sid with no Bearer token returns 401. Don't conflate the two.
+
+### 2026-04-14 — page.reload() strips the URL hash in CDP-attached Playwright sessions
+`page.reload()` drops the fragment entirely, breaking AngularJS hash routing (`#?mode=admin&app=RPTCTR_HTML`). Use `page.evaluate("() => { window.location.href = 'url#hash' }")` to navigate to hash routes. If the new hash matches the current one, bounce through a neutral route (e.g. DASHBOARD) first so Angular fires a real route-change event.
+
+### 2026-04-14 — CDP mode Playwright: route interception and init scripts don't work on existing pages
+In CDP mode (attaching to an already-running browser): `context.route()` never intercepts, `page.add_init_script()` doesn't apply to pages that already exist, and calling `resp.text()` inside a sync CDP response handler raises `asyncio.CancelledError`. The correct pattern: install interceptors via `page.evaluate()` after attaching, then make your own `fetch()` calls from within the page context using captured tokens.
+
 ### 2026-04-12 — Two-tier LLM strategy for knowledge pipelines
 Use a local model (Ollama/mistral:7b) for bulk structured extraction where speed and cost
 matter; use a frontier model (Claude) for deep comprehension where quality matters. A shared

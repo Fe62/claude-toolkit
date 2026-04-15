@@ -22,6 +22,7 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-04-14 | paychex-download Phase 2 — `paychex_download.py` complete. CDP to Brave, XHR interceptor captures OIDC Bearer JWT from Angular in-memory auth, calls loadPackageFolders + getDownloadFolderRequestURL, downloads zip, extracts 16 PDFs to NAS. Last run: Payroll.0415. Phase 3 spec written to SESSION-CONTEXT-phase3.md. |
 | 2026-04-12 | Vault ollama-ingest pipeline — scripts/ollama-ingest.py built (batch PDF/doc cataloging via Ollama/mistral:7b, pdftotext + tesseract OCR fallback, JSON registry dedup, --limit/--ocr/--dry-run flags); mistral:7b pulled, tesseract installed; OCR fallback added after 80% image-PDF failure rate discovered in first test batch; crontab installed (2am daily, --limit 50 --ocr); conversation archived + /wiki-ingest run (6 new concept pages: ollama-ingest, local-llm-inference, ocr-pipeline, batch-processing-schedule, registry-pattern); Obsidian Web Clipper installed, Dataview plugin installed, default save location set to raw/ |
 | 2026-04-07 | Vault external brain activation — CLAUDE.md schema written, raw/ intake folder created, knowledge/index.md + log.md added, 3 vault commands built (/wiki-ingest, /import-last30days, /archive-conversation), first INGEST pass run on hooeem external brain article (6 concepts, 1 reference, 1 person page) |
 | 2026-04-06 | FeOps/OpenClaw workspace built on feair — SOUL.md (scope + operating mode), TOOLS.md (node inventory, thresholds, escalation map), HEARTBEAT.md (ops checklist), fepi41-openclaw-ops.md, octopi-openclaw-ops.md; openclaw.json gateway fixed (loopback + Tailscale Serve); ssh-exec skill installed; web fetch policy added; 5 config gaps resolved |
@@ -90,6 +91,7 @@ _Updated at end of each session via the /update skill._
 - [x] vault: verify Obsidian default save location routes new files to raw/ — confirmed 2026-04-12
 - [ ] vault: tune ollama-ingest --limit once first nightly run completes (check knowledge/.ollama-ingest.log runtime)
 - [ ] Push toolkit updates to GitHub
+- [ ] paychex Phase 3: launchd plist (Tuesday 8am), per-run log file, Discord webhook (success + error), AppleScript QB Desktop IIF import, end-to-end test (download → IIF → QB import)
 
 ---
 
@@ -109,4 +111,5 @@ _Updated at end of each session via the /update skill._
 | octopi-n8n | octopi: Docker n8n, port 5678 | active |
 | taz5-cad | skills/taz5-cad/ + ~/.claude/commands/taz5-cad.md | active |
 | feops-openclaw | feair: /Users/feair/.openclaw/workspace/ | active |
+| paychex-download | skills/paychex payroll automation/paychex_download.py | active |
 | ollama-ingest | vault/scripts/ollama-ingest.py | active |

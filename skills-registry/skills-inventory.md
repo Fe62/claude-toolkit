@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-04-12
+Last updated: 2026-04-14
 
 ---
 
@@ -20,6 +20,25 @@ Last updated: 2026-04-12
 ---
 
 ## Active Skills
+
+### paychex-download
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Location | `skills/paychex payroll automation/paychex_download.py` |
+| Type | Standalone Python script |
+| Dependencies | `playwright` + Chromium; macOS Keychain entries: `paychex`/`username`, `paychex-password`/`password`; DirectNAS mounted at `/Volumes/Public` |
+| Purpose | Automates Paychex Flex weekly payroll zip download for Direct Lighting LLC. Connects to existing Brave session via CDP, installs XHR interceptor to capture OIDC Bearer JWT from Angular's in-memory auth service, calls `loadPackageFolders` + `getDownloadFolderRequestURL`, downloads zip, extracts to correct NAS folder (`Q{1-4}/Payroll.MMDD`). |
+| Auth method | XHR monkey-patch captures `Authorization: Bearer <JWT>` from Angular's own `getMostFrequentlyUsedReports` page-load request. `x-payx-sid` is correlation only. |
+| Brave requirement | Brave must be running with `--remote-debugging-port=9222` before script runs |
+| NAS path | `/Volumes/Public/Direct Lighting/Direct Lighting LLC/1.Direct.Payroll/1.Payrolls/26.Payrolls/Q{n}/Payroll.MMDD/` |
+| Usage | `python3 paychex_download.py` (uses today's date) or `python3 paychex_download.py 2026-04-15` |
+| Phase 3 pending | launchd plist (Tuesday 8am), per-run log, Discord webhook, AppleScript QB import |
+| Session context | `skills/paychex payroll automation/SESSION-CONTEXT-phase3.md` |
+| Added | 2026-04-14 |
+
+---
 
 ### ollama-ingest
 | Field | Detail |
