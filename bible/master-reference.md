@@ -623,6 +623,15 @@ The `Authorization: Bearer <JWT>` OIDC token is held exclusively in AngularJS's 
 ### 2026-04-14 — CDP mode Playwright: route interception and init scripts don't work on existing pages
 In CDP mode (attaching to an already-running browser): `context.route()` never intercepts, `page.add_init_script()` doesn't apply to pages that already exist, and calling `resp.text()` inside a sync CDP response handler raises `asyncio.CancelledError`. The correct pattern: install interceptors via `page.evaluate()` after attaching, then make your own `fetch()` calls from within the page context using captured tokens.
 
+### 2026-04-17 — Paychex Flex login: SPA shows both cards simultaneously after OIDC handoff
+On `login.flex.paychex.com/login_static/UsernameOnly.html`, only the username card is visible. After clicking Continue, the SPA navigates to `index.html?oac=<JWT>` (same domain — safe). On this URL, BOTH `#login-username` (shown as context, w=340) and `#login-password` (active input, w=317.5) are visible simultaneously. Always check `#login-password` visibility BEFORE `#login-username` in detection order, or the loop will get stuck re-filling the username card forever.
+
+### 2026-04-17 — Paychex Flex: post-OIDC dashboard URL is landing_remote/login.do, not /html
+After username+password, the OIDC code exchange redirects to `myapps.paychex.com/landing_remote/login.do?lang=en&landingRedirect=true#...`. The dashboard shows at this URL — not at `landing_remote/html` as one might expect. `landing_remote/login.do` can show either the dashboard OR a security question depending on session state. Distinguish by DOM: dashboard has zero visible `<input>` elements; security question / MFA has one or more. Use `is_dashboard_tab()` pattern: check URL contains `"landing_remote"` AND `visible_inputs == 0`.
+
+### 2026-04-17 — Playwright CDP: page.url goes stale after cross-domain navigation
+When a page navigates cross-domain (e.g. `login.flex.paychex.com` → `myapps.paychex.com` via OIDC redirect), the Playwright `page` object's `.url` property can freeze at the last same-domain URL for the remainder of the session — even while the tab visibly loads the new domain. Never rely on `page.url` for cross-domain post-auth monitoring. Instead, scan `context.pages` directly on every iteration to find tabs at the new domain. The `page` reference from `connect_over_cdp` is a snapshot handle; `ctx.pages` is always live.
+
 ### 2026-04-12 — Two-tier LLM strategy for knowledge pipelines
 Use a local model (Ollama/mistral:7b) for bulk structured extraction where speed and cost
 matter; use a frontier model (Claude) for deep comprehension where quality matters. A shared
@@ -636,6 +645,12 @@ On every run: load registry, skip items already present, process the rest, save 
 item. Safe to interrupt at any point — no work duplicated, no progress lost. Extend the
 result value to store the failure reason so specific failure classes can be selectively
 retried (e.g. `"reason": "no-text"` → retry when OCR is enabled).
+
+### 2026-04-20 — OpenClaw node env var is OPENCLAW_GATEWAY_TOKEN
+The env var holding the gateway auth token in the node env file (`openclaw-node.env` on brekpi41) is `OPENCLAW_GATEWAY_TOKEN`, not `OPENCLAW_TOKEN`. The key name differs from what the config field name (`gateway.auth.token`) suggests. Confirmed on brekpi41 2026-04-20. Always `cat` the env file before patching to verify the actual key name.
+
+### 2026-04-20 — Use python3 one-liners for remote file patching over SSH, not sed
+`sed -i` behavior differs between macOS (`-i ''` with space) and Linux (`-i''` no space). When SSH command strings are double-quoted in zsh, the quoting mangles further and `sed` reliably fails. Use `python3 -c "import re,pathlib; ..."` one-liners instead — immune to the macOS/Linux `sed -i` difference and handles JSON/structured files cleanly without quoting fights.
 
 ### 2026-04-06 — Read OpenClaw dist source to verify config schema
 The OpenClaw config validator is strict and not fully documented publicly. Before editing

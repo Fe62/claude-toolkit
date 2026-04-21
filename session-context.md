@@ -22,6 +22,8 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-04-20 | FeOps credential rotation complete — gateway auth token (new: 65299d29…) patched in openclaw.json and brekpi41 openclaw-node.env (OPENCLAW_GATEWAY_TOKEN); Brave API key patched in openclaw.json; 11 stale backup configs with old key deleted from feair; openclaw restarted cleanly (Telegram re-initialized). |
+| 2026-04-16 | FeOps/OpenClaw comms fixed — Telegram polling restored (plugin config from `openclaw configure` was silently blocking channel init; removed plugins block from openclaw.json); brekpi41 node token synced to gateway; iMessage pairing disabled. Cerbo GX MQTT commissioned: portal ID c0619ab21c63, MQTT + ModBus TCP enabled, SOC confirmed unavailable (no battery monitor), voltage proxy documented. TOOLS.md + HEARTBEAT.md updated with Cerbo node entry, voltage thresholds (<46V Tier 3, <44V Tier 4), mosquitto_sub poll command, and brekpi41_victron_voltage heartbeat state key. |
 | 2026-04-14 | paychex-download Phase 2 — `paychex_download.py` complete. CDP to Brave, XHR interceptor captures OIDC Bearer JWT from Angular in-memory auth, calls loadPackageFolders + getDownloadFolderRequestURL, downloads zip, extracts 16 PDFs to NAS. Last run: Payroll.0415. Phase 3 spec written to SESSION-CONTEXT-phase3.md. |
 | 2026-04-12 | Vault ollama-ingest pipeline — scripts/ollama-ingest.py built (batch PDF/doc cataloging via Ollama/mistral:7b, pdftotext + tesseract OCR fallback, JSON registry dedup, --limit/--ocr/--dry-run flags); mistral:7b pulled, tesseract installed; OCR fallback added after 80% image-PDF failure rate discovered in first test batch; crontab installed (2am daily, --limit 50 --ocr); conversation archived + /wiki-ingest run (6 new concept pages: ollama-ingest, local-llm-inference, ocr-pipeline, batch-processing-schedule, registry-pattern); Obsidian Web Clipper installed, Dataview plugin installed, default save location set to raw/ |
 | 2026-04-07 | Vault external brain activation — CLAUDE.md schema written, raw/ intake folder created, knowledge/index.md + log.md added, 3 vault commands built (/wiki-ingest, /import-last30days, /archive-conversation), first INGEST pass run on hooeem external brain article (6 concepts, 1 reference, 1 person page) |
@@ -79,9 +81,11 @@ _Updated at end of each session via the /update skill._
 - [ ] octopi: add octopi pane to Ghostty control-room dashboard
 - [ ] octopi: store taz5-admin-guide.docx, taz5-user-guide.docx, taz5-new-user-setup.docx somewhere accessible (shared drive or vault)
 - [ ] feair: pair iMessage +1 323-244-0868 with FeOps (`openclaw configure` on feair)
-- [ ] feair: add brekpi41 Victron health endpoint or MQTT topic to TOOLS.md and HEARTBEAT.md (SOC polling method undefined)
+- [x] feair: add brekpi41 Victron health endpoint or MQTT topic to TOOLS.md and HEARTBEAT.md — completed 2026-04-16 (voltage proxy, portal ID c0619ab21c63)
 - [ ] feair: delete BOOTSTRAP.md from FeOps workspace (bootstrap phase complete)
-- [ ] feair: rotate Telegram bot token, gateway auth token, Brave API key (exposed in chat 2026-04-06)
+- [x] feair: rotate Telegram bot token, gateway auth token, Brave API key — completed 2026-04-20
+- [ ] feair: check cabin battery voltage — run mosquitto_sub on brekpi41, verify recovered from 42.3V (48V LFP system)
+- [ ] feair: confirm mosquitto_sub installed on brekpi41 (`which mosquitto_sub`; install if missing: `sudo apt install mosquitto-clients`)
 - [ ] feair: add feair/FeOps to session-context.md machine inventory
 - [ ] feair: deploy OpenClaw node on fepi41 (same SSH tunnel pattern as brekpi41)
 - [ ] feair: deploy OpenClaw node on octopi (same SSH tunnel pattern as brekpi41)

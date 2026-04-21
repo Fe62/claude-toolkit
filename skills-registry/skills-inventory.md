@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-04-14
+Last updated: 2026-04-17
 
 ---
 
@@ -21,22 +21,60 @@ Last updated: 2026-04-14
 
 ## Active Skills
 
+### paychex-login
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Location | `skills/paychex payroll automation/paychex_login.py` |
+| Type | Standalone Python script + launchd agent |
+| Dependencies | `playwright` + Chromium, `certifi`; Keychain: `paychex`/`username`, `paychex`/`password`, `discord-webhook`/`paychex-download` |
+| Purpose | Logs into Paychex Flex at 7:45am Tuesday (15 min ahead of download). Handles the full OIDC SPA flow: username card → password card → post-auth redirect detection. |
+| Login flow | `UsernameOnly.html` → fills username → `index.html?oac=<JWT>` shows both username+password visible; detection checks password first → fills password → cross-domain OIDC redirect to `myapps.paychex.com/landing_remote/login.do` |
+| Dashboard detection | `is_dashboard_tab()` checks URL contains `"landing_remote"` AND no visible form inputs (disambiguates dashboard from security question / MFA) |
+| Phase 2 monitoring | After credentials submitted, `page.url` is stale (cross-domain nav breaks CDP tracking). Scans `ctx.pages` directly for any `landing_remote` tab. |
+| MFA handling | OTP delivery method auto-selects Text; OTP entry → Discord alert. Security question → extracts question text → Discord alert. User has until 8am to respond in Brave. |
+| Brave requirement | Brave running with `--remote-debugging-port=9222` (script launches it if not open) |
+| Schedule | launchd: `com.directlighting.paychex-login` — Tuesday 7:45am (`~/Library/LaunchAgents/`) |
+| Log | `~/Library/Logs/paychex-login.log` |
+| Manual trigger | `launchctl start com.directlighting.paychex-login` |
+| Added | 2026-04-17 |
+
+### paychex-to-401k
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Location | `skills/paychex payroll automation/paychex_to_401k.py` |
+| Type | Standalone Python script |
+| Dependencies | `pdfplumber`, `openpyxl`; `401k_employee_ref.json` (same folder) |
+| Purpose | Parses Paychex Retirement Plan Summary PDF and generates Creative Planning 401(k) contribution CSV + XLSX (matching upload template format). Outputs to the payroll folder: `{prefix}-{YYYYMMDD}-001-CREATIVEPLANNING-DIRECTLIGHTING-GUID-{GUID}.csv/.xlsx` |
+| Roster | `401k_employee_ref.json` — holds full SSNs + personal info keyed by SSN last-4 (Paychex masks SSNs in PDFs). Rebuild with `--build-ref /path/to/template.xlsx` when employees change. |
+| Usage | `python3 paychex_to_401k.py` (auto-detects latest folder) or `python3 paychex_to_401k.py /path/to/Payroll.MMDD` |
+| Non-contributors | Employees in roster with no PDF activity get zeros (e.g. Jacob Magadan — eligible but not contributing) |
+| Contribution types | Handles Roth (Post-tax), PreTax, and mixed; infers type from `EmployeeRecurringAmount(s):` line |
+| Added | 2026-04-17 |
+
 ### paychex-download
 | Field | Detail |
 |---|---|
 | Status | built |
 | Health | active |
 | Location | `skills/paychex payroll automation/paychex_download.py` |
-| Type | Standalone Python script |
-| Dependencies | `playwright` + Chromium; macOS Keychain entries: `paychex`/`username`, `paychex-password`/`password`; DirectNAS mounted at `/Volumes/Public` |
-| Purpose | Automates Paychex Flex weekly payroll zip download for Direct Lighting LLC. Connects to existing Brave session via CDP, installs XHR interceptor to capture OIDC Bearer JWT from Angular's in-memory auth service, calls `loadPackageFolders` + `getDownloadFolderRequestURL`, downloads zip, extracts to correct NAS folder (`Q{1-4}/Payroll.MMDD`). |
-| Auth method | XHR monkey-patch captures `Authorization: Bearer <JWT>` from Angular's own `getMostFrequentlyUsedReports` page-load request. `x-payx-sid` is correlation only. |
-| Brave requirement | Brave must be running with `--remote-debugging-port=9222` before script runs |
+| Type | Standalone Python script + launchd agent |
+| Dependencies | `playwright` + Chromium, `certifi`, `pdfplumber`; Keychain: `paychex`/`username`, `discord-webhook`/`paychex-download`; DirectNAS at `/Volumes/Public`; QB Desktop open |
+| Purpose | Full weekly payroll automation for Direct Lighting LLC. Downloads Paychex zip via CDP/Bearer token capture, extracts to NAS, generates QB IIF (3 checks: Invoice, DD, Tax), imports to QB Desktop via AppleScript, writes per-run log, sends Discord notification. |
+| Auth method | Playwright `page.on('request')` listener captures `Authorization: Bearer <JWT>` from Angular's `getMostFrequentlyUsedReports` request on RPTCTR_HTML load. Survives full-page navigation (unlike XHR monkey-patch). |
+| Brave requirement | Brave running with `--remote-debugging-port=9222`; Paychex Flex tab logged in to dashboard (not login.do) |
+| Schedule | launchd: `com.directlighting.paychex-download` — Tuesday 8:00am (`~/Library/LaunchAgents/`) |
 | NAS path | `/Volumes/Public/Direct Lighting/Direct Lighting LLC/1.Direct.Payroll/1.Payrolls/26.Payrolls/Q{n}/Payroll.MMDD/` |
-| Usage | `python3 paychex_download.py` (uses today's date) or `python3 paychex_download.py 2026-04-15` |
-| Phase 3 pending | launchd plist (Tuesday 8am), per-run log, Discord webhook, AppleScript QB import |
-| Session context | `skills/paychex payroll automation/SESSION-CONTEXT-phase3.md` |
+| Log | `{Payroll.MMDD}/download.log` per run; launchd stdout/stderr → `~/Library/Logs/paychex-download.log` |
+| QB import | `import_iif.applescript` — `open -a 'QuickBooks 2024'` via shell; handles backup warning + confirmation dialogs. IIF copied to `/private/tmp/` first (QB can't handle spaces in path). |
+| Discord | Webhook URL in Keychain `discord-webhook`/`paychex-download`. Success: date, file count, check totals. Error: exception + timestamp. Uses `certifi` CA bundle + `User-Agent: paychex-download/1.0` (Cloudflare requires non-default UA). |
+| Toggle | `IMPORT_TO_QB = True/False` at top of `paychex_download.py` |
+| Manual trigger | `launchctl start com.directlighting.paychex-download` |
 | Added | 2026-04-14 |
+| Completed | 2026-04-15 — Phase 3 done; end-to-end tested |
 
 ---
 
@@ -75,7 +113,7 @@ Last updated: 2026-04-14
 | Node connections | brekpi41: SSH tunnel pattern (Pi tunnels to Mac loopback); fepi41/octopi: not yet deployed |
 | Skills installed | ssh-exec (ClawHub) |
 | Operating mode | Solo mode — no service agents deployed yet; FeOps polls nodes directly |
-| Open work | Pair iMessage; add Victron polling method; delete BOOTSTRAP.md; rotate exposed tokens; deploy nodes on fepi41 + octopi |
+| Open work | Pair iMessage; add Victron polling method; delete BOOTSTRAP.md; deploy nodes on fepi41 + octopi; check cabin battery voltage via brekpi41 mosquitto_sub |
 | Added | 2026-04-06 |
 
 ---

@@ -6,6 +6,37 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-04
 
+### 2026-04-20 — FeOps credential rotation
+- Rotated gateway auth token — patched openclaw.json on feair and OPENCLAW_GATEWAY_TOKEN in brekpi41 openclaw-node.env; openclaw restarted cleanly, Telegram re-initialized
+- Rotated Brave API key — patched openclaw.json plugins.entries.brave config
+- Deleted 11 stale backup/clobbered openclaw.json files containing old Brave key from /Users/feair/.openclaw/
+
+### 2026-04-17 — paychex-login automation complete
+- Added `paychex_login.py` — Playwright CDP automation to log into Paychex Flex at 7:45am Tuesday ahead of 8am download
+- Handles full OIDC login flow on `login.flex.paychex.com` SPA (username → password cards)
+- Key fixes: (1) detection order — password card checked before username since both are visible simultaneously on `index.html?oac=...`; (2) DASHBOARD_INDICATOR = `"landing_remote"` (actual post-OIDC URL is `landing_remote/login.do`, not `/html`); (3) Phase 2 scans `ctx.pages` directly — `page.url` stays stale after cross-domain OIDC redirect; (4) `is_dashboard_tab()` validates by DOM (no visible inputs) rather than URL alone
+- Security question and OTP detection via Discord alert; user has until 8am to respond
+- launchd plist: `com.directlighting.paychex-login`, Tuesday 7:45am
+- All button clicks via JS (bypasses Proton Pass extension overlay)
+
+### 2026-04-17 — paychex-to-401k skill built and tested
+- Added `paychex_to_401k.py` — parses Retirement Plan Summary PDF, generates Creative Planning contribution CSV + XLSX
+- Outputs match template format exactly (verified against 0408 reference file)
+- Employee roster in `401k_employee_ref.json` — built once from template xlsx, update with `--build-ref` on roster change
+- Handles Roth, PreTax, and mixed contributors; zero-fills non-contributing eligible employees (e.g. Jacob Magadan)
+- SSN resolution: Paychex masks SSNs in PDFs; ref file holds full SSNs keyed by last-4
+- Auto-detects latest payroll folder; accepts explicit path arg
+
+### 2026-04-15 — paychex-download Phase 3 complete
+- Full pipeline working end-to-end: download → IIF → QB import → log → Discord
+- Added `paychex_to_iif.py` (extracted from SKILL doc, fixed `DirDep\s+` regex — `\*\*` variant was wrong for this QB version)
+- Added `import_iif.applescript` — uses `open -a 'QuickBooks 2024'` via shell (not file dialog); IIF copied to `/private/tmp/` first to avoid spaces-in-path issue
+- launchd plist installed: `com.directlighting.paychex-download`, Tuesday 8am
+- Discord: webhook in Keychain, `certifi` CA bundle, `User-Agent: paychex-download/1.0` required (Cloudflare blocks Python default UA)
+- Switched from JS XHR monkey-patch to Playwright `page.on('request')` listener — survives full-page navigation when tab is at login.do instead of SPA
+- Added login.do guard: script exits cleanly if Paychex tab is at login page
+- Paychex must be logged in to dashboard (not just tab open) before 8am Tuesday
+
 ### 2026-04-14 — paychex-download Phase 2 complete
 - Completed `paychex_download.py` — full end-to-end download pipeline working
 - Root cause resolved: Paychex Flex uses OIDC Bearer JWT held in Angular's in-memory `$http` interceptor; captured via `XMLHttpRequest.setRequestHeader` monkey-patch before navigation
