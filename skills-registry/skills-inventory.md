@@ -152,7 +152,29 @@ Last updated: 2026-04-22
 | Output | Raw research saved to ~/Documents/Last30Days/ (via --save-dir flag) |
 | Known issue | Reddit, HN, and Bluesky fail on macOS with CERTIFICATE_VERIFY_FAILED — Python macOS SSL cert issue, not skill bug. Fix: run /Applications/Python*/Install\ Certificates.command or pip install --upgrade certifi |
 | Notes | API keys managed via prompt-on-entry skill (see below). Never hardcode. |
+| Fork block | Inserted before WAIT FOR USER'S RESPONSE section (line 622) — after every run, prompts user to go deeper via `/feynman` for academic/lit depth |
 | Reinstalled | 2026-03-28 |
+| Updated | 2026-04-22 — fork block to /feynman added |
+
+---
+
+### feynman
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Source | ~/.claude/commands/feynman.md (not in git — back up manually) |
+| Type | Custom slash command (`/feynman`) |
+| Runtime | feynman.is CLI at `~/.local/bin/feynman`; config at `~/.feynman/agent/` |
+| Dependencies | feynman CLI; Anthropic API key in `~/.feynman/agent/auth.json` (isolated from shell env — `ANTHROPIC_API_KEY` must stay unset in `~/.zshrc`) |
+| Purpose | Two-tier deep research forked off `/last30days`. `/feynman [topic]` runs Sonnet for fast academic/lit scan; `/feynman deep [topic]` runs Opus + thinking:high for full multi-agent deepresearch. A fork block in the `/last30days` SKILL.md prompts this after every social/web signal run. |
+| Tiers | Default: `claude-sonnet-4-6`; Deep: `--model anthropic/claude-opus-4-6 --thinking high` |
+| Output | feynman is REPL-only (no non-interactive mode). Two-phase command: Phase 1 prints the terminal command; Phase 2 (`/feynman-save`) reads `~/.feynman/sessions/` and copies to `vault/raw/feynman/{slug}-{YYYY-MM-DD}.md` |
+| Config | `~/.feynman/agent/settings.json` — defaultModel, providers; `~/.feynman/agent/auth.json` — API key |
+| Sessions | `~/.feynman/sessions/` — all past runs; latest = highest sort |
+| Install | `curl -fsSL https://feynman.is/install \| bash` then `feynman setup` (API key flow, not OAuth) |
+| Useful commands | `feynman model list`, `feynman doctor`, `feynman update` |
+| Added | 2026-04-22 |
 
 ---
 ### api-key-prompt
@@ -242,7 +264,7 @@ Last updated: 2026-04-22
 | Type | Custom slash command (`/update`) |
 | Dependencies | session-context.md, skills-inventory.md, bible/master-reference.md, CHANGELOG.md |
 | Purpose | End-of-session toolkit documentation update. Works through 5 sequential questions with confirmation at each step (session summary, skill changes, open work resolved, new open items, lessons learned), then drafts targeted updates to all four files. Stages with `git add -A` but never commits. |
-| Last revised | 2026-03-02 — rewrote from single-summary prompt to 5-step interactive flow |
+| Last revised | 2026-04-22 — lazy file reads (bible + skills-inventory read only when needed); removed Claude.ai cross-check from Step 5; synced toolkit source to installed version |
 
 ---
 ## pdf-to-qbo

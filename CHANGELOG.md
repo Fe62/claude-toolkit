@@ -6,6 +6,13 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-04
 
+### 2026-04-22 — feynman integration
+- Integrated feynman.is CLI as deep research fork off /last30days — two-tier workflow: Sonnet (quick scan) + Opus+thinking:high (deepresearch)
+- Built /feynman slash command at ~/.claude/commands/feynman.md — two-phase REPL workflow; /feynman-save copies latest session to vault/raw/feynman/
+- Fork block inserted into /last30days SKILL.md before WAIT FOR USER'S RESPONSE — prompts user to go deeper via /feynman after every run
+- feynman.is installed to ~/.local/bin; defaultModel set to claude-sonnet-4-6; config lives at ~/.feynman/agent/ (not ~/.feynman/ root)
+- Resolved: Fiilex firmware check, Google Drive/Gmail credential rotation, iMac SSH password change
+
 ### 2026-04-22 — firmware-monitor deployed
 - Deployed firmware-monitor to Direct Lighting iMac (`~/payroll/firmware-monitor/`) via scp over Tailscale
 - venv + deps installed (`requests`, `beautifulsoup4`); Google Drive API key configured for Cerise/FTSLED

@@ -22,6 +22,7 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-04-22 | feynman integration — /feynman slash command built (two-phase REPL workflow: Sonnet fast scan + /feynman deep Opus+thinking:high tier); fork block added to /last30days SKILL.md prompting deeper research; feynman.is installed to ~/.local/bin, defaultModel set to claude-sonnet-4-6; /feynman-save copies latest session to vault/raw/feynman/{slug}-{date}.md |
 | 2026-04-22 | firmware-monitor deployed to Direct Lighting iMac — all files copied via scp over Tailscale, venv + deps installed, Google Drive API key configured, Gmail SMTP via smtplib (Postfix abandoned — IPv6 + SASL failures), baseline run clean (8/8 sources), cron set 8am daily, config centralized into manufacturers.json (recipients + SMTP + manufacturers), final confirmation email sent to all 4 recipients. |
 | 2026-04-20 | FeOps credential rotation complete — gateway auth token (new: 65299d29…) patched in openclaw.json and brekpi41 openclaw-node.env (OPENCLAW_GATEWAY_TOKEN); Brave API key patched in openclaw.json; 11 stale backup configs with old key deleted from feair; openclaw restarted cleanly (Telegram re-initialized). |
 | 2026-04-16 | FeOps/OpenClaw comms fixed — Telegram polling restored (plugin config from `openclaw configure` was silently blocking channel init; removed plugins block from openclaw.json); brekpi41 node token synced to gateway; iMessage pairing disabled. Cerbo GX MQTT commissioned: portal ID c0619ab21c63, MQTT + ModBus TCP enabled, SOC confirmed unavailable (no battery monitor), voltage proxy documented. TOOLS.md + HEARTBEAT.md updated with Cerbo node entry, voltage thresholds (<46V Tier 3, <44V Tier 4), mosquitto_sub poll command, and brekpi41_victron_voltage heartbeat state key. |
@@ -97,9 +98,12 @@ _Updated at end of each session via the /update skill._
 - [ ] vault: tune ollama-ingest --limit once first nightly run completes (check knowledge/.ollama-ingest.log runtime)
 - [ ] Push toolkit updates to GitHub
 - [ ] paychex Phase 3: launchd plist (Tuesday 8am), per-run log file, Discord webhook (success + error), AppleScript QB Desktop IIF import, end-to-end test (download → IIF → QB import)
-- [ ] firmware-monitor: check Fiilex manually — "LAST UPDATED" showed APR 22,2026 on first run, may be a real update
-- [ ] firmware-monitor: rotate Google Drive API key and Gmail App Password — both shared in plain text in chat
-- [ ] direct-lighting iMac: change SSH password (7787 shared in plain text in chat)
+- [x] firmware-monitor: check Fiilex manually — resolved 2026-04-22
+- [x] firmware-monitor: rotate Google Drive API key and Gmail App Password — resolved 2026-04-22
+- [x] direct-lighting iMac: change SSH password — resolved 2026-04-22
+- [ ] Back up ~/.claude/commands/feynman.md to toolkit or dotfiles repo (not tracked in git)
+- [ ] Create vault/raw/feynman/ directory (output path for /feynman-save)
+- [ ] Verify /feynman-save slash command is backed up to toolkit
 
 ---
 
@@ -121,4 +125,5 @@ _Updated at end of each session via the /update skill._
 | feops-openclaw | feair: /Users/feair/.openclaw/workspace/ | active |
 | paychex-download | skills/paychex payroll automation/paychex_download.py | active |
 | ollama-ingest | vault/scripts/ollama-ingest.py | active |
+| feynman | ~/.claude/commands/feynman.md | active |
 | firmware-monitor | skills/firmware-monitor/ → iMac ~/payroll/firmware-monitor/ | active |

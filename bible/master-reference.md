@@ -742,6 +742,36 @@ then execute remotely. Reliable every time.
 
 ---
 
+## 2026-04-22 — feynman CLI integration
+
+### feynman is REPL-only — no non-interactive mode
+`feynman deepresearch "topic" > file.md` silently fails — feynman launches an interactive REPL and output redirection has no effect. The only way to capture output is inside the REPL session. Workaround: two-phase slash command — Phase 1 prints the terminal command for the user to run in a separate terminal; Phase 2 reads the latest session file from `~/.feynman/sessions/` and copies it to vault.
+
+### feynman config lives at ~/.feynman/agent/, not ~/.feynman/
+`settings.json`, `auth.json`, and `agents/` are all under `~/.feynman/agent/`. The `~/.feynman/` root only contains `agent/`, `memory/`, `npm-global/`, `sessions/`. Paths like `~/.feynman/settings.json` find nothing.
+
+### ANTHROPIC_API_KEY must stay unset in the shell environment
+`~/.zshrc` has `unset ANTHROPIC_API_KEY` intentionally. If the key is set as a persistent shell export, Claude Code bypasses Pro/Max OAuth and bills all usage against the API key instead. Tools like feynman store their own key in their own auth file (`~/.feynman/agent/auth.json`) — isolated from the shell. Never set `ANTHROPIC_API_KEY` as a persistent export on this machine.
+
+### sed multiline insert is broken on macOS
+`sed -i '' '622i\\ line1\ line2'` fails with "extra characters after `\`" on macOS BSD sed. Use Python instead:
+```python
+with open('file.md', 'r') as f:
+    lines = f.readlines()
+lines = lines[:621] + insert_lines + lines[621:]
+with open('file.md', 'w') as f:
+    f.writelines(lines)
+```
+Extends the earlier SSH-patching lesson: Python > sed for any multiline or structured file edit on macOS, whether local or remote.
+
+### feynman setup skips provider selection if one already exists
+Re-running `feynman setup` jumps past model/provider selection when a provider is already configured. To add a second provider or change the default model, edit `~/.feynman/agent/settings.json` directly — there is no interactive re-configure path.
+
+### Ollama not worth wiring into feynman
+feynman's multi-agent academic synthesis (lit review, paper auditing, cross-paper reasoning) requires Sonnet/Opus depth. Local 7–8B models return shallow citations and miss cross-paper synthesis. Tier: Sonnet for quick scans, Opus for deepresearch. Don't spend setup time on Ollama integration for feynman.
+
+---
+
 ## Reference Links
 
 - Claude Code docs: https://docs.claude.ai/claude-code
