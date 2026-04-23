@@ -362,6 +362,7 @@ def main():
     script_dir    = os.path.dirname(os.path.abspath(__file__))
     iif_script    = os.path.join(script_dir, 'paychex_to_iif.py')
     as_script     = os.path.join(script_dir, 'import_iif.applescript')
+    k401_script   = os.path.join(script_dir, 'paychex_to_401k.py')
     python3       = '/usr/local/bin/python3'
 
     payroll_date  = None
@@ -406,6 +407,19 @@ def main():
                 raise RuntimeError(f"QB import failed:\n{as_result.stderr.strip()}")
             print("QuickBooks import complete.")
 
+        # ── 401(k) contribution files ─────────────────────────────────────────
+        print("\nGenerating 401(k) contribution files...")
+        k401_result = subprocess.run(
+            [python3, k401_script, output_folder],
+            capture_output=True, text=True,
+        )
+        if k401_result.returncode != 0:
+            k401_status = f"FAILED: {k401_result.stderr.strip().splitlines()[-1]}"
+            print(f"401k generation failed (non-fatal):\n{k401_result.stderr.strip()}")
+        else:
+            print(k401_result.stdout.strip())
+            k401_status = "CSV + XLSX generated"
+
         # ── Log ───────────────────────────────────────────────────────────────
         write_log(output_folder, payroll_date, files)
 
@@ -417,6 +431,7 @@ def main():
         msg = (
             f"✅ **Paychex Payroll — {payroll_date}**\n"
             f"Files: {len(files)} | {qb_status}\n"
+            f"401k: {k401_status}\n"
             f"Folder: `{output_folder}`"
         )
         if totals:

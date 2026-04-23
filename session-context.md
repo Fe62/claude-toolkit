@@ -22,6 +22,7 @@ _Updated at end of each session via the /update skill._
 
 | Date | What |
 |---|---|
+| 2026-04-22 | firmware-monitor deployed to Direct Lighting iMac — all files copied via scp over Tailscale, venv + deps installed, Google Drive API key configured, Gmail SMTP via smtplib (Postfix abandoned — IPv6 + SASL failures), baseline run clean (8/8 sources), cron set 8am daily, config centralized into manufacturers.json (recipients + SMTP + manufacturers), final confirmation email sent to all 4 recipients. |
 | 2026-04-20 | FeOps credential rotation complete — gateway auth token (new: 65299d29…) patched in openclaw.json and brekpi41 openclaw-node.env (OPENCLAW_GATEWAY_TOKEN); Brave API key patched in openclaw.json; 11 stale backup configs with old key deleted from feair; openclaw restarted cleanly (Telegram re-initialized). |
 | 2026-04-16 | FeOps/OpenClaw comms fixed — Telegram polling restored (plugin config from `openclaw configure` was silently blocking channel init; removed plugins block from openclaw.json); brekpi41 node token synced to gateway; iMessage pairing disabled. Cerbo GX MQTT commissioned: portal ID c0619ab21c63, MQTT + ModBus TCP enabled, SOC confirmed unavailable (no battery monitor), voltage proxy documented. TOOLS.md + HEARTBEAT.md updated with Cerbo node entry, voltage thresholds (<46V Tier 3, <44V Tier 4), mosquitto_sub poll command, and brekpi41_victron_voltage heartbeat state key. |
 | 2026-04-14 | paychex-download Phase 2 — `paychex_download.py` complete. CDP to Brave, XHR interceptor captures OIDC Bearer JWT from Angular in-memory auth, calls loadPackageFolders + getDownloadFolderRequestURL, downloads zip, extracts 16 PDFs to NAS. Last run: Payroll.0415. Phase 3 spec written to SESSION-CONTEXT-phase3.md. |
@@ -80,11 +81,11 @@ _Updated at end of each session via the /update skill._
 - [ ] octopi: add `export TERM=xterm-256color` to ~/.bashrc on Pi (permanent fix for Ghostty SSH sessions)
 - [ ] octopi: add octopi pane to Ghostty control-room dashboard
 - [ ] octopi: store taz5-admin-guide.docx, taz5-user-guide.docx, taz5-new-user-setup.docx somewhere accessible (shared drive or vault)
-- [ ] feair: pair iMessage +1 323-244-0868 with FeOps (`openclaw configure` on feair)
+- [x] feair: pair iMessage +1 323-244-0868 with FeOps — removed, no longer needed
 - [x] feair: add brekpi41 Victron health endpoint or MQTT topic to TOOLS.md and HEARTBEAT.md — completed 2026-04-16 (voltage proxy, portal ID c0619ab21c63)
 - [ ] feair: delete BOOTSTRAP.md from FeOps workspace (bootstrap phase complete)
 - [x] feair: rotate Telegram bot token, gateway auth token, Brave API key — completed 2026-04-20
-- [ ] feair: check cabin battery voltage — run mosquitto_sub on brekpi41, verify recovered from 42.3V (48V LFP system)
+- [x] feair: check cabin battery voltage — removed, no longer needed
 - [ ] feair: confirm mosquitto_sub installed on brekpi41 (`which mosquitto_sub`; install if missing: `sudo apt install mosquitto-clients`)
 - [ ] feair: add feair/FeOps to session-context.md machine inventory
 - [ ] feair: deploy OpenClaw node on fepi41 (same SSH tunnel pattern as brekpi41)
@@ -96,6 +97,9 @@ _Updated at end of each session via the /update skill._
 - [ ] vault: tune ollama-ingest --limit once first nightly run completes (check knowledge/.ollama-ingest.log runtime)
 - [ ] Push toolkit updates to GitHub
 - [ ] paychex Phase 3: launchd plist (Tuesday 8am), per-run log file, Discord webhook (success + error), AppleScript QB Desktop IIF import, end-to-end test (download → IIF → QB import)
+- [ ] firmware-monitor: check Fiilex manually — "LAST UPDATED" showed APR 22,2026 on first run, may be a real update
+- [ ] firmware-monitor: rotate Google Drive API key and Gmail App Password — both shared in plain text in chat
+- [ ] direct-lighting iMac: change SSH password (7787 shared in plain text in chat)
 
 ---
 
@@ -117,3 +121,4 @@ _Updated at end of each session via the /update skill._
 | feops-openclaw | feair: /Users/feair/.openclaw/workspace/ | active |
 | paychex-download | skills/paychex payroll automation/paychex_download.py | active |
 | ollama-ingest | vault/scripts/ollama-ingest.py | active |
+| firmware-monitor | skills/firmware-monitor/ → iMac ~/payroll/firmware-monitor/ | active |

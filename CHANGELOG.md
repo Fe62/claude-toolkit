@@ -6,6 +6,15 @@ Format: [YYYY-MM-DD] — What changed and why (brief)
 
 ## 2026-04
 
+### 2026-04-22 — firmware-monitor deployed
+- Deployed firmware-monitor to Direct Lighting iMac (`~/payroll/firmware-monitor/`) via scp over Tailscale
+- venv + deps installed (`requests`, `beautifulsoup4`); Google Drive API key configured for Cerise/FTSLED
+- Switched email delivery from sendmail/Postfix to `smtplib` direct Gmail SMTP — Postfix abandoned after IPv6 routing + SASL failures
+- Baseline run clean — all 8 sources recorded; ARRI confirmed static (no Playwright needed); Cerise Drive API working
+- Cron set `0 8 * * *`; old broken cron entry (pointing to iCloud path) removed
+- Config centralized into `manufacturers.json` — recipients, SMTP creds, and manufacturers in one file
+- Final confirmation email sent to all 4 recipients with Fiilex heads-up note
+
 ### 2026-04-20 — FeOps credential rotation
 - Rotated gateway auth token — patched openclaw.json on feair and OPENCLAW_GATEWAY_TOKEN in brekpi41 openclaw-node.env; openclaw restarted cleanly, Telegram re-initialized
 - Rotated Brave API key — patched openclaw.json plugins.entries.brave config

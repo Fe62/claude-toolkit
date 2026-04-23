@@ -1,6 +1,6 @@
 # Skills Inventory
 
-Last updated: 2026-04-17
+Last updated: 2026-04-22
 
 ---
 
@@ -20,6 +20,27 @@ Last updated: 2026-04-17
 ---
 
 ## Active Skills
+
+### firmware-monitor
+| Field | Detail |
+|---|---|
+| Status | built |
+| Health | active |
+| Host | Direct Lighting iMac (100.110.71.33, user: directlightingllc) |
+| Location | `skills/firmware-monitor/` (source); deployed `~/payroll/firmware-monitor/` on iMac |
+| Type | Standalone Python script + cron |
+| Dependencies | `requests`, `beautifulsoup4` (venv at `~/payroll/firmware-monitor/venv/`); Gmail App Password; Google Drive API key |
+| Purpose | Monitors 8 lighting manufacturer pages daily for firmware updates. Emails alert to 4 recipients when a change is detected. Sources: Astera, Fiilex, Nanlux, Kino Flo, ARRI, Aputure, Blackout, Cerise (FTSLED). |
+| Config | `manufacturers.json` — single file for all operator config: recipients, SMTP credentials, manufacturer list. Add `"disabled": true` to pause a source without deleting. |
+| Email | Gmail SMTP via `smtplib` — `flintellsworth@gmail.com` + App Password. Postfix not used (IPv6 routing failure + SASL fragility on macOS). |
+| Schedule | cron: `0 8 * * *` on iMac |
+| State | `state.json` (auto-generated) — fingerprints per source; first run sets baseline, no alerts fire |
+| Log | `firmware_monitor.log` (auto-generated) |
+| Watch points | ARRI + Aputure use page hashes (no version string) — alert fires on any content change. Fiilex "LAST UPDATED" date showed APR 22,2026 on first run — check manually. |
+| Extend | Add JSON block to `manufacturers.json` manufacturers array; run once to set baseline |
+| Added | 2026-04-22 |
+
+---
 
 ### paychex-login
 | Field | Detail |

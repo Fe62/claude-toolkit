@@ -710,6 +710,38 @@ Activate plugins: `Ctrl+b Shift+i`
 
 ---
 
+## 2026-04-22 — Email delivery on macOS scripts
+
+### Use smtplib directly — skip Postfix
+Postfix on macOS is frequently not running and unreliable to configure for outbound relay.
+Common failure modes: IPv6 routing failures to Gmail (fix: `inet_protocols = ipv4`), SASL auth
+failures, service not starting after reload. For any Python script needing email delivery,
+use `smtplib.SMTP("smtp.gmail.com", 587)` with `starttls()` + Gmail App Password directly.
+No system config required, easy to test, easy to debug.
+
+### Gmail App Passwords — store without spaces
+Google displays App Passwords as `xxxx xxxx xxxx xxxx` for readability.
+The actual credential is 16 characters with no spaces. Always strip spaces before storing
+in config files or env vars — storing with spaces causes SASL authentication failure
+with a generic "authentication failed" error that doesn't hint at the cause.
+
+### Centralise all operator-editable config in one file
+When a script has settings a non-developer may need to change (recipients, API keys,
+monitored sources), put everything in one JSON or YAML file. Load it at startup.
+Never split config between the script and a config file — operators shouldn't need to
+know which file to edit.
+
+### Verify destination directory exists before scp
+`scp` fails with a cryptic `realpath` error if the target path doesn't exist on the remote.
+Always `ssh user@host 'mkdir -p ~/target'` before copying a directory tree.
+
+### Multi-line Python strings over SSH — use a temp file
+Passing multi-line Python inline via SSH heredoc causes zsh to mangle special characters
+(parentheses, braces, URLs, em-dashes). Write the script to a local temp file, scp it,
+then execute remotely. Reliable every time.
+
+---
+
 ## Reference Links
 
 - Claude Code docs: https://docs.claude.ai/claude-code

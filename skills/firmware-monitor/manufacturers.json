@@ -1,0 +1,78 @@
+{
+  "recipients": [
+    "flint@directlighting.net",
+    "juan@directlighting.net",
+    "ken@directlighting.net",
+    "rickq89@gmail.com"
+  ],
+  "smtp": {
+    "user": "flintellsworth@gmail.com",
+    "pass": "ikeiwtvzktrdykni",
+    "from": "firmware-monitor@directlighting.net"
+  },
+  "manufacturers": [
+    {
+      "name": "Astera",
+      "type": "static_html",
+      "url": "https://update.astera-led.com/firmwares/current/release_notes.html",
+      "selector": "h1, h2, h3",
+      "version_pattern": "V(\\d+\\.\\d+\\.\\d+)",
+      "notes": "Static page. Version at top as e.g. 'Firmware V5.16.24'. Current: V5.16.24"
+    },
+    {
+      "name": "Fiilex",
+      "type": "static_html",
+      "url": "https://fiilex.com/support/firmwareUpdates.php",
+      "selector": "body",
+      "version_pattern": "LAST UPDATED:\\s*([A-Z]+ \\d+,\\d+)",
+      "notes": "Static PHP page. First LAST UPDATED date used as fingerprint. Current: NOV 11,2025"
+    },
+    {
+      "name": "Nanlux",
+      "type": "static_html",
+      "url": "https://www.nanlux.com/en/h-col-152.html",
+      "selector": "body",
+      "version_pattern": null,
+      "notes": "Static page. Versions embedded in zip filenames — page is hashed since no single version string."
+    },
+    {
+      "name": "Kino Flo",
+      "type": "static_html",
+      "url": "https://kinoflo.com/true-match/",
+      "selector": "body",
+      "version_pattern": "True Match.{0,30}Firmware (\\d+\\.\\d+)",
+      "notes": "WordPress page. Current: True Match Firmware 6.0"
+    },
+    {
+      "name": "ARRI",
+      "type": "static_html",
+      "url": "https://www.arri.com/en/technical-service/firmware/firmware-updates-for-lighting-products",
+      "selector": "body",
+      "version_pattern": "V(\\d+\\.\\d+\\.\\d+)",
+      "notes": "WARNING: May be JS-rendered. If fingerprint never changes despite real updates, this needs Playwright. Current: V5.6.1"
+    },
+    {
+      "name": "Aputure",
+      "type": "static_html",
+      "url": "https://aputure.com/en-US/pages/downloads",
+      "selector": "body",
+      "version_pattern": null,
+      "notes": "WARNING: Shopify — likely JS-rendered. If fingerprint is always the same short stub, needs Playwright."
+    },
+    {
+      "name": "Blackout",
+      "type": "itunes",
+      "url": "https://apps.apple.com/us/app/blackout-lighting-console/id1414562959",
+      "app_id": "1414562959",
+      "notes": "iPad app — version tracked via iTunes lookup API. Current: 2.5.2"
+    },
+    {
+      "name": "Cerise (FTSLED)",
+      "type": "google_drive",
+      "url": "https://drive.google.com/drive/folders/1X_QW4aECtIQzD6QfDS7VVZu9tz8psGlp",
+      "folder_id": "1X_QW4aECtIQzD6QfDS7VVZu9tz8psGlp",
+      "api_key": "AIzaSyAqSIsqDlqyRpOEJQ5FPSHa7E2mrmDSb00",
+      "notes": "Firmware on public Google Drive folder. Requires Google Cloud API key — see SETUP.md."
+    }
+  ]
+}
