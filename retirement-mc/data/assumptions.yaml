@@ -1,0 +1,5 @@
+equity_return: 0.075    # nominal annual, lognormal monthly draws
+equity_vol: 0.15         # annual sigma
+inflation: 0.025         # deterministic in Phase 1
+paths: 10000
+seed: 42

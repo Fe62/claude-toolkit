@@ -1,0 +1,41 @@
+timeline:
+  start: 2026-07        # simulation start
+  horizon: 2061         # expected-lifetime endpoint
+  step: monthly
+
+buckets:                # three tax categories; same growth in Phase 1
+  taxable: 0            # brokerage + cash equivalents
+  pretax: 0             # 401k / trad IRA
+  roth: 0
+
+contributions:          # monthly, pre-retirement, off the top of surplus
+  pretax: 0
+  roth: 0
+
+income:
+  surplus: 0            # monthly investable surplus while working (after living
+                         # expenses and minimum debt service at ORIGINAL schedule)
+  rental_net: 0          # monthly net rental income, tracks inflation
+
+liabilities:
+  loan_a:                # IO -> amortizing (Shellpoint-style)
+    balance: 0
+    rate: 0.0
+    io_until: 2031        # conversion year
+    amort_years: 25       # recast term at conversion
+  loan_b:                 # standard amortizing
+    balance: 0
+    rate: 0.0
+    years_left: 0
+
+social_security:          # claim ladder, both people; today's $, COLA-flat in real terms
+  person1:
+    - {age: 62, year: 0000, monthly: 0}
+    - {age: 65, year: 0000, monthly: 0}
+    - {age: 67, year: 0000, monthly: 0}
+    - {age: 70, year: 0000, monthly: 0}
+  person2:
+    - {age: 62, year: 0000, monthly: 0}
+    - {age: 65, year: 0000, monthly: 0}
+    - {age: 67, year: 0000, monthly: 0}
+    - {age: 70, year: 0000, monthly: 0}

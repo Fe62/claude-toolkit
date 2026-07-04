@@ -1,0 +1,8 @@
+name: "Prepay A hard, claim late"
+retire_year: 2032
+alloc: {prepay_a: 30, prepay_b: 40}   # % of allocatable surplus; remainder -> taxable
+recovery: {amount: 0, year: 2027}     # Direct Lighting event -> taxable
+recast_a: false                       # post-conversion payment re-derives from balance
+draw_order: t-p-r                     # t-p-r | p-t-r | proportional
+sell_property: {enabled: false, year: 2035, proceeds: 0}
+ss_claim: {person1: 67, person2: 67}  # ladder index by age label

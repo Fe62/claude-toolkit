@@ -1,0 +1,8 @@
+name: "Invest surplus, claim SS at 67"
+retire_year: 2032
+alloc: {prepay_a: 0, prepay_b: 0}     # % of allocatable surplus; remainder -> taxable
+recovery: {amount: 0, year: 2027}     # Direct Lighting event -> taxable
+recast_a: false
+draw_order: t-p-r                     # t-p-r | p-t-r | proportional
+sell_property: {enabled: false, year: 2035, proceeds: 0}
+ss_claim: {person1: 67, person2: 67}  # ladder index by age label
