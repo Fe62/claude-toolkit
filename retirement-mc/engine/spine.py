@@ -115,7 +115,7 @@ def _build_loan_schedules(
         return actual, reference, conversion_info
 
     if loan_type == "standard_amortizing":
-        months_remaining = int(loan_cfg["years_left"]) * 12
+        months_remaining = round(float(loan_cfg["years_left"]) * 12)
         actual = amortize_loan_b(balance, rate, months_remaining, extra_payments=extra_payments)
         reference = amortize_loan_b(balance, rate, months_remaining)
         return actual, reference, None
