@@ -71,7 +71,7 @@ Shape and engine behavior were already validated in a Claude.ai prototype (`reti
 - [x] Phase 1 — `loans.py` + tests (IO→amortizing, standard amortizing, recast)
 - [x] Phase 2 — `spine.py` (deterministic cash-flow schedule)
 - [x] Phase 3 — `montecarlo.py` (vectorized stochastic overlay)
-- [ ] Phase 4 — `metrics.py` (endowment search, survival, percentile bands)
+- [x] Phase 4 — `metrics.py` (endowment search, survival, percentile bands)
 - [ ] Phase 5 — `run.py` CLI + report/fan-chart output
 - [ ] Phase 6 — real data entry + Shellpoint note sanity check
 - [ ] Update load-context.sh (Active Skills + Recent Completions)
