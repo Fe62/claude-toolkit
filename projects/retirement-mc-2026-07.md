@@ -87,8 +87,8 @@ Shape and engine behavior were already validated in a Claude.ai prototype (`reti
 - [x] SS ladder (both people, ages 62/65/67/70) — entered from SSA statements 2026-07-05
 - [x] Real loan balances/rates (all 5), bucket values (all 4), surplus ($300/mo), rental_net ($8,100/mo combined) — entered 2026-07-05
 - [x] Loan E minimum payment % (2%) — confirmed 2026-07-05
-- [ ] Monthly pretax/roth contribution amounts (currently 0 placeholder)
-- [ ] Real estate taxable/pretax split ($210k/$600k) currently summed into one bucket — revisit if Phase 2 tax modeling needs it split
+- [x] Monthly pretax/roth contribution amounts (pretax $19.80, roth $132) — entered 2026-07-05
+- [x] Real estate taxable/pretax split — staying summed into one bucket, confirmed 2026-07-05 (revisit only if Phase 2 tax modeling needs it split)
 - [x] Loan list confirmed (A home mortgage, B rental mortgage, C Schwab margin, D RJ SBL, E credit card) and asset structure (taxable/pretax/roth + real_estate) — 2026-07-05
 
 ---
