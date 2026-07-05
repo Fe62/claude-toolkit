@@ -1,5 +1,10 @@
-equity_return: 0.075    # nominal annual, lognormal monthly draws
-equity_vol: 0.15         # annual sigma
+returns:                  # nominal annual, lognormal monthly draws; independent draw stream per type
+  equity:                 # applies to taxable/pretax/roth buckets
+    return: 0.075
+    vol: 0.15
+  real_estate:             # applies to the real_estate bucket
+    return: 0.04
+    vol: 0.08
 inflation: 0.025         # deterministic in Phase 1
 paths: 10000
 seed: 42

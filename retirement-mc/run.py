@@ -20,26 +20,27 @@ import yaml
 from engine.metrics import ScenarioMetrics, compute_scenario_metrics
 from engine.spine import build_spine
 
-NUMERIC_ROWS = [
-    ("Endowment income ($/mo)", lambda m: m.endowment_income, lambda v: f"${v:,.0f}"),
-    ("Survival probability", lambda m: m.survival_pct * 100, lambda v: f"{v:.1f}%"),
-    ("Median total at horizon (real $)", lambda m: m.median_total_real_at_horizon, lambda v: f"${v:,.0f}"),
-    ("  taxable (real $)", lambda m: m.bucket_mix_real_at_horizon["taxable"], lambda v: f"${v:,.0f}"),
-    ("  pretax (real $)", lambda m: m.bucket_mix_real_at_horizon["pretax"], lambda v: f"${v:,.0f}"),
-    ("  roth (real $)", lambda m: m.bucket_mix_real_at_horizon["roth"], lambda v: f"${v:,.0f}"),
-]
-
-INFO_ROWS = [
-    ("Loan A conversion balance", lambda m: m.conversion_balance, lambda v: f"${v:,.0f}" if v is not None else "n/a"),
-    ("Loan A conversion payment", lambda m: m.conversion_payment, lambda v: f"${v:,.0f}" if v is not None else "n/a"),
-    ("Loan A payoff year", lambda m: m.payoff_year_a, lambda v: str(v) if v is not None else "n/a"),
-    ("Loan B payoff year", lambda m: m.payoff_year_b, lambda v: str(v) if v is not None else "n/a"),
-]
-
-
 def load_yaml(path: str) -> dict:
     with open(path) as fh:
         return yaml.safe_load(fh)
+
+
+def _money(v) -> str:
+    return f"${v:,.0f}" if v is not None else "n/a"
+
+
+def _add_numeric_row(lines: list, all_metrics: list, baseline: "ScenarioMetrics", label: str, getter, fmt) -> None:
+    base_val = getter(baseline)
+    cells = []
+    for i, m in enumerate(all_metrics):
+        value = getter(m)
+        cell = fmt(value)
+        if i > 0 and len(all_metrics) > 1:
+            delta = value - base_val
+            sign = "+" if delta >= 0 else ""
+            cell = f"{cell} ({sign}{fmt(delta)})"
+        cells.append(cell)
+    lines.append("| " + label + " | " + " | ".join(cells) + " |")
 
 
 def build_metric_table(all_metrics: list[ScenarioMetrics]) -> str:
@@ -49,22 +50,28 @@ def build_metric_table(all_metrics: list[ScenarioMetrics]) -> str:
         "|" + "---|" * (len(all_metrics) + 1),
     ]
 
-    for label, getter, fmt in NUMERIC_ROWS:
-        base_val = getter(baseline)
-        cells = []
-        for i, m in enumerate(all_metrics):
-            value = getter(m)
-            cell = fmt(value)
-            if i > 0 and len(all_metrics) > 1:
-                delta = value - base_val
-                sign = "+" if delta >= 0 else ""
-                cell = f"{cell} ({sign}{fmt(delta)})"
-            cells.append(cell)
-        lines.append("| " + label + " | " + " | ".join(cells) + " |")
+    _add_numeric_row(lines, all_metrics, baseline, "Endowment income ($/mo)",
+                      lambda m: m.endowment_income, lambda v: f"${v:,.0f}")
+    _add_numeric_row(lines, all_metrics, baseline, "Survival probability",
+                      lambda m: m.survival_pct * 100, lambda v: f"{v:.1f}%")
+    _add_numeric_row(lines, all_metrics, baseline, "Median total at horizon (real $)",
+                      lambda m: m.median_total_real_at_horizon, lambda v: f"${v:,.0f}")
 
-    for label, getter, fmt in INFO_ROWS:
-        cells = [fmt(getter(m)) for m in all_metrics]
-        lines.append("| " + label + " | " + " | ".join(cells) + " |")
+    bucket_names = sorted({b for m in all_metrics for b in m.bucket_mix_real_at_horizon})
+    for bucket in bucket_names:
+        _add_numeric_row(
+            lines, all_metrics, baseline, f"  {bucket} (real $)",
+            lambda m, b=bucket: m.bucket_mix_real_at_horizon.get(b, 0.0), lambda v: f"${v:,.0f}",
+        )
+
+    loan_names = sorted({loan for m in all_metrics for loan in set(m.conversions) | set(m.payoff_years)})
+    for loan in loan_names:
+        cells = [_money((m.conversions.get(loan) or {}).get("balance")) for m in all_metrics]
+        lines.append(f"| {loan} conversion balance | " + " | ".join(cells) + " |")
+        cells = [_money((m.conversions.get(loan) or {}).get("payment")) for m in all_metrics]
+        lines.append(f"| {loan} conversion payment | " + " | ".join(cells) + " |")
+        cells = [str(m.payoff_years.get(loan)) if m.payoff_years.get(loan) is not None else "n/a" for m in all_metrics]
+        lines.append(f"| {loan} payoff year | " + " | ".join(cells) + " |")
 
     return "\n".join(lines)
 
@@ -116,7 +123,7 @@ def run_compare(scenario_paths: list[str], baseline_path: str, assumptions_path:
         scenario = load_yaml(scenario_path)
         spine = build_spine(baseline, assumptions, scenario)
         m = compute_scenario_metrics(
-            scenario["name"], spine, assumptions["equity_return"], assumptions["equity_vol"],
+            scenario["name"], spine, assumptions["returns"],
             assumptions["inflation"], baseline["buckets"], scenario["draw_order"],
             target, assumptions["paths"], assumptions["seed"],
         )

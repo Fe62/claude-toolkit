@@ -14,21 +14,24 @@ def base_inputs():
         "contributions": {"pretax": 500.0, "roth": 200.0},
         "income": {"surplus": 3000.0, "rental_net": 1000.0},
         "liabilities": {
-            "loan_a": {"balance": 0.0, "rate": 0.0, "io_until": 2026, "amort_years": 25},
-            "loan_b": {"balance": 0.0, "rate": 0.0, "years_left": 0},
+            "loan_a": {"type": "io_amortizing", "balance": 0.0, "rate": 0.0, "io_until": 2026, "amort_years": 25},
+            "loan_b": {"type": "standard_amortizing", "balance": 0.0, "rate": 0.0, "years_left": 0},
         },
         "social_security": {
             "person1": [{"age": 67, "year": 2030, "monthly": 2000.0}],
             "person2": [{"age": 67, "year": 2030, "monthly": 1500.0}],
         },
     }
-    assumptions = {"equity_return": 0.075, "equity_vol": 0.15, "inflation": 0.0, "paths": 100, "seed": 1}
+    assumptions = {
+        "returns": {"equity": {"return": 0.075, "vol": 0.15}, "real_estate": {"return": 0.04, "vol": 0.08}},
+        "inflation": 0.0, "paths": 100, "seed": 1,
+    }
     scenario = {
         "name": "test",
         "retire_year": 2029,
-        "alloc": {"prepay_a": 0, "prepay_b": 0},
+        "alloc": {"loan_a": 0, "loan_b": 0},
+        "recast": {"loan_a": False},
         "recovery": {"amount": 0, "year": None},
-        "recast_a": False,
         "draw_order": "t-p-r",
         "sell_property": {"enabled": False, "year": 2030, "proceeds": 0},
         "ss_claim": {"person1": 67, "person2": 67},
@@ -111,44 +114,79 @@ def test_loan_a_conversion_reported_and_prepay_reduces_conversion_payment():
     baseline, assumptions, scenario = base_inputs()
     baseline["timeline"]["horizon"] = 2032
     baseline["liabilities"]["loan_a"] = {
-        "balance": 300_000.0, "rate": 0.06, "io_until": 2027, "amort_years": 25,
+        "type": "io_amortizing", "balance": 300_000.0, "rate": 0.06, "io_until": 2027, "amort_years": 25,
     }
     scenario["retire_year"] = 2035  # stay working throughout
-    scenario["alloc"] = {"prepay_a": 100, "prepay_b": 0}
+    scenario["alloc"] = {"loan_a": 100, "loan_b": 0}
 
     no_prepay_scenario = dict(scenario)
-    no_prepay_scenario["alloc"] = {"prepay_a": 0, "prepay_b": 0}
+    no_prepay_scenario["alloc"] = {"loan_a": 0, "loan_b": 0}
 
     with_prepay = build_spine(baseline, assumptions, scenario)
     without_prepay = build_spine(baseline, assumptions, no_prepay_scenario)
 
-    assert with_prepay.conversion_balance is not None
-    assert with_prepay.conversion_balance < without_prepay.conversion_balance
-    assert with_prepay.conversion_payment < without_prepay.conversion_payment
+    assert with_prepay.conversions["loan_a"]["balance"] < without_prepay.conversions["loan_a"]["balance"]
+    assert with_prepay.conversions["loan_a"]["payment"] < without_prepay.conversions["loan_a"]["payment"]
 
     # Dumping 100% of allocatable surplus into prepay diverts it away from taxable
     # investing during IO, so taxable_inflow is lower than the no-prepay case...
     assert with_prepay.months[11].taxable_inflow < without_prepay.months[11].taxable_inflow
     # ...but the interest-only payment itself is smaller because the balance is lower.
     extra_at_11 = 2300.0  # full allocatable, zero inflation, no roth/pretax siphon in this fixture
-    with_prepay_scheduled = with_prepay.months[11].loan_a_payment - extra_at_11
-    assert with_prepay_scheduled < without_prepay.months[11].loan_a_payment
+    with_prepay_scheduled = with_prepay.months[11].loan_payments["loan_a"] - extra_at_11
+    assert with_prepay_scheduled < without_prepay.months[11].loan_payments["loan_a"]
 
 
 def test_loan_b_payoff_redirects_allocation_to_taxable():
     baseline, assumptions, scenario = base_inputs()
     baseline["timeline"]["horizon"] = 2032
-    baseline["liabilities"]["loan_b"] = {"balance": 10_000.0, "rate": 0.06, "years_left": 5}
+    baseline["liabilities"]["loan_b"] = {
+        "type": "standard_amortizing", "balance": 10_000.0, "rate": 0.06, "years_left": 5,
+    }
     scenario["retire_year"] = 2035
-    scenario["alloc"] = {"prepay_a": 0, "prepay_b": 100}  # dump all allocatable into loan B
+    scenario["alloc"] = {"loan_a": 0, "loan_b": 100}  # dump all allocatable into loan B
     result = build_spine(baseline, assumptions, scenario)
 
-    assert result.payoff_month_b is not None
-    payoff = result.payoff_month_b
+    assert result.payoff_months["loan_b"] is not None
+    payoff = result.payoff_months["loan_b"]
     before = result.months[payoff - 1]
     after = result.months[payoff + 1]
     # Once paid off, the loan payment drops to zero and the freed allocation
     # (minimum + redirected extra) shows up in taxable_inflow.
-    assert result.months[payoff].loan_b_payment > 0
-    assert after.loan_b_payment == 0.0
+    assert result.months[payoff].loan_payments["loan_b"] > 0
+    assert after.loan_payments["loan_b"] == 0.0
     assert after.taxable_inflow > before.taxable_inflow
+
+
+def test_revolving_loan_generates_debt_service_without_conversion_or_payoff():
+    baseline, assumptions, scenario = base_inputs()
+    baseline["liabilities"]["loan_c"] = {
+        "type": "revolving_interest_only", "balance": 20_000.0, "rate": 0.08,
+    }
+    scenario["alloc"] = {"loan_a": 0, "loan_b": 0, "loan_c": 0}
+    scenario["retire_year"] = 2030
+    result = build_spine(baseline, assumptions, scenario)
+    m0 = result.months[0]
+    assert math.isclose(m0.loan_payments["loan_c"], 20_000.0 * 0.08 / 12, rel_tol=1e-9)
+    assert "loan_c" not in result.conversions
+    assert result.payoff_months["loan_c"] is None
+    assert math.isclose(m0.total_debt_service, m0.loan_payments["loan_a"] + m0.loan_payments["loan_b"] + m0.loan_payments["loan_c"])
+
+
+def test_five_named_loans_all_produce_payments():
+    baseline, assumptions, scenario = base_inputs()
+    baseline["liabilities"] = {
+        "loan_a": {"type": "io_amortizing", "balance": 300_000.0, "rate": 0.06, "io_until": 2027, "amort_years": 25},
+        "loan_b": {"type": "standard_amortizing", "balance": 40_000.0, "rate": 0.055, "years_left": 10},
+        "loan_c": {"type": "revolving_interest_only", "balance": 15_000.0, "rate": 0.08},
+        "loan_d": {"type": "revolving_interest_only", "balance": 25_000.0, "rate": 0.07},
+        "loan_e": {"type": "revolving_interest_only", "balance": 5_000.0, "rate": 0.22, "min_payment_pct": 0.02},
+    }
+    scenario["alloc"] = {"loan_a": 10, "loan_b": 10, "loan_c": 10, "loan_d": 10, "loan_e": 10}
+    scenario["retire_year"] = 2030
+    result = build_spine(baseline, assumptions, scenario)
+    m0 = result.months[0]
+    assert set(m0.loan_payments.keys()) == {"loan_a", "loan_b", "loan_c", "loan_d", "loan_e"}
+    assert all(v > 0 for v in m0.loan_payments.values())
+    assert "loan_a" in result.conversions
+    assert set(result.conversions.keys()) == {"loan_a"}  # only io_amortizing loans convert

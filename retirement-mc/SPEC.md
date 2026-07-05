@@ -200,3 +200,40 @@ Decision-support tool, pre-tax model in Phase 1. Not financial advice; outputs a
 conditional on chosen assumptions, and the prepay-vs-invest answer is dominated by
 the equity-return and rate inputs — the tool's value is quantifying the RISK
 difference between strategies, not predicting the winner.
+
+## 11. Addendum (2026-07-05) — named loans, real estate bucket
+
+Real balance sheet has 5 liabilities and a 4th asset bucket, so the fixed
+loan_a/loan_b/taxable/pretax/roth schema was generalized before real data entry:
+
+**Liabilities** are now an arbitrarily-named dict in `baseline.yaml`, each with a
+`type`:
+- `io_amortizing` — home mortgage (was "loan A"): unchanged mechanics.
+- `standard_amortizing` — rental mortgage (was "loan B"): unchanged mechanics.
+- `revolving_interest_only` — Schwab margin loan, RJ SBL, credit card debt: no
+  fixed term (minimum payment = max(interest, balance × `min_payment_pct`);
+  0 = pure interest-only for margin/SBL, >0 = credit-card-style minimum nibble).
+  Bounded by the simulation horizon since it has no self-terminating schedule.
+
+Scenario `alloc` and `recast` levers are now dicts keyed by loan name instead of
+`{prepay_a, prepay_b}` / `recast_a`. `spine.py`'s freed-cash/redirect-to-taxable
+logic loops over however many loans are defined; `MonthFlow.loan_payments` is a
+dict (`total_debt_service` property sums it) instead of fixed `loan_a_payment`/
+`loan_b_payment` fields. `SpineResult.conversions`/`payoff_months` are dicts too
+(only `io_amortizing` loans produce a conversion entry).
+
+**Buckets** gained `real_estate` (real estate equity / private investments),
+which grows at its **own** return/vol assumption rather than sharing the
+equity assumption — `assumptions.yaml`'s flat `equity_return`/`equity_vol` became
+a `returns: {equity: {...}, real_estate: {...}}` dict, with each return-type
+getting an independent draw stream (spawned from one seed, so still common
+random numbers across scenarios). `real_estate` is deliberately **not** part of
+`LIQUID_BUCKETS` (taxable/pretax/roth): it doesn't participate in retirement
+withdrawals or the failure clamp (an illiquid asset doesn't vanish just because
+the liquid buckets ran dry), and the fan chart / survival / endowment metrics
+stay liquid-only to preserve their original meaning. It does show up in the
+final bucket-mix table for the full net-worth picture.
+
+`baseline.yaml` now holds real personal data (names, SSA benefit figures) and
+is gitignored; `baseline.example.yaml` carries the current (5-loan, 4-bucket)
+schema with zeroed placeholders.

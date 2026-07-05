@@ -32,10 +32,11 @@ Shape and engine behavior were already validated in a Claude.ai prototype (`reti
 ## Scope
 
 **In scope (Phase 1 — pre-tax):**
-- Deterministic spine: loan amortization (IO→amortizing + standard), contractual income/expenses, lever-driven allocations, one-time events
-- Stochastic overlay: lognormal monthly equity returns, common random numbers across scenarios, fixed seed
-- Endowment income metric (binary search on median deterministic path) + survival probability metric
+- Deterministic spine: loan amortization (named loans: io_amortizing, standard_amortizing, revolving_interest_only), contractual income/expenses, lever-driven allocations, one-time events
+- Stochastic overlay: lognormal monthly returns per return-type (equity, real_estate), common random numbers across scenarios, fixed seed
+- Endowment income metric (binary search on median deterministic path) + survival probability metric — liquid buckets only (taxable/pretax/roth)
 - CLI scenario comparison with fan charts + markdown summary
+- 5 named liabilities (home mortgage, rental mortgage, Schwab margin loan, RJ SBL, credit card) and a 4th real_estate/private-investment bucket with its own return assumption (2026-07-05 addendum — see SPEC.md section 11)
 
 **Out of scope (Phase 1):**
 - All taxation (bracket tables, cap gains/basis, Roth conversion ladder, RMDs, IRMAA) — Phase 2 backlog
@@ -73,7 +74,8 @@ Shape and engine behavior were already validated in a Claude.ai prototype (`reti
 - [x] Phase 3 — `montecarlo.py` (vectorized stochastic overlay)
 - [x] Phase 4 — `metrics.py` (endowment search, survival, percentile bands)
 - [x] Phase 5 — `run.py` CLI + report/fan-chart output
-- [ ] Phase 6 — real data entry + Shellpoint note sanity check
+- [x] Phase 5.5 — generalize loans (named, 3 mechanics) + assets (real_estate bucket, own return assumption) ahead of real data entry
+- [ ] Phase 6 — real data entry (all 5 loans, all 4 buckets) + Shellpoint note sanity check
 - [ ] Update load-context.sh (Active Skills + Recent Completions)
 - [ ] Commit load-context.sh with final project commit
 
@@ -84,6 +86,7 @@ Shape and engine behavior were already validated in a Claude.ai prototype (`reti
 - [ ] Exact Obsidian vault path for summary .md output (deferred to build time per spec)
 - [x] SS ladder (both people, ages 62/65/67/70) — entered from SSA statements 2026-07-05
 - [ ] Real loan balances/rates, surplus, contributions, rental net — still needed before Phase 6
+- [x] Loan list confirmed (A home mortgage, B rental mortgage, C Schwab margin, D RJ SBL, E credit card) and asset structure (taxable/pretax/roth + real_estate) — 2026-07-05
 
 ---
 

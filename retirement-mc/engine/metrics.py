@@ -3,11 +3,10 @@ and the composite per-scenario metric bundle consumed by the CLI/report.
 """
 
 from dataclasses import dataclass
-from typing import Optional
 
 import numpy as np
 
-from engine.montecarlo import PathResult
+from engine.montecarlo import LIQUID_BUCKETS, PathResult
 from engine.montecarlo import run as run_montecarlo
 from engine.spine import SpineResult
 
@@ -17,9 +16,15 @@ def deflate(nominal: float, inflation: float, month: int) -> float:
     return nominal / (1 + inflation) ** (month / 12)
 
 
-def real_total_path(result: PathResult, inflation: float) -> np.ndarray:
-    """Real (deflated) combined portfolio value, shape (paths, n_months+1)."""
-    nominal_total = result.taxable + result.pretax + result.roth
+def real_total_path(result: PathResult, inflation: float, bucket_names: tuple = LIQUID_BUCKETS) -> np.ndarray:
+    """Real (deflated) combined value of `bucket_names`, shape (paths, n_months+1).
+
+    Defaults to the liquid buckets (taxable/pretax/roth) -- the survival and
+    endowment metrics are about sustaining spendable income, not net worth
+    including illiquid assets like real estate.
+    """
+    present = [b for b in bucket_names if b in result.buckets]
+    nominal_total = sum(result.buckets[b] for b in present)
     n_months = nominal_total.shape[1] - 1
     deflator = np.array([(1 + inflation) ** (t / 12) for t in range(n_months + 1)])
     return nominal_total / deflator
@@ -28,7 +33,7 @@ def real_total_path(result: PathResult, inflation: float) -> np.ndarray:
 def percentile_bands(
     result: PathResult, inflation: float, percentiles: tuple = (10, 25, 50, 75, 90)
 ) -> dict:
-    """Real portfolio percentile trajectories, for fan-chart plotting."""
+    """Real (liquid) portfolio percentile trajectories, for fan-chart plotting."""
     real = real_total_path(result, inflation)
     return {p: np.percentile(real, p, axis=0) for p in percentiles}
 
@@ -40,8 +45,7 @@ def survival_probability(result: PathResult) -> float:
 
 def endowment_income(
     spine: SpineResult,
-    equity_return: float,
-    equity_vol: float,
+    returns_cfg: dict,
     inflation: float,
     initial_buckets: dict,
     draw_order: str,
@@ -50,12 +54,13 @@ def endowment_income(
     iterations: int = 40,
 ) -> float:
     """Max sustainable monthly income (today's $) on the median deterministic path,
-    per spec section 5: real total at horizon >= real total at retirement, no failure.
+    per spec section 5: real (liquid) total at horizon >= real total at retirement,
+    no failure.
     """
 
     def holds(income: float) -> bool:
         det = run_montecarlo(
-            spine, equity_return, equity_vol, inflation, income, draw_order,
+            spine, returns_cfg, inflation, income, draw_order,
             initial_buckets, paths=1, seed=0, deterministic=True,
         )
         if det.failed[0]:
@@ -81,10 +86,8 @@ class ScenarioMetrics:
     name: str
     endowment_income: float
     survival_pct: float
-    conversion_balance: Optional[float]
-    conversion_payment: Optional[float]
-    payoff_year_a: Optional[int]
-    payoff_year_b: Optional[int]
+    conversions: dict            # loan name -> {"balance": float, "payment": float}
+    payoff_years: dict           # loan name -> Optional[int]
     median_total_real_at_horizon: float
     bucket_mix_real_at_horizon: dict
     bands: dict
@@ -93,8 +96,7 @@ class ScenarioMetrics:
 def compute_scenario_metrics(
     name: str,
     spine: SpineResult,
-    equity_return: float,
-    equity_vol: float,
+    returns_cfg: dict,
     inflation: float,
     initial_buckets: dict,
     draw_order: str,
@@ -103,37 +105,33 @@ def compute_scenario_metrics(
     seed: int,
 ) -> ScenarioMetrics:
     mc = run_montecarlo(
-        spine, equity_return, equity_vol, inflation, target_income_today, draw_order,
+        spine, returns_cfg, inflation, target_income_today, draw_order,
         initial_buckets, paths=paths, seed=seed,
     )
     det = run_montecarlo(
-        spine, equity_return, equity_vol, inflation, target_income_today, draw_order,
+        spine, returns_cfg, inflation, target_income_today, draw_order,
         initial_buckets, paths=1, seed=seed, deterministic=True,
     )
 
-    endowment = endowment_income(spine, equity_return, equity_vol, inflation, initial_buckets, draw_order)
+    endowment = endowment_income(spine, returns_cfg, inflation, initial_buckets, draw_order)
     survival = survival_probability(mc)
     bands = percentile_bands(mc, inflation)
 
     deflator = (1 + inflation) ** (len(spine.months) / 12)
-    bucket_mix = {
-        "taxable": det.taxable[0, -1] / deflator,
-        "pretax": det.pretax[0, -1] / deflator,
-        "roth": det.roth[0, -1] / deflator,
-    }
+    bucket_mix = {name_: det.buckets[name_][0, -1] / deflator for name_ in det.buckets}
     median_total = sum(bucket_mix.values())
 
-    payoff_year_a = spine.months[spine.payoff_month_a].year if spine.payoff_month_a is not None else None
-    payoff_year_b = spine.months[spine.payoff_month_b].year if spine.payoff_month_b is not None else None
+    payoff_years = {
+        loan_name: (spine.months[month].year if month is not None else None)
+        for loan_name, month in spine.payoff_months.items()
+    }
 
     return ScenarioMetrics(
         name=name,
         endowment_income=endowment,
         survival_pct=survival,
-        conversion_balance=spine.conversion_balance,
-        conversion_payment=spine.conversion_payment,
-        payoff_year_a=payoff_year_a,
-        payoff_year_b=payoff_year_b,
+        conversions=spine.conversions,
+        payoff_years=payoff_years,
         median_total_real_at_horizon=median_total,
         bucket_mix_real_at_horizon=bucket_mix,
         bands=bands,
