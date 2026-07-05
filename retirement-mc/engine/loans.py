@@ -1,10 +1,15 @@
 """Loan amortization for the retirement-mc spine (Layer 1).
 
-Two loan types, matching the balance sheet:
-- Loan A: interest-only until conversion, then amortizing (Shellpoint-style).
-- Loan B: standard amortizing from the start.
+Three loan mechanics, matching the balance sheet:
+- io_amortizing: interest-only until conversion, then amortizing (Shellpoint-style
+  home mortgage). See amortize_loan_a.
+- standard_amortizing: standard amortizing from the start (rental mortgage).
+  See amortize_loan_b.
+- revolving_interest_only: no fixed term; minimum payment each month is interest
+  (margin loan, securities-based line) or interest-plus-a-minimum-principal-nibble
+  (credit card style). See amortize_revolving.
 
-Both support a monthly extra-payment (prepay) stream. No randomness here —
+All support a monthly extra-payment (prepay) stream. No randomness here —
 this module is pure loan mechanics; cash routing (freed payments -> taxable)
 is a spine.py concern.
 """
@@ -138,6 +143,54 @@ def amortize_loan_a(
                 phase=phase,
                 balance_start=balance,
                 scheduled_payment=scheduled_payment,
+                extra=extra,
+                interest=interest,
+                principal=principal,
+                balance_end=max(balance_end, 0.0),
+                payoff=payoff,
+            )
+        )
+
+        balance = max(balance_end, 0.0)
+        month += 1
+
+    return results
+
+
+def amortize_revolving(
+    balance: float,
+    annual_rate: float,
+    n_months: int,
+    extra_payments: Sequence[float] = (),
+    min_payment_pct: float = 0.0,
+) -> list[MonthResult]:
+    """Revolving interest-only debt (margin loan, securities-based line, credit card).
+
+    No fixed amortization term, so the loop is bounded by `n_months` rather than
+    running to payoff. Minimum payment each month is max(interest, balance *
+    min_payment_pct): margin loans/SBLs use min_payment_pct=0 (pure interest-only,
+    balance never self-amortizes without extra payments); credit-card-style lines
+    set min_payment_pct>0 for a minimum principal nibble even without extra.
+    """
+    r = annual_rate / 12
+    results: list[MonthResult] = []
+
+    month = 0
+    while month < n_months and balance > 1e-9:
+        interest = balance * r
+        minimum_payment = max(interest, balance * min_payment_pct)
+        scheduled_principal = minimum_payment - interest
+        extra = extra_payments[month] if month < len(extra_payments) else 0.0
+        principal = min(balance, scheduled_principal + extra)
+        balance_end = balance - principal
+        payoff = balance_end <= 1e-9
+
+        results.append(
+            MonthResult(
+                month=month,
+                phase="revolving",
+                balance_start=balance,
+                scheduled_payment=minimum_payment,
                 extra=extra,
                 interest=interest,
                 principal=principal,

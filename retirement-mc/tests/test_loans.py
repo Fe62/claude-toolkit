@@ -4,7 +4,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from engine.loans import amortize_loan_a, amortize_loan_b, amortize_payment, conversion_snapshot
+from engine.loans import (
+    amortize_loan_a,
+    amortize_loan_b,
+    amortize_payment,
+    amortize_revolving,
+    conversion_snapshot,
+)
 
 
 def independent_payment(balance, annual_rate, term_months):
@@ -111,3 +117,40 @@ def test_loan_a_total_principal_equals_original_balance():
     schedule = amortize_loan_a(300_000, 0.06, io_until_months=60, amort_months=300, extra_payments=extra)
     total_principal = sum(m.principal for m in schedule)
     assert math.isclose(total_principal, 300_000, abs_tol=0.01)
+
+
+# --- Revolving interest-only (margin loan / SBL / credit card) ----------------
+
+def test_revolving_pure_interest_only_never_amortizes_without_extra():
+    # Margin loan / SBL style: min_payment_pct=0 -> balance never shrinks on its own.
+    schedule = amortize_revolving(50_000, 0.08, n_months=24, min_payment_pct=0.0)
+    assert len(schedule) == 24  # bounded by n_months, never pays off
+    assert all(m.balance_start == 50_000 for m in schedule)
+    assert all(math.isclose(m.scheduled_payment, m.interest, rel_tol=1e-9) for m in schedule)
+    assert not schedule[-1].payoff
+
+
+def test_revolving_extra_payments_reduce_balance():
+    extra = [2_000.0] * 24
+    schedule = amortize_revolving(50_000, 0.08, n_months=24, extra_payments=extra, min_payment_pct=0.0)
+    balances = [m.balance_start for m in schedule]
+    assert all(b1 > b2 for b1, b2 in zip(balances, balances[1:]))
+    assert len(schedule) == 24  # 24 * $2k = $48k < $50k balance, doesn't fully pay off
+    total_principal = sum(m.principal for m in schedule)
+    assert math.isclose(total_principal, 48_000.0, abs_tol=0.01)
+
+
+def test_revolving_credit_card_min_payment_nibbles_principal_without_extra():
+    # 24% APR = 2%/mo interest; a 3% minimum payment exceeds interest-only.
+    schedule = amortize_revolving(5_000, 0.24, n_months=12, min_payment_pct=0.03)
+    m0 = schedule[0]
+    assert math.isclose(m0.scheduled_payment, max(5_000 * 0.24 / 12, 5_000 * 0.03), rel_tol=1e-9)
+    balances = [m.balance_start for m in schedule]
+    assert all(b1 > b2 for b1, b2 in zip(balances, balances[1:]))
+
+
+def test_revolving_stops_at_payoff_within_bound():
+    schedule = amortize_revolving(1_000, 0.1, n_months=60, extra_payments=[1_000.0] * 60)
+    assert len(schedule) == 1  # fully paid off in the first month
+    assert schedule[0].payoff
+    assert schedule[0].balance_end == 0.0
