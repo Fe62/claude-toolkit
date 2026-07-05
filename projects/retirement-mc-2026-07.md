@@ -69,7 +69,7 @@ Shape and engine behavior were already validated in a Claude.ai prototype (`reti
 
 - [x] Phase 0 — scaffold `retirement-mc/` project layout + placeholder data files
 - [x] Phase 1 — `loans.py` + tests (IO→amortizing, standard amortizing, recast)
-- [ ] Phase 2 — `spine.py` (deterministic cash-flow schedule)
+- [x] Phase 2 — `spine.py` (deterministic cash-flow schedule)
 - [ ] Phase 3 — `montecarlo.py` (vectorized stochastic overlay)
 - [ ] Phase 4 — `metrics.py` (endowment search, survival, percentile bands)
 - [ ] Phase 5 — `run.py` CLI + report/fan-chart output
