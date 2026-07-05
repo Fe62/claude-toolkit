@@ -24,7 +24,7 @@ Shape and engine behavior were already validated in a Claude.ai prototype (`reti
 - [ ] `loans.py` matches an independent amortization table for both loan types (incl. mid-IO prepay + recast cases)
 - [x] Zero-vol Monte Carlo run collapses to the deterministic spine (p10 = p50 = p90)
 - [ ] Python port matches prototype `.jsx` metrics within Monte Carlo noise on placeholder inputs
-- [ ] Real data entered; conversion payment sanity-checked against actual Shellpoint note terms
+- [x] Real data entered; loan_a conversion payment ($7,447/mo @ 3.60% over 30yr on $1,638,000) sanity-checked against the amortization formula 2026-07-05 (still worth confirming against the actual Shellpoint note once available)
 - [x] `run.py compare` produces metric table + fan charts + Obsidian summary for at least 2 scenarios (Obsidian vault path still TBD -- writes to `--outdir`, default `output/`)
 
 ---
@@ -75,7 +75,7 @@ Shape and engine behavior were already validated in a Claude.ai prototype (`reti
 - [x] Phase 4 — `metrics.py` (endowment search, survival, percentile bands)
 - [x] Phase 5 — `run.py` CLI + report/fan-chart output
 - [x] Phase 5.5 — generalize loans (named, 3 mechanics) + assets (real_estate bucket, own return assumption) ahead of real data entry
-- [ ] Phase 6 — real data entry (all 5 loans, all 4 buckets) + Shellpoint note sanity check
+- [x] Phase 6 — real data entered (all 5 loans, all 4 buckets, surplus, rental_net); first real `run.py compare` produced sensible output 2026-07-05
 - [ ] Update load-context.sh (Active Skills + Recent Completions)
 - [ ] Commit load-context.sh with final project commit
 
@@ -85,7 +85,10 @@ Shape and engine behavior were already validated in a Claude.ai prototype (`reti
 
 - [ ] Exact Obsidian vault path for summary .md output (deferred to build time per spec)
 - [x] SS ladder (both people, ages 62/65/67/70) — entered from SSA statements 2026-07-05
-- [ ] Real loan balances/rates, surplus, contributions, rental net — still needed before Phase 6
+- [x] Real loan balances/rates (all 5), bucket values (all 4), surplus ($300/mo), rental_net ($8,100/mo combined) — entered 2026-07-05
+- [x] Loan E minimum payment % (2%) — confirmed 2026-07-05
+- [ ] Monthly pretax/roth contribution amounts (currently 0 placeholder)
+- [ ] Real estate taxable/pretax split ($210k/$600k) currently summed into one bucket — revisit if Phase 2 tax modeling needs it split
 - [x] Loan list confirmed (A home mortgage, B rental mortgage, C Schwab margin, D RJ SBL, E credit card) and asset structure (taxable/pretax/roth + real_estate) — 2026-07-05
 
 ---
