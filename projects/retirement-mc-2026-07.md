@@ -82,7 +82,8 @@ Shape and engine behavior were already validated in a Claude.ai prototype (`reti
 ## Open Questions
 
 - [ ] Exact Obsidian vault path for summary .md output (deferred to build time per spec)
-- [ ] Real balance sheet values (loans, SS ladder, contributions) — needed before Phase 6
+- [x] SS ladder (both people, ages 62/65/67/70) — entered from SSA statements 2026-07-05
+- [ ] Real loan balances/rates, surplus, contributions, rental net — still needed before Phase 6
 
 ---
 

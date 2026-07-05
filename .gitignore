@@ -7,3 +7,4 @@ __pycache__/
 .pytest_cache/
 retirement-mc/output/*
 !retirement-mc/output/.gitkeep
+retirement-mc/data/baseline.yaml
