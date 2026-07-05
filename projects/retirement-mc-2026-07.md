@@ -25,7 +25,7 @@ Shape and engine behavior were already validated in a Claude.ai prototype (`reti
 - [x] Zero-vol Monte Carlo run collapses to the deterministic spine (p10 = p50 = p90)
 - [ ] Python port matches prototype `.jsx` metrics within Monte Carlo noise on placeholder inputs
 - [ ] Real data entered; conversion payment sanity-checked against actual Shellpoint note terms
-- [ ] `run.py compare` produces metric table + fan charts + Obsidian summary for at least 2 scenarios
+- [x] `run.py compare` produces metric table + fan charts + Obsidian summary for at least 2 scenarios (Obsidian vault path still TBD -- writes to `--outdir`, default `output/`)
 
 ---
 
@@ -72,7 +72,7 @@ Shape and engine behavior were already validated in a Claude.ai prototype (`reti
 - [x] Phase 2 — `spine.py` (deterministic cash-flow schedule)
 - [x] Phase 3 — `montecarlo.py` (vectorized stochastic overlay)
 - [x] Phase 4 — `metrics.py` (endowment search, survival, percentile bands)
-- [ ] Phase 5 — `run.py` CLI + report/fan-chart output
+- [x] Phase 5 — `run.py` CLI + report/fan-chart output
 - [ ] Phase 6 — real data entry + Shellpoint note sanity check
 - [ ] Update load-context.sh (Active Skills + Recent Completions)
 - [ ] Commit load-context.sh with final project commit
